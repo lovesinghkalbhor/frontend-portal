@@ -306,6 +306,16 @@ export default function Topbar() {
           </ListItemIcon>
           Locked Fund : 45234
         </MenuItem>
+        <MenuItem
+          onClick={() => {
+            navigate("/reset");
+          }}
+        >
+          <ListItemIcon>
+            <LockRoundedIcon fontSize="small" />
+          </ListItemIcon>
+          Reset password
+        </MenuItem>
 
         <MenuItem onClick={logoutfunctionbutton}>
           <ListItemIcon>

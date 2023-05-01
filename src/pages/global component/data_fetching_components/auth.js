@@ -27,6 +27,58 @@ const Logindata = async (email, password) => {
   }
 };
 
+const Send_reset_email = async (email) => {
+  const apiUrl = "http://localhost:5000/auth/reset"; // Replace with your actual API URL
+  console.log("in login");
+  // Create a JSON object with the request parameters
+  const requestBody = {
+    email: email,
+  };
+
+  // Make the POST request with Axios
+  try {
+    const response = await axios.post(apiUrl, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = response.data;
+    console.log(data);
+    return data;
+  } catch (error) {
+    // Handle any error during the request
+    console.error("Error:", error);
+  }
+};
+const Reset_password = async (vcode, vcode2, hashedEmail, password) => {
+  const apiUrl = "http://localhost:5000/auth/reset2"; // Replace with your actual API URL
+  console.log("in login");
+  // Create a JSON object with the request parameters
+  const requestBody = {
+    vcode: vcode,
+    vcode2: vcode2,
+    email: hashedEmail,
+    password: password,
+  };
+
+  // Make the POST request with Axios
+  try {
+    const response = await axios.post(apiUrl, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = response.data;
+    console.log(data);
+    return data;
+  } catch (error) {
+    // Handle any error during the request
+    console.error("Error:", error);
+  }
+};
+
 const is_user_session_valid = async () => {
   const session_id = Cookies.get("session_id");
   console.log(session_id, "session_id,here");
@@ -89,4 +141,11 @@ const Logoutallfunction = async (email, password) => {
   return data;
 };
 
-export { Logindata, is_user_session_valid, Logoutfunction, Logoutallfunction };
+export {
+  Logindata,
+  is_user_session_valid,
+  Logoutfunction,
+  Logoutallfunction,
+  Send_reset_email,
+  Reset_password,
+};

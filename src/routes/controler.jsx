@@ -22,6 +22,7 @@ import { is_user_session_valid } from "../pages/global component/data_fetching_c
 import Cookies from "js-cookie";
 import { result } from "lodash";
 import Logoutall from "../pages/login signup/logoutall/logoutall";
+import Change_password from "../pages/reset password/reset";
 // const AppContext = createContext();
 
 const globalcontext = createContext();
@@ -36,7 +37,7 @@ export default function App() {
   const navigate = useNavigate();
   async function is_session_valid() {
     let a = await is_user_session_valid();
-    if (a.status === 0) {
+    if (!a.status) {
       navigate("/login");
     }
   }
@@ -44,7 +45,7 @@ export default function App() {
   useEffect(
     () => {
       const session_id = Cookies.get("session_id");
-
+      // this is
       if (
         // location.pathname === "/" ||
         location.pathname === "/login" ||
@@ -95,6 +96,10 @@ export default function App() {
               <Route path="/customer" element={<Customer />}></Route>
               <Route path="/billing" element={<Billing />}></Route>
               <Route path="/profile" element={<Profile></Profile>} />
+              <Route
+                path="/reset"
+                element={<Change_password></Change_password>}
+              />
               <Route exact path="/logoutall" element={<Logoutall />}></Route>
 
               <Route path="/tools">
