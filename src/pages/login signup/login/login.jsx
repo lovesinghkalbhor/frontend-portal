@@ -7,8 +7,7 @@ import { useFormik } from "formik";
 import { TextField, FormHelperText, Box } from "@mui/material";
 
 import { Logindata } from "../../global component/data_fetching_components/auth";
-import validationSchema from "../../global component/schema for validation/index";
-
+import validationSchema from "../../global component/schema for validation";
 function Login() {
   const navigate = useNavigate();
   const [servererror, setservererror] = useState("");
@@ -92,7 +91,7 @@ function Login() {
               id="outlined-error-helper-text"
               helperText={errors.password}
             ></TextField>
-
+            {/* {touched.email && errors.email ? <div>{errors.email}</div> : null} */}
             <button className="submit-button inputs" type="submit">
               Login
             </button>

@@ -1,103 +1,19 @@
 const express = require("express");
 const app = express();
 const axios = require("axios");
-require("dotenv").config();
 const router = express.Router();
+require("dotenv").config();
+
 // get the url form the .env file
 let url = process.env.BASE_URL;
 
-// login api
-router.post("/login", async (req, res) => {
-  const apiUrl = `${url}/auth/login`;
-  // an object that contain all the data the is required to api
-  const requestBody = {
-    email: req.body.email,
-    password: req.body.password,
-  };
-  console.log(requestBody.email, requestBody.password);
-
-  // Make the POST request with Axios
-  try {
-    const response = await axios.post(apiUrl, requestBody, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = response.data;
-    console.log(data);
-    res.send(data);
-  } catch (error) {
-    // Handle any error during the request
-    console.error("Error:", error);
-  }
-});
-// reset email send    /reset
-router.post("/reset", async (req, res) => {
-  const apiUrl = `${url}/auth/reset`;
-  console.log("reset called here");
-
-  // an object that contain all the data the is required to api
-  const requestBody = {
-    email: req.body.email,
-  };
-  console.log(requestBody.email);
-
-  // Make the POST request with Axios
-  try {
-    const response = await axios.post(apiUrl, requestBody, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = response.data;
-    console.log(data, "reset");
-    res.send(data);
-    // console.log(data);
-  } catch (error) {
-    // Handle any error during the request
-    console.error("Error:", error);
-  }
-});
-// reset password   /reset
-router.post("/reset2", async (req, res) => {
-  const apiUrl = `${url}/auth/reset2`;
-  console.log("reset called here");
-
-  // an object that contain all the data the is required to api
-  const requestBody = {
-    vcode: req.body.vcode,
-    vcode2: req.body.vcode2,
-    email: req.body.email,
-    new_password: req.body.password,
-  };
-  console.log(requestBody);
-
-  // Make the POST request with Axios
-  try {
-    const response = await axios.post(apiUrl, requestBody, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = response.data;
-    console.log(data, "reset");
-    res.send(data);
-    // console.log(data);
-  } catch (error) {
-    // Handle any error during the request
-    console.error("Error:", error);
-  }
-});
-
-// logout
-router.post("/logout", async (req, res) => {
-  const apiUrl = `${url}/auth/logout`;
-
+// for getting the org info
+router.post("/view", async (req, res) => {
+  const apiUrl = `${url}/org/view`;
   // an object that contain all the data the is required to api
   const requestBody = {
     session_id: req.body.session_id,
   };
-
   // Make the POST request with Axios
   try {
     const response = await axios.post(apiUrl, requestBody, {
@@ -106,7 +22,7 @@ router.post("/logout", async (req, res) => {
       },
     });
     const data = response.data;
-    console.log(data);
+    // console.log(data);
     res.send(data);
     // console.log(data);
   } catch (error) {
@@ -115,43 +31,42 @@ router.post("/logout", async (req, res) => {
   }
 });
 
-// loguutall
-router.post("/logoutall", async (req, res) => {
-  const apiUrl = `${url}/auth/logoutall`;
-
+// for updating the org info
+router.post("/update", async (req, res) => {
+  const apiUrl = `${url}/org/update`;
   // an object that contain all the data the is required to api
   const requestBody = {
-    email: req.body.email,
-    password: req.body.password,
+    ...req.body,
   };
-
+  console.log(
+    requestBody,
+    "it is hrtetfghfgjghkjhkhjklgkyutyu 1111111111111111111111111111000000000000000000000000"
+  );
   // Make the POST request with Axios
   try {
+    // console.log("in me update");
     const response = await axios.post(apiUrl, requestBody, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     const data = response.data;
-    console.log(data, "logotu all the data");
-    res.send(data);
     // console.log(data);
+    res.send(data);
   } catch (error) {
     // Handle any error during the request
     console.error("Error:", error);
   }
 });
 
-// this api is for showing the status if the user session is valid or not
-router.post("/status", async (req, res) => {
-  const apiUrl = `${url}/auth/status`;
-
+// get userdata of the organization
+router.post("/getUsers", async (req, res) => {
+  const apiUrl = `${url}/org/getUsers`;
   // an object that contain all the data the is required to api
   const requestBody = {
     session_id: req.body.session_id,
+    org_id: req.body.org_id,
   };
-  console.log(requestBody.session_id);
-
   // Make the POST request with Axios
   try {
     const response = await axios.post(apiUrl, requestBody, {
@@ -159,10 +74,108 @@ router.post("/status", async (req, res) => {
         "Content-Type": "application/json",
       },
     });
+    // JSON.parse(response);
+    const data = response.data;
+
+    res.send(data);
+  } catch (error) {
+    // Handle any error during the request
+    console.error("Error:", error);
+  }
+});
+router.post("/suspendUsers", async (req, res) => {
+  const apiUrl = `${url}/org/suspendUsers`;
+  // an object that contain all the data the is required to api
+  const requestBody = {
+    session_id: req.body.session_id,
+    org_id: req.body.org_id,
+    user_id: req.body.user_id,
+  };
+  // Make the POST request with Axios
+  try {
+    const response = await axios.post(apiUrl, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    // JSON.parse(response);
+    const data = response.data;
+
+    res.send(data);
+  } catch (error) {
+    // Handle any error during the request
+    console.error("Error:", error);
+  }
+});
+router.post("/revokeUsers", async (req, res) => {
+  const apiUrl = `${url}/org/revokeUsers`;
+  // an object that contain all the data the is required to api
+  const requestBody = {
+    session_id: req.body.session_id,
+    org_id: req.body.org_id,
+    user_id: req.body.user_id,
+  };
+  // Make the POST request with Axios
+  try {
+    const response = await axios.post(apiUrl, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    // JSON.parse(response);
     const data = response.data;
     console.log(data);
     res.send(data);
-    // console.log(data);
+  } catch (error) {
+    // Handle any error during the request
+    console.error("Error:", error);
+  }
+});
+
+router.post("/searchUsers", async (req, res) => {
+  const apiUrl = `${url}/org/searchUsers`;
+  // an object that contain all the data the is required to api
+  const requestBody = {
+    session_id: req.body.session_id,
+    org_id: req.body.org_id,
+    search_array: req.body.search_data,
+  };
+  // Make the POST request with Axios
+  try {
+    const response = await axios.post(apiUrl, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    // JSON.parse(response);
+    const data = response.data;
+
+    res.send(data);
+  } catch (error) {
+    // Handle any error during the request
+    console.error("Error:", error);
+  }
+});
+router.post("/editUsers", async (req, res) => {
+  const apiUrl = `${url}/org/editUsers`;
+  // an object that contain all the data the is required to api
+  const requestBody = {
+    session_id: req.body.session_id,
+    org_id: req.body.org_id,
+    user_id: req.body.user_id,
+    edit: req.body.edit_data,
+  };
+  // Make the POST request with Axios
+  try {
+    const response = await axios.post(apiUrl, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    // JSON.parse(response);
+    const data = response.data;
+
+    res.send(data);
   } catch (error) {
     // Handle any error during the request
     console.error("Error:", error);

@@ -28,7 +28,7 @@ const currencies = [
 ];
 
 export default function Reports() {
-  const matches = useContext(globalcontext);
+  const is_screen_sm = useContext(globalcontext);
   const initialValues = {
     // Set default value to empty string if userinfo.firstName is undefined
     report: "",
@@ -162,8 +162,8 @@ export default function Reports() {
           </Grid>
         </Grid>
         <Box
-          width={matches ? "95%" : "100%"}
-          margin={matches ? "1rem" : "0rem"}
+          width={is_screen_sm ? "95%" : "100%"}
+          margin={is_screen_sm ? "1rem" : "0rem"}
         >
           <Button
             variant="contained"

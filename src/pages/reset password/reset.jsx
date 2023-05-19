@@ -3,12 +3,9 @@ import {
   Avatar,
   Stack,
   Box,
-  Divider,
   Button,
   TextField,
   Grid,
-  tabsClasses,
-  Switch,
   FormHelperText,
 } from "@mui/material";
 import { shadow } from "../../components/variable";
@@ -17,7 +14,7 @@ import { primarycolor } from "../../components/variable";
 import { Send_reset_email } from "../global component/data_fetching_components/auth";
 import { globalcontext } from "../../routes/controler";
 import { useFormik } from "formik";
-export default function Change_password() {
+export default function ChangePassword() {
   const [message, setmessage] = useState(false);
   const [parmsdata, setparamsdata] = useState({
     vcode: false,
@@ -28,14 +25,8 @@ export default function Change_password() {
 
   const [error, seterror] = useState(false);
   // context for media query
-  const {
-    matches,
-    userinfo,
-    setuserinfo,
-    servererror,
-    setservererror,
-    is_session_valid,
-  } = useContext(globalcontext);
+  const { servererror, setservererror, is_session_valid } =
+    useContext(globalcontext);
 
   // formik here is
 
@@ -44,30 +35,29 @@ export default function Change_password() {
     password: "",
     email: "",
   };
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues: initialValues,
-      // validationSchema,
-      onSubmit: async (values) => {
-        if (parmsdata.vcode) {
-          setpassword(
-            parmsdata.vcode,
-            parmsdata.vcode2,
-            parmsdata.email,
-            values.password
-          );
-          console.log(
-            parmsdata.vcode,
-            parmsdata.vcode2,
-            parmsdata.email,
-            values.password,
-            "5555555555555555550000000000000000000000000"
-          );
-        } else {
-          isemailcorrect(values);
-        }
-      },
-    });
+  const { values, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues: initialValues,
+    // validationSchema,
+    onSubmit: async (values) => {
+      if (parmsdata.vcode) {
+        setpassword(
+          parmsdata.vcode,
+          parmsdata.vcode2,
+          parmsdata.email,
+          values.password
+        );
+        console.log(
+          parmsdata.vcode,
+          parmsdata.vcode2,
+          parmsdata.email,
+          values.password,
+          "5555555555555555550000000000000000000000000"
+        );
+      } else {
+        isemailcorrect(values);
+      }
+    },
+  });
 
   async function isemailcorrect(values) {
     try {

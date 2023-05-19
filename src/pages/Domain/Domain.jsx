@@ -5,7 +5,7 @@ import { primarycolor, shadow } from "../../components/variable";
 import { globalcontext } from "../../routes/controler";
 
 export default function Domain() {
-  const { matches, is_session_valid } = useContext(globalcontext);
+  const { is_screen_sm, is_session_valid } = useContext(globalcontext);
   useEffect(() => {
     is_session_valid();
   });
@@ -16,9 +16,9 @@ export default function Domain() {
         <Box
           borderRadius="1.2rem"
           backgroundColor="#FFFFFF"
-          width={matches ? "95%" : "100%"}
-          padding={matches ? "2rem" : "0.5rem"}
-          margin={matches ? "0.5rem" : "0rem"}
+          width={is_screen_sm ? "95%" : "100%"}
+          padding={is_screen_sm ? "2rem" : "0.5rem"}
+          margin={is_screen_sm ? "0.5rem" : "0rem"}
           boxShadow={shadow}
         >
           {/* <Button

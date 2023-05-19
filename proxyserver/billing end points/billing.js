@@ -1,103 +1,19 @@
 const express = require("express");
 const app = express();
 const axios = require("axios");
-require("dotenv").config();
 const router = express.Router();
+require("dotenv").config();
+
 // get the url form the .env file
 let url = process.env.BASE_URL;
 
-// login api
-router.post("/login", async (req, res) => {
-  const apiUrl = `${url}/auth/login`;
-  // an object that contain all the data the is required to api
-  const requestBody = {
-    email: req.body.email,
-    password: req.body.password,
-  };
-  console.log(requestBody.email, requestBody.password);
-
-  // Make the POST request with Axios
-  try {
-    const response = await axios.post(apiUrl, requestBody, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = response.data;
-    console.log(data);
-    res.send(data);
-  } catch (error) {
-    // Handle any error during the request
-    console.error("Error:", error);
-  }
-});
-// reset email send    /reset
-router.post("/reset", async (req, res) => {
-  const apiUrl = `${url}/auth/reset`;
-  console.log("reset called here");
-
-  // an object that contain all the data the is required to api
-  const requestBody = {
-    email: req.body.email,
-  };
-  console.log(requestBody.email);
-
-  // Make the POST request with Axios
-  try {
-    const response = await axios.post(apiUrl, requestBody, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = response.data;
-    console.log(data, "reset");
-    res.send(data);
-    // console.log(data);
-  } catch (error) {
-    // Handle any error during the request
-    console.error("Error:", error);
-  }
-});
-// reset password   /reset
-router.post("/reset2", async (req, res) => {
-  const apiUrl = `${url}/auth/reset2`;
-  console.log("reset called here");
-
-  // an object that contain all the data the is required to api
-  const requestBody = {
-    vcode: req.body.vcode,
-    vcode2: req.body.vcode2,
-    email: req.body.email,
-    new_password: req.body.password,
-  };
-  console.log(requestBody);
-
-  // Make the POST request with Axios
-  try {
-    const response = await axios.post(apiUrl, requestBody, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = response.data;
-    console.log(data, "reset");
-    res.send(data);
-    // console.log(data);
-  } catch (error) {
-    // Handle any error during the request
-    console.error("Error:", error);
-  }
-});
-
-// logout
-router.post("/logout", async (req, res) => {
-  const apiUrl = `${url}/auth/logout`;
-
+// for getting the org info
+router.post("/viewFunds", async (req, res) => {
+  const apiUrl = `${url}/billing/viewFunds`;
   // an object that contain all the data the is required to api
   const requestBody = {
     session_id: req.body.session_id,
   };
-
   // Make the POST request with Axios
   try {
     const response = await axios.post(apiUrl, requestBody, {
@@ -106,7 +22,7 @@ router.post("/logout", async (req, res) => {
       },
     });
     const data = response.data;
-    console.log(data);
+    console.log(data, "this is billing information");
     res.send(data);
     // console.log(data);
   } catch (error) {
@@ -115,43 +31,12 @@ router.post("/logout", async (req, res) => {
   }
 });
 
-// loguutall
-router.post("/logoutall", async (req, res) => {
-  const apiUrl = `${url}/auth/logoutall`;
-
-  // an object that contain all the data the is required to api
-  const requestBody = {
-    email: req.body.email,
-    password: req.body.password,
-  };
-
-  // Make the POST request with Axios
-  try {
-    const response = await axios.post(apiUrl, requestBody, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = response.data;
-    console.log(data, "logotu all the data");
-    res.send(data);
-    // console.log(data);
-  } catch (error) {
-    // Handle any error during the request
-    console.error("Error:", error);
-  }
-});
-
-// this api is for showing the status if the user session is valid or not
-router.post("/status", async (req, res) => {
-  const apiUrl = `${url}/auth/status`;
-
+router.post("/listTransactions", async (req, res) => {
+  const apiUrl = `${url}/billing/listTransactions`;
   // an object that contain all the data the is required to api
   const requestBody = {
     session_id: req.body.session_id,
   };
-  console.log(requestBody.session_id);
-
   // Make the POST request with Axios
   try {
     const response = await axios.post(apiUrl, requestBody, {
@@ -159,10 +44,112 @@ router.post("/status", async (req, res) => {
         "Content-Type": "application/json",
       },
     });
+    // JSON.parse(response);
     const data = response.data;
-    console.log(data);
+
     res.send(data);
-    // console.log(data);
+  } catch (error) {
+    // Handle any error during the request
+    console.error("Error:", error);
+  }
+});
+
+router.post("/listInvoices", async (req, res) => {
+  const apiUrl = `${url}/billing/listInvoices`;
+  // an object that contain all the data the is required to api
+  const requestBody = {
+    session_id: req.body.session_id,
+  };
+  // Make the POST request with Axios
+  try {
+    const response = await axios.post(apiUrl, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    // JSON.parse(response);
+    const data = response.data;
+    console.log(
+      data,
+      "LIST OF INVOICES LLLLLLLLLLLLLLLLLLLLLLLLLSSSSSSSSSSSSSSSSS"
+    );
+    res.send(data);
+  } catch (error) {
+    // Handle any error during the request
+    console.error("Error:", error);
+  }
+});
+
+router.post("/viewInvoice", async (req, res) => {
+  const apiUrl = `${url}/billing/viewInvoice`;
+  // an object that contain all the data the is required to api
+  const requestBody = {
+    session_id: req.body.session_id,
+    invoice_number: req.body.invoice_number,
+  };
+  // Make the POST request with Axios
+  try {
+    const response = await axios.post(apiUrl, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    // JSON.parse(response);
+    const data = response.data;
+    console.log(
+      data,
+      "LIST OF INVOICES LLLLLLLLLLLLLLLLLLLLLLLLLSSSSSSSSSSSSSSSSS"
+    );
+    res.send(data);
+  } catch (error) {
+    // Handle any error during the request
+    console.error("Error:", error);
+  }
+});
+router.post("/addFunds", async (req, res) => {
+  const apiUrl = `${url}/billing/addFunds`;
+  // an object that contain all the data the is required to api
+  const requestBody = {
+    session_id: req.body.session_id,
+    amount: req.body.amount,
+  };
+  // Make the POST request with Axios
+  try {
+    const response = await axios.post(apiUrl, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    // JSON.parse(response);
+    const data = response.data;
+    console.log(
+      data,
+      "LIST OF INVOICES LLLLLLLLLLLLLLLLLLLLLLLLLSSSSSSSSSSSSSSSSS"
+    );
+    res.send(data);
+  } catch (error) {
+    // Handle any error during the request
+    console.error("Error:", error);
+  }
+});
+router.post("/viewTransaction", async (req, res) => {
+  const apiUrl = `${url}/billing/viewTransaction`;
+  // an object that contain all the data the is required to api
+  const requestBody = {
+    session_id: req.body.session_id,
+    reference_number: req.body.reference_number,
+  };
+  // Make the POST request with Axios
+  try {
+    const response = await axios.post(apiUrl, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    // JSON.parse(response);
+    const data = response.data;
+
+    res.send(data);
   } catch (error) {
     // Handle any error during the request
     console.error("Error:", error);

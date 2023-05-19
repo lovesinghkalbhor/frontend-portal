@@ -4,7 +4,7 @@ import DataTable from "../../components/datatable";
 import { primarycolor, shadow } from "../../components/variable";
 import { globalcontext } from "../../routes/controler";
 export default function Dashboard() {
-  const { matches, is_session_valid } = useContext(globalcontext);
+  const { is_screen_sm, is_session_valid } = useContext(globalcontext);
   useEffect(() => {
     is_session_valid();
   });
@@ -20,7 +20,7 @@ export default function Dashboard() {
               borderRadius="1.2rem"
               height="15rem"
               backgroundColor="#E9EFFD"
-              margin={matches ? "1rem" : "0rem"}
+              margin={is_screen_sm ? "1rem" : "0rem"}
               boxShadow={shadow}
             ></Box>
           </Grid>
@@ -30,19 +30,19 @@ export default function Dashboard() {
               borderRadius="1.2rem"
               height="15rem"
               backgroundColor="#FFEAE7"
-              margin={matches ? "1rem" : "0rem"}
+              margin={is_screen_sm ? "1rem" : "0rem"}
               boxShadow={shadow}
             ></Box>
           </Grid>
         </Grid>
         <Box
-          width={matches ? "95%" : "100%"}
+          width={is_screen_sm ? "95%" : "100%"}
           borderRadius="1.2rem"
           // height="50vh"
           backgroundColor="#FFFFFF"
-          padding={matches ? "2rem" : "1rem"}
-          margin={matches ? "1rem" : "0rem"}
-          marginTop={matches ? "0rem" : "4rem"}
+          padding={is_screen_sm ? "2rem" : "1rem"}
+          margin={is_screen_sm ? "1rem" : "0rem"}
+          marginTop={is_screen_sm ? "0rem" : "4rem"}
           boxShadow={shadow}
         >
           <Button

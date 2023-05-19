@@ -12,7 +12,9 @@ import {
   MenuItem,
   ListItemIcon,
   Divider,
+  Typography,
   Button,
+  SvgIcon,
 } from "@mui/material";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -28,6 +30,7 @@ import {
 import { globalcontext } from "../../../routes/controler";
 import Sidemenu from "../sidemenu/Sidemenu";
 import { Me_Endpoint } from "../data_fetching_components/me_endpoint";
+import { billing_view_Data } from "../data_fetching_components/billing_endpoints";
 import lodash from "lodash";
 import {
   Logoutfunction,
@@ -74,17 +77,27 @@ export default function Topbar() {
   // let showpathUpperCase = lodash.capitalize(showpath);
   showpath = lodash.startCase(showpath);
 
-  const { matches, userinfo, setuserinfo, is_session_valid } =
-    useContext(globalcontext);
+  const {
+    is_screen_sm,
+    userinfo,
+    setuserinfo,
+    is_session_valid,
+    setbillinginfo,
+    billinginfo,
+  } = useContext(globalcontext);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userData = await Me_Endpoint();
         console.log(userData.userinfo);
+        const billing_data = await billing_view_Data();
 
         // You can use the userData variable to access the fetched data and update your component state or perform any other necessary actions
         if (userData.status === 1) {
           setuserinfo(userData.userinfo);
+        }
+        if (billing_data.status === 1) {
+          setbillinginfo(billing_data.billing);
         }
         // console.log(userData.users[0], "inthe topbar");
       } catch (error) {
@@ -92,6 +105,7 @@ export default function Topbar() {
         // Handle any errors that may occur during the fetch operation
       }
     };
+
     is_session_valid();
     fetchData();
   }, []);
@@ -99,9 +113,9 @@ export default function Topbar() {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  // const matches = useContext(globalcontext);
+  // const is_screen_sm = useContext(globalcontext);
   // const [ismediumscreen, setismediumscreen] = useState(0);
-  // setismediumscreen(matches);
+  // setismediumscreen(is_screen_sm);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -131,7 +145,7 @@ export default function Topbar() {
       backgroundColor="#FFFFFF"
       boxShadow={shadow}
     >
-      {matches ? (
+      {is_screen_sm ? (
         <Box
           component="h5"
           margin="1rem"
@@ -144,7 +158,7 @@ export default function Topbar() {
         <Sidemenu></Sidemenu>
       )}
       {/* inner box for icons end */}
-      {matches ? (
+      {is_screen_sm ? (
         <Box
           display="flex"
           alignItems="center"
@@ -167,23 +181,34 @@ export default function Topbar() {
             paddingRight="1rem"
             borderRadius="1.5rem"
           >
-            &#8377; 22
+            {billinginfo.currency_symbol} {billinginfo.currentStanding}
           </Box>
 
           {/* icons */}
           <Tooltip title="Add money">
             <IconButton
               style={{
-                // margin: "1rem",
-                padding: "0.5rem",
+                // margin: "1rem"
+
                 backgroundColor: primarycolor,
                 color: "white",
               }}
+              onClick={() => navigate("/addfund")}
             >
-              <CurrencyRupeeIcon
+              {/* <CurrencyRupeeIcon
                 fontSize="small"
                 // margin="1rem"
-              ></CurrencyRupeeIcon>
+              ></CurrencyRupeeIcon> */}
+
+              <Typography
+                // variant="h6"
+                component="span"
+                fontSize="large"
+                width="1.5rem"
+                height="1.5rem"
+              >
+                {billinginfo.currency_symbol}
+              </Typography>
             </IconButton>
           </Tooltip>
 
@@ -300,12 +325,7 @@ export default function Topbar() {
         </MenuItem>
 
         <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <LockRoundedIcon fontSize="small" />
-          </ListItemIcon>
-          Locked Fund : 45234
-        </MenuItem>
+
         <MenuItem
           onClick={() => {
             navigate("/reset");

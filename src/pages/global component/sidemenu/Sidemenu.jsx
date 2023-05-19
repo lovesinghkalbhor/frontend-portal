@@ -14,6 +14,7 @@ import {
   useTheme,
   Button,
   useMediaQuery,
+  Tooltip,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
@@ -26,6 +27,7 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import MenuIcon from "@mui/icons-material/Menu";
 import { iconcolor } from "../../../components/variable";
 import { globalcontext } from "../../../routes/controler";
+import CorporateFareIcon from "@mui/icons-material/CorporateFare";
 
 export default function Sidemenu() {
   // const iconcolor = "#1F33F2";
@@ -38,6 +40,13 @@ export default function Sidemenu() {
       ),
       name: "Dashboard",
       path: "/dashboard",
+    },
+    {
+      icon: (
+        <CorporateFareIcon style={{ color: iconcolor }}></CorporateFareIcon>
+      ),
+      name: "Organization",
+      path: "/org",
     },
 
     {
@@ -106,11 +115,11 @@ export default function Sidemenu() {
     },
   ];
 
-  const { matches, is_session_valid } = useContext(globalcontext);
+  const { is_screen_sm, is_session_valid } = useContext(globalcontext);
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
   const [iscollapsed, setiscollapsed] = useState(1);
-  // const matches = useMediaQuery("(min-width:600px)");
+  // const is_screen_sm = useMediaQuery("(min-width:600px)");
   useEffect(() => {
     is_session_valid();
   });
@@ -134,7 +143,7 @@ export default function Sidemenu() {
       >
         <IconButton
           style={{
-            margin: matches ? "1rem" : "0rem",
+            margin: is_screen_sm ? "1rem" : "0rem",
             color: iconcolor,
           }}
           onClick={() => {
@@ -151,44 +160,50 @@ export default function Sidemenu() {
           style={{ height: "100vh", paddingTop: "1rem" }}
           breakPoint="md"
         >
-          <Menu>
-            {menus.map((element, index) => {
-              return (
-                <>
-                  {element.subitems?.length ? null : (
-                    <MenuItem
-                      style={{
-                        borderRadius: "0.5rem",
-                      }}
-                      key={element.name}
-                      icon={element.icon}
-                      component={<Link to={element.path} />}
-                    >
-                      {iscollapsed ? element.name : ""}
-                    </MenuItem>
-                  )}
-                  {element.subitems?.length ? (
-                    <SubMenu
-                      icon={element.icon}
-                      label={element.name}
-                      key={element.name}
-                    >
-                      {element.subitems.map((subitem, index) => {
-                        return (
-                          <MenuItem
-                            component={<Link to={subitem.path} />}
-                            icon={subitem.icon}
-                            key={subitem.name}
-                          >
-                            {subitem.name}
-                          </MenuItem>
-                        );
-                      })}
-                    </SubMenu>
-                  ) : null}
-                </>
-              );
-            })}
+          <Menu style={{ display: "flex", alignContent: "space-between" }}>
+            <Box>
+              {menus.map((element, index) => {
+                return (
+                  <>
+                    {element.subitems?.length ? null : (
+                      <Tooltip title={element.name}>
+                        <MenuItem
+                          style={{
+                            borderRadius: "0.5rem",
+                          }}
+                          key={element.name}
+                          icon={element.icon}
+                          component={<Link to={element.path} />}
+                        >
+                          {iscollapsed ? element.name : ""}
+                        </MenuItem>
+                      </Tooltip>
+                    )}
+                    {element.subitems?.length ? (
+                      <Tooltip title={element.name}>
+                        <SubMenu
+                          icon={element.icon}
+                          label={element.name}
+                          key={element.name}
+                        >
+                          {element.subitems.map((subitem, index) => {
+                            return (
+                              <MenuItem
+                                component={<Link to={subitem.path} />}
+                                icon={subitem.icon}
+                                key={subitem.name}
+                              >
+                                {subitem.name}
+                              </MenuItem>
+                            );
+                          })}
+                        </SubMenu>
+                      </Tooltip>
+                    ) : null}
+                  </>
+                );
+              })}
+            </Box>
           </Menu>
         </Sidebar>
       </Box>

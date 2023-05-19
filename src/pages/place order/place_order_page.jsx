@@ -8,9 +8,9 @@ import AddCostumerTab from "./addCustomerTab";
 import SearchDomainTab from "./searchDomainTab";
 import DomaintransferTab from "./domaintransferTab";
 import { globalcontext } from "../../routes/controler";
-export default function Place_Orders() {
+export default function PlaceOrders() {
   const [value, setValue] = React.useState("1");
-  const { matches, userinfo, setuserinfo, is_session_valid } =
+  const { is_screen_sm, userinfo, setuserinfo, is_session_valid } =
     useContext(globalcontext);
   const TabhandleChange = (event, newValue) => {
     setValue(newValue);

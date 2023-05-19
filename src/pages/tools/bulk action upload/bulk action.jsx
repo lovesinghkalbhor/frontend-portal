@@ -26,7 +26,7 @@ const currencies = [
 ];
 
 export default function BulkActionUpload() {
-  const matches = useContext(globalcontext);
+  const is_screen_sm = useContext(globalcontext);
   const initialValues = {
     // Set default value to empty string if userinfo.firstName is undefined
     action: "",
@@ -93,10 +93,10 @@ export default function BulkActionUpload() {
         <Grid item xs={12} md={6}>
           <Box
             height="90%"
-            // margin={matches ? "2rem" : "1rem"}
-            width={matches ? "95%" : "100%"}
-            margin={matches ? "0.5rem" : "0rem"}
-            padding={matches ? "2rem" : "0.3rem"}
+            // margin={is_screen_sm ? "2rem" : "1rem"}
+            width={is_screen_sm ? "95%" : "100%"}
+            margin={is_screen_sm ? "0.5rem" : "0rem"}
+            padding={is_screen_sm ? "2rem" : "0.3rem"}
             boxShadow={shadow}
             display="flex"
             flexDirection="column"
@@ -172,9 +172,9 @@ export default function BulkActionUpload() {
         <Grid item xs={12} md={6}>
           <Box
             height="90%"
-            width={matches ? "95%" : "100%"}
-            margin={matches ? "0.5rem" : "0rem"}
-            padding={matches ? "2rem" : "0rem"}
+            width={is_screen_sm ? "95%" : "100%"}
+            margin={is_screen_sm ? "0.5rem" : "0rem"}
+            padding={is_screen_sm ? "2rem" : "0rem"}
             display="flex"
             flexDirection="column"
             justifyContent="space-between"

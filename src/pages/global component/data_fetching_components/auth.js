@@ -19,7 +19,7 @@ const Logindata = async (email, password) => {
     });
 
     const data = response.data;
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     // Handle any error during the request
@@ -44,7 +44,7 @@ const Send_reset_email = async (email) => {
     });
 
     const data = response.data;
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     // Handle any error during the request
@@ -71,7 +71,7 @@ const Reset_password = async (vcode, vcode2, hashedEmail, password) => {
     });
 
     const data = response.data;
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     // Handle any error during the request
@@ -81,7 +81,7 @@ const Reset_password = async (vcode, vcode2, hashedEmail, password) => {
 
 const is_user_session_valid = async () => {
   const session_id = Cookies.get("session_id");
-  console.log(session_id, "session_id,here");
+  // console.log(session_id, "session_id,here");
 
   const apiUrl = "http://localhost:5000/auth/status"; // Replace with your actual API URL
   console.log("in login");
@@ -93,7 +93,7 @@ const is_user_session_valid = async () => {
       session_id,
     });
     data = userdata.data;
-    console.log(data, "valid or not");
+    // console.log(data, "valid or not");
   } catch (err) {
     data.error = "Failed to fetch data. Please try again later.";
   }
@@ -102,10 +102,10 @@ const is_user_session_valid = async () => {
 
 const Logoutfunction = async () => {
   const session_id = Cookies.get("session_id");
-  console.log(session_id, "session_id,here");
+  // console.log(session_id, "session_id,here");
 
   const apiUrl = "http://localhost:5000/auth/logout"; // Replace with your actual API URL
-  console.log("in login");
+  // console.log("in login");
   // Create a JSON object with the request parameters
   let data = {};
 
@@ -114,7 +114,7 @@ const Logoutfunction = async () => {
       session_id,
     });
     data = userdata.data;
-    console.log(data, "valid or not");
+    // console.log(data, "valid or not");
     Cookies.remove("session_id");
   } catch (err) {
     data.error = "Failed to fetch data. Please try again later.";

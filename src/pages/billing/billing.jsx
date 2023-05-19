@@ -3,25 +3,24 @@ import DataTable from "../../components/datatable";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import {
-  TextField,
-  InputLabel,
-  FormControl,
-  Button,
-  Box,
-  Tab,
-  tabsClasses,
-} from "@mui/material";
+import { Box, Tab, tabsClasses } from "@mui/material";
 import { primarycolor, shadow } from "../../components/variable";
 import { globalcontext } from "../../routes/controler";
+import ListTranscationTab from "./list_transcationTab";
+import ListInvoice from "./Listinvoice";
+import ViewInvoice from "./ViewInvoiceTab";
+import ViewTransaction from "./ViewTransactionTab copy";
 
 export default function Billing() {
   const [value, setValue] = React.useState("1");
-  const { matches, is_session_valid } = useContext(globalcontext);
+
+  const { is_screen_sm, is_session_valid } = useContext(globalcontext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  // on render it check if the session is valid or not if not then is_session_valid function redirect to login page
   useEffect(() => {
     is_session_valid();
   });
@@ -29,9 +28,9 @@ export default function Billing() {
   return (
     <>
       <Box
-        width={matches ? "95%" : "100%"}
-        padding={matches ? "2rem" : "0.2rem"}
-        //  margin={matches ? "0.5rem" : "0rem"}
+        width={is_screen_sm ? "95%" : "100%"}
+        padding={is_screen_sm ? "2rem" : "0.2rem"}
+        margin={is_screen_sm ? "0.5rem" : "0rem"}
         borderRadius="1.2rem"
         backgroundColor="#FFFFFF"
         paddingLeft="0.5rem"
@@ -52,43 +51,23 @@ export default function Billing() {
               }}
             >
               <Tab label="List of transcation" value="1" />
-              <Tab label="Locked Payment" value="2" />
-              <Tab label="Archive List of Transaction" value="3" />
+              <Tab label="View Transaction" value="2" />
+              <Tab label="Invoice List" value="3" />
+              <Tab label="View Invoice" value="4" />
             </TabList>
           </Box>
           <TabPanel value="1">
-            List of transcation{" "}
-            <Box>
-              <Box
-                width="99%"
-                borderRadius="1.2rem"
-                backgroundColor="#FFFFFF"
+            <Box
+              width="99%"
+              borderRadius="1.2rem"
+              backgroundColor="#FFFFFF"
 
-                // boxShadow={shadow}
-              >
-                {/* <Button
-                  variant="contained"
-                  //   backgroundColor={primarycolor}
-                  style={{
-                    padding: "0.5rem",
-                    paddingLeft: "1rem",
-                    paddingRight: "1rem",
-                    color: "white",
-                    backgroundColor: primarycolor,
-                    marginBottom: "1rem",
-                    borderRadius: "0.5rem",
-                    marginLeft: "1rem",
-                  }}
-                >
-                  Renew domain
-                </Button> */}
-
-                <DataTable></DataTable>
-              </Box>
+              // boxShadow={shadow}
+            >
+              <ListTranscationTab></ListTranscationTab>
             </Box>
           </TabPanel>
           <TabPanel value="2">
-            Locked Payment{" "}
             <Box>
               <Box
                 width="100%"
@@ -99,57 +78,33 @@ export default function Billing() {
                 // margin="1rem"
                 // boxShadow={shadow}
               >
-                {/* <Button
-                  variant="contained"
-                  //   backgroundColor={primarycolor}
-                  style={{
-                    padding: "0.5rem",
-                    paddingLeft: "1rem",
-                    paddingRight: "1rem",
-                    color: "white",
-                    backgroundColor: primarycolor,
-                    marginBottom: "1rem",
-                    borderRadius: "0.5rem",
-                    marginLeft: "1rem",
-                  }}
-                >
-                  Renew domain
-                </Button> */}
-
-                <DataTable></DataTable>
+                <ViewTransaction></ViewTransaction>
               </Box>
             </Box>
           </TabPanel>
+
           <TabPanel value="3">
-            Archive List of Transaction
             <Box>
               <Box
                 width="100%"
                 borderRadius="1.2rem"
                 // height="50vh"
                 backgroundColor="#FFFFFF"
-                // padding="2rem"
-                // margin="1rem"
-                // boxShadow={shadow}
               >
-                {/* <Button
-                  variant="contained"
-                  backgroundColor={primarycolor}
-                  style={{
-                    padding: "0.5rem",
-                    paddingLeft: "1rem",
-                    paddingRight: "1rem",
-                    color: "white",
-                    backgroundColor: primarycolor,
-                    marginBottom: "1rem",
-                    borderRadius: "0.5rem",
-                    marginLeft: "1rem",
-                  }}
-                >
-                  Renew domain
-                </Button> */}
+                <ListInvoice></ListInvoice>
+              </Box>
+            </Box>
+          </TabPanel>
 
-                <DataTable></DataTable>
+          <TabPanel value="4">
+            <Box>
+              <Box
+                width="100%"
+                borderRadius="1.2rem"
+                // height="50vh"
+                backgroundColor="#FFFFFF"
+              >
+                <ViewInvoice></ViewInvoice>
               </Box>
             </Box>
           </TabPanel>

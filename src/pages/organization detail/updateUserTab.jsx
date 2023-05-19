@@ -1,99 +1,91 @@
-import { React, useContext, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import {
-  Avatar,
-  Stack,
   Box,
   Button,
   TextField,
   Grid,
-  tabsClasses,
   Switch,
+  Stack,
+  Avatar,
 } from "@mui/material";
-import { shadow } from "../../components/variable";
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
-import { primarycolor } from "../../components/variable";
-import Password_Tab from "./password tab ";
-import Domain_Pricing_Tab from "./Domain pricing tab";
-import Pannel_Setting from "./pannel setting";
-import Api_Tab from "./api tab";
-import Profile_Tab from "./profile tab";
-import { globalcontext } from "../../routes/controler";
-import { updateprofiledata } from "../global component/data_fetching_components/me_endpoint";
+import { primarycolor, shadow } from "../../components/variable";
 import { useFormik } from "formik";
-// import validationSchema from "./index";
-export default function Profile() {
-  const [value, setValue] = useState("1");
-
+import { EditUser } from "../global component/data_fetching_components/org";
+import { globalcontext } from "../../routes/controler";
+export default function UpdateUser() {
   const [ismodify, setismodify] = useState(false);
-  const [error, seterror] = useState(false);
-  // context for media query
   const {
+    orgdata,
+    setorgdata,
     is_screen_sm,
-    userinfo,
-    setuserinfo,
     servererror,
-    setservererror,
     is_session_valid,
+    successmessage,
+
+    setservererror,
     setsuccessmessage,
   } = useContext(globalcontext);
+  const [user, setuser] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+  });
 
-  const tabhandleChange = (event, newValue) => {
-    setValue(newValue);
-  };
   // formik here is
-  // console.log(userinfo.firstName, userinfo.lastName, "in last nae amd ");
 
   const initialValues = {
     // firstname: userinfo.firstName, // Set default value to empty string if userinfo.firstName is undefined
-    firstname: "",
-    lastname: "",
+    first_name: "",
+    last_name: "",
     email: "",
   };
   const { values, handleBlur, handleChange, handleSubmit, setValues } =
     useFormik({
       initialValues: initialValues,
-      // validationSchema,
       onSubmit: async (values) => {
-        try {
-          console.log("in the update lvoe saveasdf");
-          let updateddata = await updateprofiledata(
-            values.firstname,
-            values.lastname,
-            values.email
-          );
-          console.log(updateddata.userinfo, "this si sis sisis sisisi");
-          if (updateddata.status === 1) {
-            setuserinfo(updateddata.userinfo);
-            setsuccessmessage("User data has been updated successfully");
-            setservererror(false);
-          } else {
-            setservererror(updateddata.error);
-            console.log(error, "this is lerror");
-            // alert(error);
-          }
-
-          console.log(values, "called data update");
-        } catch (error) {
-          console.log(error);
+        console.log(orgdata.org_id, "hereis the org data that apperarsfsdf");
+        let a = await EditUser(orgdata.org_id, values, user.email);
+        if (a.status === 1) {
+          setservererror(false);
+          setsuccessmessage(a.description);
+          setValues({
+            ...values,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+          });
+        } else {
+          setservererror(a.error);
+          // alert(error);
         }
+
+        console.log(values, "called data update");
       },
     });
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    let first_name = searchParams.get("first_name");
+    let last_name = searchParams.get("last_name");
+    let email = searchParams.get("email");
+    console.log(first_name, last_name, email);
+    setuser({
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+    });
+    is_session_valid();
+  }, []);
 
   useEffect(() => {
-    // it sets the input value after fetchform the api
-    if (userinfo.first_name && userinfo.last_name && userinfo.email) {
+    if (user.first_name && user.last_name) {
       setValues({
         ...values,
-        firstname: userinfo.first_name,
-        lastname: userinfo.last_name,
-        email: userinfo.email,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
       });
     }
-    is_session_valid();
-  }, [userinfo]);
+  }, [user]);
 
   return (
     <Box>
@@ -133,11 +125,13 @@ export default function Profile() {
                       id="firstname-input"
                       label="firstname"
                       variant="outlined"
-                      name="firstname"
-                      value={values.firstname}
+                      name="first_name"
+                      value={values.first_name}
                       onChange={handleChange}
                       disabled={!ismodify}
                       onBlur={handleBlur}
+                      error={!!servererror}
+                      helperText={servererror}
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -150,11 +144,13 @@ export default function Profile() {
                       id="lastname-input"
                       label="lastname"
                       variant="outlined"
-                      name="lastname"
-                      value={values.lastname}
+                      name="last_name"
+                      value={values.last_name}
                       onChange={handleChange}
                       disabled={!ismodify}
                       onBlur={handleBlur}
+                      error={!!servererror}
+                      helperText={servererror}
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -171,10 +167,10 @@ export default function Profile() {
                   variant="outlined"
                   disabled={!ismodify}
                   value={values.email}
-                  error={!!servererror}
-                  helperText={servererror}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  error={!!servererror}
+                  helperText={servererror}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -213,59 +209,6 @@ export default function Profile() {
           </Box>
         </Box>
       ) : null}
-      <Box
-        width="95%"
-        backgroundColor="white"
-        // margin="1rem"
-        // marginRight="2rem"
-        boxShadow={shadow}
-        borderRadius="1rem"
-        height="100%"
-      >
-        {" "}
-        <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList
-              onChange={tabhandleChange}
-              aria-label="lab API tabs example"
-              variant="scrollable"
-              scrollButtons="auto"
-              // for opacity of scrolled disable button
-              sx={{
-                [`& .${tabsClasses.scrollButtons}`]: {
-                  "&.Mui-disabled": { opacity: 0.3 },
-                },
-              }}
-            >
-              <Tab label="Profile" value="0" />
-              <Tab label="Password" value="1" />
-              <Tab label="Domain Pricing" value="2" />
-              <Tab label="Branding" value="3" />
-              <Tab label="pannel setting" value="4" />
-              <Tab label="API" value="5" />
-            </TabList>
-          </Box>
-          <TabPanel value="0">
-            <Profile_Tab></Profile_Tab>
-          </TabPanel>
-          <TabPanel value="1">
-            <Password_Tab screenSize={is_screen_sm}></Password_Tab>
-          </TabPanel>
-          <TabPanel value="2">
-            <Domain_Pricing_Tab screenSize={is_screen_sm}></Domain_Pricing_Tab>
-          </TabPanel>
-          <TabPanel value="3">
-            {/* <Pannel_Setting></Pannel_Setting> */}
-            not complete yet...
-          </TabPanel>
-          <TabPanel value="4">
-            <Pannel_Setting screenSize={is_screen_sm}></Pannel_Setting>
-          </TabPanel>
-          <TabPanel value="5">
-            <Api_Tab screenSize={is_screen_sm}></Api_Tab>
-          </TabPanel>
-        </TabContext>
-      </Box>
     </Box>
   );
 }

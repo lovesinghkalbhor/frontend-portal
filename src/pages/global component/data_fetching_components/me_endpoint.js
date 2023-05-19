@@ -4,8 +4,8 @@ import Cookies from "js-cookie";
 const Me_Endpoint = async () => {
   let data = {};
   const session_id = Cookies.get("session_id");
-  console.log(session_id);
-  console.log("in me react");
+  // console.log(session_id);
+  // console.log("in me react");
   try {
     const userdata = await axios.post("http://localhost:5000/me/view", {
       session_id,
@@ -28,9 +28,9 @@ const updateprofiledata = async (
 ) => {
   const session_id = Cookies.get("session_id");
 
-  console.log("in updateprofiledata");
+  // console.log("in updateprofiledata");
   let upadtedData = {};
-  console.log(first_name, "inupdate first name");
+  // console.log(first_name, "inupdate first name");
   try {
     const userdata = await axios.post("http://localhost:5000/me/update", {
       session_id,

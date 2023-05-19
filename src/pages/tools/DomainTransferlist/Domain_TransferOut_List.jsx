@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import DataTable from "../../../components/datatable";
-import { primarycolor, shadow } from "../../../components/variable";
+import { shadow } from "../../../components/variable";
 import { globalcontext } from "../../../routes/controler";
 
 export default function DomainTransferList() {
-  const { matches } = useContext(globalcontext);
+  const { is_screen_sm } = useContext(globalcontext);
 
   return (
     <>
@@ -14,9 +14,9 @@ export default function DomainTransferList() {
           borderRadius="1.2rem"
           // height="50vh"
           backgroundColor="#FFFFFF"
-          width={matches ? "95%" : "100%"}
-          padding={matches ? "2rem" : "0.2rem"}
-          margin={matches ? "0.5rem" : "0rem"}
+          width={is_screen_sm ? "95%" : "100%"}
+          padding={is_screen_sm ? "2rem" : "0.2rem"}
+          margin={is_screen_sm ? "0.5rem" : "0rem"}
           boxShadow={shadow}
         >
           {/* <Button

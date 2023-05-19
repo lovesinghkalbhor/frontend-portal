@@ -9,7 +9,7 @@ import { useFormik } from "formik";
 import ReactTelInput from "react-telephone-input";
 import "react-telephone-input/css/default.css";
 import signUpSchema from "../../global component/schema for validation";
-function Sign_up() {
+function SignUp() {
   const navigate = useNavigate();
   function handleInputChange(telNumber, selectedCountry) {
     console.log(
@@ -180,7 +180,7 @@ function Sign_up() {
   );
 }
 
-export default Sign_up;
+export default SignUp;
 
 // import { useFormik } from 'formik';
 // import ReactTelInput from 'react-telephone-input';

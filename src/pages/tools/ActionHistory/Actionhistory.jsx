@@ -2,27 +2,17 @@ import React, { useContext } from "react";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-// import { Box } from "@material-ui/core";
 import YourHistoryTAB from "./yourHistoryTAB";
 import DomainHistoryTAB from "./domainhistoryTab";
 import EmailHistoryTAB from "./emailhistoryTAB";
 import { globalcontext } from "../../../routes/controler";
 import { shadow } from "../../../components/variable";
 
-import {
-  TextField,
-  InputLabel,
-  FormControl,
-  Button,
-  Box,
-  Tab,
-  tabsClasses,
-} from "@mui/material";
-import DataTable from "../../../components/datatable";
+import { Box, Tab, tabsClasses } from "@mui/material";
 
 export default function Actionhistory() {
   const [value, setValue] = React.useState("1");
-  const { matches } = useContext(globalcontext);
+  const { is_screen_sm } = useContext(globalcontext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -42,9 +32,9 @@ export default function Actionhistory() {
         borderRadius="1.2rem"
         // height="50vh"
         backgroundColor="#FFFFFF"
-        width={matches ? "95%" : "100%"}
-        margin={matches ? "0.5rem" : "0rem"}
-        padding={matches ? "2rem" : "0rem"}
+        width={is_screen_sm ? "95%" : "100%"}
+        margin={is_screen_sm ? "0.5rem" : "0rem"}
+        padding={is_screen_sm ? "2rem" : "0rem"}
         boxShadow={shadow}
       >
         <TabContext value={value}>
@@ -77,9 +67,9 @@ export default function Actionhistory() {
               <TabContext value={value1}>
                 <Box
                   sx={{ borderBottom: 1, borderColor: "divider" }}
-                  width={matches ? "95%" : "100%"}
-                  margin={matches ? "0.5rem" : "0rem"}
-                  padding={matches ? "1rem" : "0rem"}
+                  width={is_screen_sm ? "95%" : "100%"}
+                  margin={is_screen_sm ? "0.5rem" : "0rem"}
+                  padding={is_screen_sm ? "1rem" : "0rem"}
                 >
                   <TabList
                     onChange={handleChange1}
