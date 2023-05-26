@@ -22,20 +22,19 @@ import Logoutall from "../pages/login signup/logoutall/logoutall";
 import ChangePassword from "../pages/reset password/reset";
 import OrganizationPage from "../pages/organization detail/organization page";
 import { Alert, AlertTitle, Box } from "@mui/material";
-// const AppContext = createContext();
 import AddFunds from "../pages/billing/addfund";
 import UpdateUser from "../pages/organization detail/updateUserTab";
-
+import ViewTransaction from "../pages/billing/ViewTransactionTab copy";
+import ViewInvoice from "../pages/billing/ViewInvoiceTab";
 const globalcontext = createContext();
 export default function App() {
   const [userinfo, setuserinfo] = useState({});
-  const [orgdata, setorgdata] = useState({});
+  const [orgdata, setorgdata] = useState({ fetched: false });
   const [billinginfo, setbillinginfo] = useState({});
   const [servererror, setservererror] = useState("");
   const [successmessage, setsuccessmessage] = useState(false);
-  // const updateddata = updateprofiledata()
+  const [errormessage, seterrormessage] = useState(false);
   const location = useLocation();
-  // this is global context data like media query
   // media query of mui
   const is_screen_sm = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
@@ -43,14 +42,16 @@ export default function App() {
     let a = await is_user_session_valid();
     if (!a.status) {
       navigate("/login");
+      return false;
+    } else {
+      return true;
     }
   }
   const [path, setPath] = useState(false);
   useEffect(
     () => {
-      // this is
       if (
-        // location.pathname === "/" ||
+        location.pathname === "/" ||
         location.pathname === "/login" ||
         location.pathname === "/signup"
         // location.pathname === "/logoutall"
@@ -72,8 +73,6 @@ export default function App() {
           zIndex: 1000,
           width: "100%",
           marginTop: "1rem",
-          // backgroundColor: "#9CFF2E",
-          // color: "white",
         }}
       >
         <AlertTitle>Success</AlertTitle>
@@ -81,13 +80,28 @@ export default function App() {
       </Alert>
     );
   }
+  function renderErrorAlert(message) {
+    return (
+      <Alert
+        severity="error"
+        style={{
+          position: "fixed",
+          zIndex: 1000,
+          width: "100%",
+          marginTop: "1rem",
+        }}
+      >
+        <AlertTitle>Error</AlertTitle>
+        {message}
+      </Alert>
+    );
+  }
   useEffect(() => {
     setTimeout(() => {
       setsuccessmessage("");
+      seterrormessage("");
     }, 5000);
-
-    // renderSuccessAlert(successmessage);
-  }, [successmessage]);
+  }, [successmessage, errormessage]);
 
   return (
     <globalcontext.Provider
@@ -101,6 +115,7 @@ export default function App() {
         setbillinginfo,
         servererror,
         setservererror,
+        seterrormessage,
         is_session_valid,
         successmessage,
         setsuccessmessage,
@@ -108,6 +123,7 @@ export default function App() {
     >
       {/* this is global aler box///////////////////////////////// */}
       {successmessage ? <Box>{renderSuccessAlert(successmessage)}</Box> : null}
+      {errormessage ? <Box>{renderErrorAlert(errormessage)}</Box> : null}
       {/* the page is start form here */}
       <div
         style={{
@@ -117,58 +133,73 @@ export default function App() {
           height: "100%",
         }}
       >
+        <Routes>
+          <Route exact path="/" element={<Login />}></Route>
+          <Route exact path="/login" element={<Login />}></Route>
+          <Route exact path="/signup" element={<SignUp />}></Route>
+        </Routes>
+        {/* if path is not login or signup then only show side bar */}
         {is_screen_sm && path ? <Sidemenu></Sidemenu> : null}
-        <main
-          className="content"
-          style={{ width: "100%", height: "100%", overflowX: "auto" }}
-        >
-          {path ? <Topbar></Topbar> : ""}
-          <div style={{ margin: "1rem" }}>
-            <Routes>
-              <Route exact path="/" element={<Dashboard />}></Route>
-              <Route exact path="/login" element={<Login />}></Route>
-              <Route exact path="/signup" element={<SignUp />}></Route>
+        {/* if path is not login or signup then only show main */}
+        {path ? (
+          <main
+            className="content"
+            style={{ width: "100%", height: "100%", overflowX: "auto" }}
+          >
+            <Topbar></Topbar>
+            <div style={{ margin: "1rem" }}>
+              <Routes>
+                <Route path="/dashboard" element={<Dashboard />}></Route>
+                <Route path="/place_orders" element={<PlaceOrders />}></Route>
+                <Route path="/domain" element={<Domain />}></Route>
+                <Route path="/customer" element={<Customer />}></Route>
+                <Route path="/billing" element={<Billing />}></Route>
+                <Route
+                  path="/billing/transcation"
+                  element={<ViewTransaction />}
+                ></Route>
 
-              <Route path="/dashboard" element={<Dashboard />}></Route>
-              <Route path="/place_orders" element={<PlaceOrders />}></Route>
-              <Route path="/domain" element={<Domain />}></Route>
-              <Route path="/customer" element={<Customer />}></Route>
-              <Route path="/billing" element={<Billing />}></Route>
-              <Route path="/profile" element={<Profile></Profile>} />
-              <Route path="/addfund" element={<AddFunds></AddFunds>} />
-              <Route
-                path="/org"
-                element={<OrganizationPage></OrganizationPage>}
-              />
-              <Route path="/org/update" element={<UpdateUser></UpdateUser>} />
-              <Route
-                path="/reset"
-                element={<ChangePassword></ChangePassword>}
-              />
-              <Route exact path="/logoutall" element={<Logoutall />}></Route>
-              <Route path="/tools">
                 <Route
-                  path="domain-transferout-list"
-                  element={<DomainTransferList />}
-                />
+                  path="/billing/invoice"
+                  element={<ViewInvoice />}
+                ></Route>
+
+                <Route path="/profile" element={<Profile></Profile>} />
+                <Route path="/addfund" element={<AddFunds></AddFunds>} />
                 <Route
-                  path="pending-bulk-summary"
-                  element={<PendingBulkSummary />}
-                />
-                <Route path="action-history" element={<Actionhistory />} />
+                  path="/org"
+                  element={<OrganizationPage></OrganizationPage>}
+                ></Route>
+                <Route path="/org/update" element={<UpdateUser></UpdateUser>} />
                 <Route
-                  path="domain-pull-request"
-                  element={<Domainpullrequest></Domainpullrequest>}
+                  path="/reset"
+                  element={<ChangePassword></ChangePassword>}
                 />
-                <Route path="reports" element={<Reports></Reports>} />
-                <Route
-                  path="bulk-action-file"
-                  element={<BulkActionUpload></BulkActionUpload>}
-                />
-              </Route>
-            </Routes>
-          </div>
-        </main>
+                <Route exact path="/logoutall" element={<Logoutall />}></Route>
+                <Route path="/tools">
+                  <Route
+                    path="domain-transferout-list"
+                    element={<DomainTransferList />}
+                  />
+                  <Route
+                    path="pending-bulk-summary"
+                    element={<PendingBulkSummary />}
+                  />
+                  <Route path="action-history" element={<Actionhistory />} />
+                  <Route
+                    path="domain-pull-request"
+                    element={<Domainpullrequest></Domainpullrequest>}
+                  />
+                  <Route path="reports" element={<Reports></Reports>} />
+                  <Route
+                    path="bulk-action-file"
+                    element={<BulkActionUpload></BulkActionUpload>}
+                  />
+                </Route>
+              </Routes>
+            </div>
+          </main>
+        ) : null}
       </div>
     </globalcontext.Provider>
   );

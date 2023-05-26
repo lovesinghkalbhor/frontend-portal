@@ -1,0 +1,21 @@
+#menu_item:hover {
+  color: black;
+  background-color: #04112d !important;
+}
+#sub_menu_item:hover {
+  color: white;
+
+  background-color: #08193e !important;
+}
+#sub_menu_item {
+  color: white;
+  background-color: #04112d;
+  margin-left: -1rem;
+}
+#submenu:hover {
+  background-color: #04112d !important;
+}
+.menu_link {
+  text-decoration: none !important;
+  color: white !important;
+}

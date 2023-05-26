@@ -1,10 +1,16 @@
-import { React, useState } from "react";
+import { React, useState, useContext, useEffect } from "react";
 import { Box, Button, TextField, Grid, Switch } from "@mui/material";
-import { primarycolor } from "../../components/variable";
+import { primarycolor, radius, borderTop } from "../../components/variable";
 import { useFormik } from "formik";
+import { globalcontext } from "../../routes/controler";
 
 export default function Profile_Tab() {
   const [ismodify, setismodify] = useState(false);
+  const { is_session_valid } = useContext(globalcontext);
+
+  useEffect(() => {
+    is_session_valid();
+  }, []);
 
   // formik here is
 

@@ -1,3 +1,4 @@
+import React, { useContext, useEffect } from "react";
 import {
   Box,
   Button,
@@ -8,12 +9,17 @@ import {
   ListItemIcon,
   Grid,
 } from "@mui/material";
-import React from "react";
 import { primarycolor } from "../../components/variable";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { useFormik } from "formik";
+import { globalcontext } from "../../routes/controler";
 
 export default function Password_Tab(props) {
+  const { is_session_valid } = useContext(globalcontext);
+
+  useEffect(() => {
+    is_session_valid();
+  }, []);
   const initialValues = {
     current_password: "",
     new_password: "",

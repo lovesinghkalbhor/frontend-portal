@@ -8,8 +8,7 @@ body {
 }
 body .full-screen {
   min-width: 100vw;
-  background: rgb(1, 96, 119);
-  background: linear-gradient(142deg, rgb(53, 209, 249) 0%, rgb(2, 31, 144) 100%);
+  background: #27374d;
 }
 body .form-box {
   min-height: 100vh;
@@ -36,18 +35,17 @@ body .form-box .sign-in .sign-link {
 }
 body .form-box .inner-from-box {
   max-height: 98vh;
-  border: 5px solid black;
-  border-bottom: 3px;
+  border: 5px solid #dde6ed;
+  border-bottom: 1px solid #dde6ed;
   border-right: 3px;
   border-left: 3px;
-  background-color: rgb(255, 255, 255);
+  background-color: transparent;
   border-radius: 5px;
   padding: 1rem 2rem 3.5rem 2rem;
   max-width: 30rem;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.25);
 }
 @media only screen and (max-width: 576px) {
   body .form-box .inner-from-box {
@@ -57,7 +55,7 @@ body .form-box .inner-from-box {
 }
 body .form-box .inner-from-box h4 {
   font-family: "Poppins";
-  color: "white";
+  color: #dde6ed;
   font-weight: 600;
   font-size: 30px;
   line-height: normal;
@@ -68,7 +66,7 @@ body .form-box .inner-from-box .input-group {
   border-radius: 5px;
   border: 0px solid;
   padding: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0rem;
   margin-top: 0rem;
   min-width: 20rem;
   background-color: rgb(240, 240, 240);
@@ -103,10 +101,11 @@ body .form-box .inner-from-box .country-list {
 }
 body .form-box .inner-from-box .submit-button {
   margin-top: 2rem;
+  color: #27374d !important;
   font-family: "Poppins";
   padding: 0.5rem;
   color: white;
-  background-color: black;
+  background-color: #dde6ed;
   border-radius: 5px;
   border: 2px solid transparent;
 }

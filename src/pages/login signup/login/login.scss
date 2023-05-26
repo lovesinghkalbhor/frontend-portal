@@ -1,4 +1,6 @@
-$primary: #4a6cd1;
+$primary: #27374d;
+$secondary: #dde6ed;
+// $primary: #4a6cd1;
 @mixin main-button($color, $border-color) {
   //   margin-top: 50px;
   font-family: "Poppins";
@@ -23,12 +25,8 @@ body {
   filter: blur(0.4);
   .full-screen {
     min-width: 100vw;
-    background: rgb(1, 96, 119);
-    background: linear-gradient(
-      142deg,
-      rgb(53, 209, 249) 0%,
-      rgb(2, 31, 144) 100%
-    );
+    background: $primary;
+    // background: linear-gradient(142deg, $primary 0%, rgb(2, 31, 144) 100%);
   }
   .form-box {
     min-height: 100vh;
@@ -54,17 +52,21 @@ body {
       max-height: 98vh;
 
       // max-width: 10%;
-      border: 5px solid black;
-      border-bottom: 3px;
+      // border: 5px solid black;
+      border: 5px solid $secondary;
+      border-bottom: 1px solid $secondary;
       border-right: 3px;
       border-left: 3px;
-      background-color: rgb(255, 255, 255);
+
+      background-color: transparent;
+      // background-color: $secondary;
+      // background-color: rgb(255, 255, 255);
       @media only screen and (max-width: 576px) {
         max-width: 100%;
         min-width: 98%;
       }
       h4 {
-        @include font("Poppins", "white", 600, 30px);
+        @include font("Poppins", $secondary, 600, 30px);
       }
       input,
       .submit-button,
@@ -72,7 +74,7 @@ body {
         border-radius: 5px;
         border: 0px solid;
         padding: 1rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 0rem;
         margin-top: 0rem;
         min-width: 20rem;
         background-color: rgb(240 240 240);
@@ -106,15 +108,17 @@ body {
       }
       .submit-button {
         margin-top: 2rem;
-        @include main-button(black, transparent);
+        color: #27374d !important;
+        @include main-button($secondary, transparent);
+        // @include main-button(black, transparent);
       }
       border-radius: 5px;
       padding: 01rem 2rem 3.5rem 2rem;
       max-width: 30rem;
       height: fit-content;
-      -webkit-box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.25);
-      -moz-box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.25);
-      box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.25);
+      // -webkit-box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.25);
+      // -moz-box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.25);
+      // box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.25);
     }
   }
 }

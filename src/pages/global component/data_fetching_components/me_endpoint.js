@@ -1,25 +1,27 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { url } from "../../../components/variable";
 
+/** This function gives he data of loged in user */
 const Me_Endpoint = async () => {
   let data = {};
   const session_id = Cookies.get("session_id");
-  // console.log(session_id);
-  // console.log("in me react");
+
   try {
-    const userdata = await axios.post("http://localhost:5000/me/view", {
+    const userdata = await axios.post(`${url}/me/view`, {
       session_id,
     });
 
     data = userdata.data;
     console.log(data);
-  } catch (err) {
-    data.error = "Failed to fetch data. Please try again later.";
+  } catch (error) {
+    data.servererror = error.message;
+    console.error("Error:", error);
   }
   return data;
 };
-// Me_Endpoint();
 
+/** This function update the userdata */
 const updateprofiledata = async (
   first_name,
   last_name,
@@ -27,24 +29,21 @@ const updateprofiledata = async (
   two_factor_authentication = "0"
 ) => {
   const session_id = Cookies.get("session_id");
-
-  // console.log("in updateprofiledata");
-  let upadtedData = {};
-  // console.log(first_name, "inupdate first name");
+  let data = {};
   try {
-    const userdata = await axios.post("http://localhost:5000/me/update", {
+    const userdata = await axios.post(`${url}/me/update`, {
       session_id,
       first_name,
       last_name,
       email,
       two_factor_authentication,
     });
-    upadtedData = userdata;
-  } catch (err) {
-    upadtedData.error = "Failed to fetch data. Please try again later.";
+    data = userdata.data;
+  } catch (error) {
+    data.servererror = error.message;
+    console.error("Error:", error);
   }
 
-  return upadtedData.data;
+  return data;
 };
-// profiledata();set
 export { Me_Endpoint, updateprofiledata };

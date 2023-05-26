@@ -1,14 +1,15 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { url } from "../../../components/variable";
 
-// get organization data
+/**  This function gives organization data in which you are loged in*/
 const OrgEndpoint = async () => {
   let data = {};
   const session_id = Cookies.get("session_id");
   // console.log(session_id);
   // console.log("in me react");
   try {
-    const userdata = await axios.post("http://localhost:5000/org/view", {
+    const userdata = await axios.post(`${url}/org/view`, {
       session_id,
     });
 
@@ -19,9 +20,8 @@ const OrgEndpoint = async () => {
   }
   return data;
 };
-// Me_Endpoint();
 
-// update organization data
+/**This function update organization data */
 const UpdateOrgData = async (...orgdata) => {
   const session_id = Cookies.get("session_id");
 
@@ -29,13 +29,10 @@ const UpdateOrgData = async (...orgdata) => {
     session_id,
     ...orgdata[0],
   };
-  // console.log(
-  //   data,
-  //   "it is hrtetfghfgjghkjhkhjklgkyutyu 1111111111111111111111111111000000000000000000000000"
-  // );
+
   let upadtedData = {};
   try {
-    const userdata = await axios.post("http://localhost:5000/org/update", data);
+    const userdata = await axios.post(`${url}/org/update`, data);
     upadtedData = userdata;
   } catch (err) {
     upadtedData.error = "Failed to fetch data. Please try again later.";
@@ -44,14 +41,14 @@ const UpdateOrgData = async (...orgdata) => {
   return upadtedData.data;
 };
 
-// get user data in the organization
+/** This function gives the list of user data in the organization*/
 const OrgUserData = async (org_id) => {
   let data = {};
   const session_id = Cookies.get("session_id");
   console.log(session_id);
   console.log(org_id, "orgdataag");
   try {
-    const userdata = await axios.post("http://localhost:5000/org/getUsers", {
+    const userdata = await axios.post(`${url}/org/getUsers`, {
       session_id,
       org_id,
     });
@@ -63,35 +60,15 @@ const OrgUserData = async (org_id) => {
   }
   return data;
 };
+
+/** This function suspend the perticular user */
 const SuspendUser = async (org_id, user_id) => {
   let data = {};
   const session_id = Cookies.get("session_id");
   console.log(session_id);
   console.log(org_id, "orgdataag");
   try {
-    const userdata = await axios.post(
-      "http://localhost:5000/org/suspendUsers",
-      {
-        session_id,
-        org_id,
-        user_id,
-      }
-    );
-
-    data = userdata.data;
-    console.log(data, "50000000000000000000sdffffffffffffff");
-  } catch (err) {
-    data.error = "Failed to fetch data. Please try again later.";
-  }
-  return data;
-};
-const RevokeUser = async (org_id, user_id) => {
-  let data = {};
-  const session_id = Cookies.get("session_id");
-  console.log(session_id);
-  console.log(org_id, "orgdataag");
-  try {
-    const userdata = await axios.post("http://localhost:5000/org/revokeUsers", {
+    const userdata = await axios.post(`${url}/org/suspendUsers`, {
       session_id,
       org_id,
       user_id,
@@ -104,13 +81,34 @@ const RevokeUser = async (org_id, user_id) => {
   }
   return data;
 };
+/** This function Revoke the perticular user */
+const RevokeUser = async (org_id, user_id) => {
+  let data = {};
+  const session_id = Cookies.get("session_id");
+  console.log(session_id);
+  console.log(org_id, "orgdataag");
+  try {
+    const userdata = await axios.post(`${url}/org/revokeUsers`, {
+      session_id,
+      org_id,
+      user_id,
+    });
+
+    data = userdata.data;
+    console.log(data, "50000000000000000000sdffffffffffffff");
+  } catch (err) {
+    data.error = "Failed to fetch data. Please try again later.";
+  }
+  return data;
+};
+/** This function use to search the user */
 const SearchUser = async (org_id, search_data) => {
   let data = {};
   const session_id = Cookies.get("session_id");
   console.log(session_id);
   console.log(org_id, "orgdataag");
   try {
-    const userdata = await axios.post("http://localhost:5000/org/searchUsers", {
+    const userdata = await axios.post(`${url}/org/searchUsers`, {
       session_id,
       org_id,
       search_data,
@@ -123,13 +121,15 @@ const SearchUser = async (org_id, search_data) => {
   }
   return data;
 };
+
+/** This function edit the user data from the list of user of org */
 const EditUser = async (org_id, edit_data, user_id) => {
   let data = {};
   const session_id = Cookies.get("session_id");
   console.log(session_id);
   console.log(org_id, "orgdataag");
   try {
-    const userdata = await axios.post("http://localhost:5000/org/editUsers", {
+    const userdata = await axios.post(`${url}/org/editUsers`, {
       session_id,
       user_id,
       org_id,

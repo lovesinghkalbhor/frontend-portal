@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext, useEffect } from "react";
 
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -13,11 +13,13 @@ import {
   Grid,
   tabsClasses,
 } from "@mui/material";
-import { primarycolor, shadow } from "../../components/variable";
+import { primarycolor, shadow, radius } from "../../components/variable";
 import { useFormik } from "formik";
+import { globalcontext } from "../../routes/controler";
 
 export default function AddCostumerTab() {
   const [value, setValue] = React.useState("1");
+  const { is_session_valid } = useContext(globalcontext);
 
   const TabhandleChange = (event, newValue) => {
     setValue(newValue);
@@ -50,6 +52,9 @@ export default function AddCostumerTab() {
         console.log(values, "called data update");
       },
     });
+  useEffect(() => {
+    is_session_valid();
+  }, []);
 
   // it is usefull dont erase it for now i have commented it
   //   useEffect(() => {
@@ -246,7 +251,7 @@ export default function AddCostumerTab() {
               color: "white",
               backgroundColor: primarycolor,
               marginBottom: "1rem",
-              borderRadius: "0.5rem",
+              borderRadius: radius,
               margin: "2rem",
               marginLeft: "1rem",
             }}

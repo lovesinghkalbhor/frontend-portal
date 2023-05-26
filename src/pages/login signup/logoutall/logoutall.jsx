@@ -47,7 +47,7 @@ function Logoutall() {
   });
 
   return (
-    <div className="full-screen">
+    <div className="full-screen" style={{ overflow: "hidden" }}>
       <div className="form-box d-flex justify-content-center align-items-center">
         <div className="sign-in  d-none d-md-inline">
           {/* <label className="input-label ">Don't have an account ? </label> */}

@@ -8,7 +8,12 @@ import {
   Stack,
   Avatar,
 } from "@mui/material";
-import { primarycolor, shadow } from "../../components/variable";
+import {
+  primarycolor,
+  shadow,
+  radius,
+  borderTop,
+} from "../../components/variable";
 import { useFormik } from "formik";
 import { EditUser } from "../global component/data_fetching_components/org";
 import { globalcontext } from "../../routes/controler";
@@ -96,16 +101,18 @@ export default function UpdateUser() {
           marginBottom="2rem"
           marginTop="2rem"
           boxShadow={shadow}
-          borderRadius="1rem"
+          // borderRadius="1rem"
           display="flex"
           justifyContent="space-between"
           paddingTop="1rem"
+          borderRadius={radius}
+          // border={`1px solid ${primarycolor}`}
+          borderTop={borderTop}
         >
-          <form // method="POST"
+          <form
             className="form d-flex flex-column text-start "
             onSubmit={handleSubmit}
           >
-            {" "}
             <Stack
               direction="row"
               spacing={4}
@@ -115,7 +122,6 @@ export default function UpdateUser() {
             >
               <Avatar
                 alt="Remy Sharp"
-                // src="/static/images/avatar/1.jpg"
                 sx={{ marginTop: "1rem", width: 100, height: 100 }}
               />
               <Box>
@@ -180,9 +186,6 @@ export default function UpdateUser() {
                   <Button
                     variant="contained"
                     type="submit"
-                    // onClick={() => {
-                    //   console.log("this is lveo");
-                    // }}
                     style={{
                       padding: "0.5rem",
                       paddingLeft: "1rem",
@@ -190,7 +193,7 @@ export default function UpdateUser() {
                       color: "white",
                       backgroundColor: primarycolor,
                       marginBottom: "1rem",
-                      borderRadius: "0.5rem",
+                      borderRadius: radius,
                     }}
                   >
                     Save

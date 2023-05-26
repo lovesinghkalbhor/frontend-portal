@@ -23,9 +23,11 @@ import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import TopbarSidemenu from "./topbarsidemenu";
 import {
   primarycolor,
+  iconbordercolor,
   shadow,
   iconbackgroundcolor,
   iconcolor,
+  sidemenucolor,
 } from "../../../components/variable";
 import { globalcontext } from "../../../routes/controler";
 import Sidemenu from "../sidemenu/Sidemenu";
@@ -95,6 +97,10 @@ export default function Topbar() {
         // You can use the userData variable to access the fetched data and update your component state or perform any other necessary actions
         if (userData.status === 1) {
           setuserinfo(userData.userinfo);
+          console.log(
+            userData.userinfo.first_name,
+            "this is the first name of the user"
+          );
         }
         if (billing_data.status === 1) {
           setbillinginfo(billing_data.billing);
@@ -142,8 +148,16 @@ export default function Topbar() {
       justifyContent="space-between"
       paddingLeft="1rem"
       alignItems="center"
-      backgroundColor="#FFFFFF"
-      boxShadow={shadow}
+      // backgroundColor="#FFFFFF"
+      // boxShadow={shadow}
+      color={primarycolor}
+      backgroundColor={"#DDE6ED"}
+      // style={{
+      //   margin: is_screen_sm ? "0.5rem" : "0rem",
+      //   marginLeft: "1rem",
+      // }}
+      // border={`1px solid ${primarycolor}`}
+      // borderRadius="0.5rem"
     >
       {is_screen_sm ? (
         <Box
@@ -164,7 +178,8 @@ export default function Topbar() {
           alignItems="center"
           justifyContent="space-between"
           width="30rem"
-          padding="1rem"
+          // padding="1rem"
+          paddingRight="1rem"
         >
           {/* boxes accets like html tags  */}
           <Box component="h6" margin="0rem" style={{ opacity: 0.7 }}>
@@ -175,11 +190,17 @@ export default function Topbar() {
           <Box
             component="h6"
             margin="0rem"
-            backgroundColor={iconbackgroundcolor}
-            padding="0.5rem"
+            // backgroundColor={iconbackgroundcolor}
+            // backgroundColor="lightgray"
+            // padding="0.5rem"
+            padding="0.3rem"
             paddingLeft="1rem"
             paddingRight="1rem"
-            borderRadius="1.5rem"
+            borderRadius="0.5rem"
+            // borderRadius="1.5rem"
+            // border={`1px solid ${primarycolor}`}
+            color={primarycolor}
+            border={`1px solid ${iconbordercolor}`}
           >
             {billinginfo.currency_symbol} {billinginfo.currentStanding}
           </Box>
@@ -190,7 +211,12 @@ export default function Topbar() {
               style={{
                 // margin: "1rem"
 
+                // backgroundColor: "#FF6C2C",
                 backgroundColor: primarycolor,
+                // backgroundColor: "lightgray",
+                border: `1px solid lightgray`,
+
+                // color: primarycolor,
                 color: "white",
               }}
               onClick={() => navigate("/addfund")}
@@ -204,8 +230,12 @@ export default function Topbar() {
                 // variant="h6"
                 component="span"
                 fontSize="large"
-                width="1.5rem"
-                height="1.5rem"
+                // width="1.5rem"
+                width="1.2rem"
+                // height="1.5rem"
+                height="1.2rem"
+                paddingTop="0"
+                marginTop="0"
               >
                 {billinginfo.currency_symbol}
               </Typography>
@@ -219,6 +249,7 @@ export default function Topbar() {
                 // margin: "1rem",
                 padding: "0.5rem",
                 color: primarycolor,
+                border: `1px solid ${iconbordercolor}`,
               }}
             >
               <Badge badgeContent={4} color="primary">
@@ -234,13 +265,16 @@ export default function Topbar() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                backgroundColor: iconbackgroundcolor,
-                padding: "0.2rem",
+                // backgroundColor: iconbackgroundcolor,
+                // padding: "0.2rem",
                 paddingLeft: "0.5rem",
                 paddingRight: "0.5rem",
-                borderRadius: "2rem",
+                // borderRadius: "2rem",
+                borderRadius: "0.5rem",
                 cursor: "pointer",
               }}
+              // border={`1px solid ${primarycolor}`}
+              border={`1px solid ${iconbordercolor}`}
               onClick={handleClick}
               aria-controls={open ? "account-menu" : undefined}
               aria-haspopup="true"
@@ -263,7 +297,7 @@ export default function Topbar() {
                   </StyledBadge>
                 </Stack>
               </IconButton>
-              <Box component="h6" margin="0">
+              <Box color={primarycolor} component="h6" margin="0">
                 {userinfo.first_name}
               </Box>
             </Box>
@@ -295,6 +329,7 @@ export default function Topbar() {
           elevation: 0,
           sx: {
             overflow: "visible",
+            border: `1px solid ${primarycolor}`,
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
             mt: 1.5,
             "& .MuiAvatar-root": {

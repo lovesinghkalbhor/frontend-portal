@@ -9,6 +9,7 @@ import { useFormik } from "formik";
 import ReactTelInput from "react-telephone-input";
 import "react-telephone-input/css/default.css";
 import signUpSchema from "../../global component/schema for validation";
+import { Button } from "@mui/material";
 function SignUp() {
   const navigate = useNavigate();
   function handleInputChange(telNumber, selectedCountry) {
@@ -160,13 +161,13 @@ function SignUp() {
               }}
             />
 
-            <button
+            <Button
               // onClick={submitclicked}
               className="submit-button inputs"
               type="submit"
             >
               Submit
-            </button>
+            </Button>
             <div className="text-center d-md-none">
               <h5>OR</h5>
               <Link className="sign-link text-center d-md-none" to="/login">

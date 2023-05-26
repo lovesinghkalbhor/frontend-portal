@@ -6,6 +6,7 @@ import {
   useProSidebar,
   SubMenu,
 } from "react-pro-sidebar";
+import "./style.css"; // Import your custom styles
 
 import {
   Box,
@@ -15,6 +16,7 @@ import {
   Button,
   useMediaQuery,
   Tooltip,
+  Zoom,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
@@ -25,89 +27,123 @@ import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import MenuIcon from "@mui/icons-material/Menu";
-import { iconcolor } from "../../../components/variable";
+import {
+  iconcolor,
+  primarycolor,
+  sidemenucolor,
+} from "../../../components/variable";
 import { globalcontext } from "../../../routes/controler";
 import CorporateFareIcon from "@mui/icons-material/CorporateFare";
+import { styled, alpha } from "@mui/material/styles";
 
+import InputBase from "@mui/material/InputBase";
+import SearchIcon from "@mui/icons-material/Search";
+
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(1),
+  marginLeft: 0,
+  marginBottom: theme.spacing(1),
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "12ch",
+    },
+  },
+}));
 export default function Sidemenu() {
   // const iconcolor = "#1F33F2";
   let menus = [
     {
-      icon: (
-        <DashboardCustomizeRoundedIcon
-          style={{ color: iconcolor }}
-        ></DashboardCustomizeRoundedIcon>
-      ),
+      icon: <DashboardCustomizeRoundedIcon></DashboardCustomizeRoundedIcon>,
       name: "Dashboard",
       path: "/dashboard",
     },
     {
-      icon: (
-        <CorporateFareIcon style={{ color: iconcolor }}></CorporateFareIcon>
-      ),
+      icon: <CorporateFareIcon></CorporateFareIcon>,
       name: "Organization",
       path: "/org",
     },
 
     {
-      icon: (
-        <ShoppingCartRoundedIcon
-          style={{ color: iconcolor }}
-        ></ShoppingCartRoundedIcon>
-      ),
+      icon: <ShoppingCartRoundedIcon></ShoppingCartRoundedIcon>,
       name: "Place orders",
       path: "/place_orders",
     },
     {
-      icon: (
-        <LanguageRoundedIcon style={{ color: iconcolor }}></LanguageRoundedIcon>
-      ),
+      icon: <LanguageRoundedIcon></LanguageRoundedIcon>,
       name: "Domain",
       path: "/domain",
     },
     {
-      icon: (
-        <PersonRoundedIcon style={{ color: iconcolor }}></PersonRoundedIcon>
-      ),
+      icon: <PersonRoundedIcon></PersonRoundedIcon>,
       name: "Customer",
       path: "/customer",
     },
     {
-      icon: <PaidRoundedIcon style={{ color: iconcolor }}></PaidRoundedIcon>,
+      icon: <PaidRoundedIcon></PaidRoundedIcon>,
       name: "Billing",
       path: "/billing",
     },
     {
-      icon: <BuildRoundedIcon style={{ color: iconcolor }}></BuildRoundedIcon>,
+      icon: <BuildRoundedIcon></BuildRoundedIcon>,
       name: "Tools",
       subitems: [
         {
-          icon: <ArrowRightIcon style={{ color: iconcolor }}></ArrowRightIcon>,
+          icon: <ArrowRightIcon></ArrowRightIcon>,
           name: "Action history",
           path: "/tools/action-history",
         },
         {
-          icon: <ArrowRightIcon style={{ color: iconcolor }}></ArrowRightIcon>,
+          icon: <ArrowRightIcon></ArrowRightIcon>,
           name: "Domain Pull Request",
           path: "/tools/domain-pull-request",
         },
         {
-          icon: <ArrowRightIcon style={{ color: iconcolor }}></ArrowRightIcon>,
+          icon: <ArrowRightIcon></ArrowRightIcon>,
           name: "Domain TransferOut List",
           path: "/tools/domain-transferout-list",
         },
         {
-          icon: <ArrowRightIcon style={{ color: iconcolor }}></ArrowRightIcon>,
+          icon: <ArrowRightIcon></ArrowRightIcon>,
           name: "Pending Bulk Summary",
           path: "/tools/pending-bulk-summary",
         },
         {
-          icon: <ArrowRightIcon style={{ color: iconcolor }}></ArrowRightIcon>,
+          icon: <ArrowRightIcon></ArrowRightIcon>,
           name: "Reports",
           path: "tools/reports",
         },
         {
-          icon: <ArrowRightIcon style={{ color: iconcolor }}></ArrowRightIcon>,
+          icon: <ArrowRightIcon></ArrowRightIcon>,
           name: "Bulk Action File Upload",
           path: "tools/bulk-action-file",
         },
@@ -122,29 +158,37 @@ export default function Sidemenu() {
   // const is_screen_sm = useMediaQuery("(min-width:600px)");
   useEffect(() => {
     is_session_valid();
-  });
+  }, []);
 
   return (
     <>
       <Box
         boxShadow="0px 2px 4px rgba(2, 4, 10, 0.1)"
-        onMouseEnter={() => {
-          toggled();
-          setiscollapsed(toggled);
+        // onMouseEnter={() => {
+        //   toggled();
+
+        //   setiscollapsed(toggled);
+        // }}
+        // onMouseLeave={() => {
+        //   collapseSidebar();
+
+        //   setiscollapsed(collapsed);
+        // }}
+        style={{
+          borderRight: "1px solid white",
         }}
-        onMouseLeave={() => {
-          collapseSidebar();
-          setiscollapsed(collapsed);
-        }}
-        backgroundColor="rgb(255, 255, 255, 100%)"
+        backgroundColor={primarycolor}
+        // backgroundColor="rgb(255, 255, 255, 100%)"
         // paddingTop="rem"
         position="relative"
         // height="100vh"
+        // style={{ borderTopRightRadius: "1rem" }}
       >
         <IconButton
           style={{
-            margin: is_screen_sm ? "1rem" : "0rem",
-            color: iconcolor,
+            margin: is_screen_sm ? "0.5rem" : "0rem",
+            marginLeft: "1rem",
+            color: sidemenucolor,
           }}
           onClick={() => {
             collapseSidebar();
@@ -154,53 +198,111 @@ export default function Sidemenu() {
         >
           <MenuIcon></MenuIcon>
         </IconButton>
+        {/* <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search…"
+            inputProps={{ "aria-label": "search" }}
+          />
+        </Search> */}
         <Sidebar
           display="none !important"
-          backgroundColor="rgb(255, 255, 255, 100%)"
-          style={{ height: "100vh", paddingTop: "1rem" }}
+          backgroundColor={primarycolor}
+          // backgroundColor="rgb(255, 255, 255, 100%)"
+          style={{
+            height: "100vh",
+            paddingTop: "1rem",
+            borderTop: "1px solid white",
+          }}
           breakPoint="md"
+          width="200px"
         >
-          <Menu style={{ display: "flex", alignContent: "space-between" }}>
+          <Menu
+            style={
+              {
+                // display: "flex",
+                // alignContent: "space-between",
+                // width: "100%",
+              }
+            }
+          >
             <Box>
               {menus.map((element, index) => {
                 return (
-                  <>
+                  <React.Fragment key={element.name}>
                     {element.subitems?.length ? null : (
-                      <Tooltip title={element.name}>
-                        <MenuItem
-                          style={{
-                            borderRadius: "0.5rem",
-                          }}
-                          key={element.name}
-                          icon={element.icon}
-                          component={<Link to={element.path} />}
+                      <Tooltip
+                        title={element.name}
+                        placement="right"
+                        arrow
+                        TransitionComponent={Zoom}
+                        PopperProps={{
+                          style: {
+                            marginRight: "-20rem !important", // Adjust this value to control the distance from the item
+                          },
+                        }}
+                      >
+                        <Link
+                          className="menu_link"
+                          // style={{ textDecoration: "none", color: "white" }}
+                          to={element.path}
                         >
-                          {iscollapsed ? element.name : ""}
-                        </MenuItem>
+                          <MenuItem
+                            id="menu_item"
+                            style={{
+                              // borderRadius: "0.5rem",
+                              color: sidemenucolor,
+                            }}
+                            icon={element.icon}
+                            component="div"
+                            // component={<Link to={element.path} />}
+                          >
+                            {iscollapsed ? element.name : ""}
+                          </MenuItem>
+                        </Link>
                       </Tooltip>
                     )}
                     {element.subitems?.length ? (
-                      <Tooltip title={element.name}>
+                      <Tooltip
+                        title={element.name}
+                        placement="right"
+                        arrow
+                        TransitionComponent={Zoom}
+                      >
                         <SubMenu
+                          id="submenu"
                           icon={element.icon}
                           label={element.name}
                           key={element.name}
+                          // backgroundColor="#7C43F2"
+                          style={{
+                            // backdropFilter: primarycolor,
+                            color: sidemenucolor,
+                          }}
                         >
                           {element.subitems.map((subitem, index) => {
                             return (
-                              <MenuItem
-                                component={<Link to={subitem.path} />}
-                                icon={subitem.icon}
+                              <Link
                                 key={subitem.name}
+                                className="menu_link"
+                                to={subitem.path}
                               >
-                                {subitem.name}
-                              </MenuItem>
+                                <MenuItem
+                                  id="sub_menu_item"
+                                  component="div"
+                                  icon={subitem.icon}
+                                >
+                                  {subitem.name}
+                                </MenuItem>
+                              </Link>
                             );
                           })}
                         </SubMenu>
                       </Tooltip>
                     ) : null}
-                  </>
+                  </React.Fragment>
                 );
               })}
             </Box>

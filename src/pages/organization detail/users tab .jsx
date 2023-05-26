@@ -3,6 +3,8 @@ import {
   primarycolor,
   iconbackgroundcolor,
   shadow,
+  radius,
+  borderTop,
 } from "../../components/variable";
 import {
   OrgUserData,
@@ -33,8 +35,10 @@ import {
   ListItemText,
   ListItemIcon,
   Grid,
+  Divider,
 } from "@mui/material";
 import { globalcontext } from "../../routes/controler";
+import SearchUserTab from "./searchUserTab";
 
 function Row(props) {
   const [open, setOpen] = useState(false);
@@ -54,10 +58,10 @@ function Row(props) {
   );
 
   const [isdisable, setisdisable] = useState(false);
-  console.log(props, "this is ht eROW OF THE ");
+  console.log(orgdata.org_id, "this is ht eROW OF THE ");
   const initialValues = {
     user_id: "",
-    org_id: "",
+    // org_id: "",
     suspend: false,
     revoke: false,
   };
@@ -68,7 +72,7 @@ function Row(props) {
         // log all form values
         if (values.suspend) {
           console.log("in the   SUSPEND state");
-          SuspendUser(values.org_id, values.user_id)
+          SuspendUser(orgdata.org_id, values.user_id)
             .then((data) => {
               if (data.status === 1) {
                 setservererror(false);
@@ -87,10 +91,11 @@ function Row(props) {
         } else if (values.revoke) {
           console.log("in the   SUSPEND state");
 
-          RevokeUser(values.org_id, values.user_id)
+          RevokeUser(orgdata.org_id, values.user_id)
             .then((data) => {
               if (data.status === 1) {
                 setservererror(false);
+
                 setsuccessmessage("User has been successfully revoked");
               } else {
                 setservererror(data.error);
@@ -134,10 +139,8 @@ function Row(props) {
         <TableCell>{props?.row.user_type}</TableCell>
       </TableRow>
       <TableRow>
-        {/* <TableCell> */}
         {/* just empty box so we can give the extra space on left */}
-        <Box></Box>
-        {/* </TableCell> */}
+        <TableCell></TableCell>
         <TableCell
           style={{
             paddingBottom: 0,
@@ -149,7 +152,7 @@ function Row(props) {
             <Box id="from" marginTop="0.8rem">
               <form>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} lg={3}>
+                  {/*  <Grid item xs={12} sm={6} lg={3}>
                     <TextField
                       id="Current-input"
                       label=" ORG ID"
@@ -176,9 +179,9 @@ function Row(props) {
                       required
                       style={{ width: "100%", marginBottom: "1rem" }}
                     />
-                  </Grid>
+                  </Grid> */}
 
-                  <Grid item xs={12} sm={6} lg={3}>
+                  <Grid item xs={12} sm={6} lg={6}>
                     <TextField
                       id="new-input"
                       label="EMAIL ID"
@@ -188,7 +191,7 @@ function Row(props) {
                       value={values.user_id}
                       onChange={handleChange}
                       error={!!servererror}
-                      // helperText={servererror}
+                      helperText={servererror}
                       // onFocus={() => {
                       //   setValues({
                       //     ...values,
@@ -197,7 +200,9 @@ function Row(props) {
                       //     suspend_user: "",
                       //   });
                       // }}
-                      // onBlur={handleBlur}
+                      onBlur={() => {
+                        setservererror(false);
+                      }}
                       // disabled={!isdisable}
                       // onFocus={() => {
                       //   setisdisable(true);
@@ -228,7 +233,7 @@ function Row(props) {
                         color: "white",
                         backgroundColor: primarycolor,
                         marginTop: "1rem",
-                        borderRadius: "0.5rem",
+                        borderRadius: radius,
                         marginBottom: "1rem",
                       }}
                     >
@@ -254,7 +259,7 @@ function Row(props) {
                         color: "white",
                         backgroundColor: primarycolor,
                         marginTop: "1rem",
-                        borderRadius: "0.5rem",
+                        borderRadius: radius,
                         marginBottom: "1rem",
                       }}
                     >
@@ -294,6 +299,7 @@ export default function Users() {
   } = useContext(globalcontext);
 
   const [orguserdata, setorguserdata] = useState([]);
+  // const [clearsearch, setclearsearch] = useState(false);
   const [column, setcolumn] = useState([]);
   const [rowsWithstate, setrowsWithstate] = useState([]);
 
@@ -313,29 +319,54 @@ export default function Users() {
     getorguserdata();
     is_session_valid();
   }, []);
-  useEffect(() => {
-    is_session_valid();
-  });
 
+  function search(data) {
+    setorguserdata(data);
+    // setorguserdata([
+    //   {
+    //     email: "lovesinghkabhor.com",
+    //     first_name: "rahul",
+    //     last_name: "Singh",
+    //     user_type: "admin",
+    //   },
+    // ]);
+  }
+  function clearSearch() {
+    getorguserdata();
+  }
   return (
-    <TableContainer component={Paper} style={{ height: "100vh" }}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            {columns.map((column) => {
-              return <TableCell>{column.headerName}</TableCell>;
-            })}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {orguserdata !== []
-            ? orguserdata?.map((row, index) => (
-                <Row key={row.email} row={row} />
-              ))
-            : null}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <SearchUserTab
+        searchedData={search}
+        clearsearch={clearSearch}
+      ></SearchUserTab>
+      <Divider style={{ color: "black", opacity: 1 }}></Divider>
+      <TableContainer
+        component={Paper}
+        style={{
+          height: "100vh",
+          borderRadius: radius,
+          // border={`1px solid ${primarycolor}`}
+        }}
+      >
+        <Table aria-label="collapsible dense table ">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              {columns.map((column) => {
+                return <TableCell>{column.headerName}</TableCell>;
+              })}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {orguserdata !== []
+              ? orguserdata?.map((row, index) => (
+                  <Row key={row.email} row={row} />
+                ))
+              : null}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }

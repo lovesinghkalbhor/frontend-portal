@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Avatar,
   Stack,
@@ -9,7 +9,13 @@ import {
   Switch,
 } from "@mui/material";
 import { primarycolor } from "../../components/variable";
+import { globalcontext } from "../../routes/controler";
 export default function Pannel_Setting(props) {
+  const { is_session_valid } = useContext(globalcontext);
+
+  useEffect(() => {
+    is_session_valid();
+  }, []);
   return (
     <Box
       display="flex"

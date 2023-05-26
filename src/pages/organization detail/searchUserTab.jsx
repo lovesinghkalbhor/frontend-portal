@@ -5,16 +5,22 @@ import DataTable from "../../components/datatable";
 import { SearchUser } from "../global component/data_fetching_components/org";
 import validationSchema from "../global component/schema for validation";
 import { globalcontext } from "../../routes/controler";
-import { primarycolor } from "../../components/variable";
+import { primarycolor, radius } from "../../components/variable";
 export default function SearchUserTab(props) {
-  const { is_session_valid } = useContext(globalcontext);
+  const { is_session_valid, orgdata, seterrormessage, is_screen_sm } =
+    useContext(globalcontext);
   const [column, setcolumn] = useState([]);
   const [orguserdata, setorguserdata] = useState([]);
 
   let columns = [
     { field: "id", headerName: "ID", width: 130 },
-    { field: "first_name", headerName: "First Name", width: 130 },
-    { field: "last_name", headerName: "Last Name", width: 130 },
+    {
+      field: "full_name",
+      headerName: "User Name",
+      width: 200,
+      valueGetter: (params) =>
+        `${params.row.first_name} ${params.row.last_name}`,
+    },
     { field: "email", headerName: "Email", width: 200 },
     {
       field: "user_type",
@@ -45,19 +51,20 @@ export default function SearchUserTab(props) {
           data.first_name = values.search_data;
           data.last_name = values.search_data;
         }
-        let a = await SearchUser(values.org_id, data);
+        let a = await SearchUser(orgdata.org_id, data);
         if (a.status === 1) {
           console.log(a);
           setorguserdata(a.users);
           console.log(orguserdata[0], "THIS IS TRUE ,,,,,,,,,,,,,,,");
-        } else {
-          console.log("55555555555555555555555550000000000000000000");
+        } else if (a.servererror) {
+          seterrormessage(a.servererror);
         }
       },
     });
 
   useEffect(() => {
     console.log(orguserdata);
+    props.searchedData(orguserdata);
   }, [orguserdata]);
 
   useEffect(() => {
@@ -66,16 +73,14 @@ export default function SearchUserTab(props) {
 
   return (
     <>
-      <Box margin="2rem" width="100%">
-        <Box marginBottom="1rem">
-          <h3>Fill details </h3>
-        </Box>
+      <Box margin={is_screen_sm ? "1rem" : "0.5rem"} width="100%">
+        <Box marginBottom="1rem">{/* <h3></h3> */}</Box>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={6} md={4}>
+            <Grid item xs={12} md={6}>
               <TextField
                 id="name-input"
-                label=""
+                label="Search User"
                 variant="outlined"
                 name="search_data"
                 placeholder="Email, First Name or Last Name"
@@ -89,49 +94,53 @@ export default function SearchUserTab(props) {
                 }}
               />
             </Grid>
-            <Grid item xs={6} md={4}>
-              <TextField
-                id="name-input"
-                label="ORG ID"
-                variant="outlined"
-                name="org_id"
-                placeholder="Enter Reference Number"
-                value={values.org_id}
-                onChange={handleChange}
-                required
-                style={{ width: "100%", marginBottom: "1rem" }}
-                onBlur={handleBlur}
-                InputLabelProps={{
-                  shrink: true,
+            <Grid item xs={12} md={2}>
+              {/* {ismodify ? ( */}
+              <Button
+                variant="contained"
+                type="submit"
+                style={{
+                  padding: "0.5rem",
+                  paddingLeft: "1rem",
+                  paddingRight: "1rem",
+                  color: "white",
+                  backgroundColor: primarycolor,
+                  marginTop: "0.5rem",
+                  borderRadius: radius,
                 }}
-              />
+              >
+                Search
+              </Button>
+              {/* ) : null} */}
+            </Grid>
+            <Grid item xs={12} md={2}>
+              {/* {ismodify ? ( */}
+              <Button
+                onClick={() => {
+                  props.clearsearch();
+                }}
+                variant="contained"
+                type="submit"
+                style={{
+                  padding: "0.5rem",
+                  paddingLeft: "1rem",
+                  paddingRight: "1rem",
+                  color: "white",
+                  backgroundColor: primarycolor,
+                  marginTop: "0.5rem",
+                  borderRadius: radius,
+                }}
+              >
+                Clear
+              </Button>
+              {/* ) : null} */}
             </Grid>
           </Grid>
-
-          <Box display="flex" justifyContent="start">
-            {/* {ismodify ? ( */}
-            <Button
-              variant="contained"
-              type="submit"
-              style={{
-                padding: "0.5rem",
-                paddingLeft: "1rem",
-                paddingRight: "1rem",
-                color: "white",
-                backgroundColor: primarycolor,
-                marginBottom: "1rem",
-                borderRadius: "0.5rem",
-              }}
-            >
-              Save
-            </Button>
-            {/* ) : null} */}
-          </Box>
         </form>
-        {orguserdata[0] ? (
+        {/* {orguserdata[0] ? (
           <DataTable datarow={orguserdata} datacolumn={columns}></DataTable>
         ) : //   <Box>No user found</Box>
-        null}
+        null} */}
       </Box>
     </>
   );

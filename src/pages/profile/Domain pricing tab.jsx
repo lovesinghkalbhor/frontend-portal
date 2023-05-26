@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Avatar,
   Stack,
@@ -8,8 +8,14 @@ import {
   TextField,
   MenuItem,
 } from "@mui/material";
+import { globalcontext } from "../../routes/controler";
 
 export default function Domain_Pricing_Tab() {
+  const { is_session_valid } = useContext(globalcontext);
+
+  useEffect(() => {
+    is_session_valid();
+  }, []);
   const currencies = [
     {
       value: "USD",
@@ -29,6 +35,9 @@ export default function Domain_Pricing_Tab() {
     },
   ];
 
+  useEffect(() => {
+    is_session_valid();
+  }, []);
   return (
     <Box>
       <Box component="h4" margin="2rem">

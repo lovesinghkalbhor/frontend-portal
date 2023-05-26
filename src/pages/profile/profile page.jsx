@@ -9,7 +9,7 @@ import {
   tabsClasses,
   Switch,
 } from "@mui/material";
-import { shadow } from "../../components/variable";
+import { shadow, radius, borderTop } from "../../components/variable";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -38,6 +38,7 @@ export default function Profile() {
     setservererror,
     is_session_valid,
     setsuccessmessage,
+    seterrormessage,
   } = useContext(globalcontext);
 
   const tabhandleChange = (event, newValue) => {
@@ -69,6 +70,8 @@ export default function Profile() {
             setuserinfo(updateddata.userinfo);
             setsuccessmessage("User data has been updated successfully");
             setservererror(false);
+          } else if (updateddata.servererror) {
+            seterrormessage(updateddata.servererror);
           } else {
             setservererror(updateddata.error);
             console.log(error, "this is lerror");
@@ -97,18 +100,33 @@ export default function Profile() {
 
   return (
     <Box>
-      {is_screen_sm ? (
-        <Box
-          width="95%"
-          backgroundColor="white"
-          marginBottom="2rem"
-          marginTop="2rem"
-          boxShadow={shadow}
-          borderRadius="1rem"
-          display="flex"
-          justifyContent="space-between"
-          paddingTop="1rem"
+      {/* {is_screen_sm ? ( */}
+      <Box
+        display="flex"
+        width="95%"
+        // style={{ border: `1px solid ${primarycolor}` }}
+        backgroundColor="white"
+        marginBottom="2rem"
+        marginTop="2rem"
+        boxShadow={shadow}
+        borderRadius={radius}
+        // border={`1px solid ${primarycolor}`}
+        borderTop={borderTop}
+        justifyContent="space-between"
+        paddingTop="1rem"
+      >
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={4}
+          sx={{ alignItems: "start", justifyContent: "center" }}
+          padding="1rem"
+          paddingLeft="2rem"
         >
+          <Avatar
+            alt="Remy Sharp"
+            // src="/static/images/avatar/1.jpg"
+            sx={{ width: 100, height: 100 }}
+          />
           <form // method="POST"
             className="form d-flex flex-column text-start "
             onSubmit={handleSubmit}
@@ -121,14 +139,9 @@ export default function Profile() {
               padding="1rem"
               paddingLeft="2rem"
             >
-              <Avatar
-                alt="Remy Sharp"
-                // src="/static/images/avatar/1.jpg"
-                sx={{ marginTop: "1rem", width: 100, height: 100 }}
-              />
               <Box>
                 <Grid container spacing={2}>
-                  <Grid item sm={6}>
+                  <Grid item xs={12} sm={12} md={6} xl={4}>
                     <TextField
                       id="firstname-input"
                       label="firstname"
@@ -145,7 +158,7 @@ export default function Profile() {
                       style={{ width: "100%", marginBottom: "1rem" }}
                     />
                   </Grid>
-                  <Grid item sm={6}>
+                  <Grid item xs={12} sm={12} md={6} xl={4}>
                     <TextField
                       id="lastname-input"
                       label="lastname"
@@ -162,24 +175,27 @@ export default function Profile() {
                       style={{ width: "100%", marginBottom: "1rem" }}
                     />
                   </Grid>
+
+                  <Grid item xs={12} sm={12} md={6} xl={4}>
+                    <TextField
+                      style={{ width: "100%", marginBottom: "1rem" }}
+                      id="email-input"
+                      label="Email Address"
+                      name="email"
+                      variant="outlined"
+                      disabled={!ismodify}
+                      value={values.email}
+                      error={!!servererror}
+                      helperText={servererror}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      required
+                    />{" "}
+                  </Grid>
                 </Grid>
-                <TextField
-                  style={{ width: "100%", marginBottom: "1rem" }}
-                  id="email-input"
-                  label="Email Address"
-                  name="email"
-                  variant="outlined"
-                  disabled={!ismodify}
-                  value={values.email}
-                  error={!!servererror}
-                  helperText={servererror}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  required
-                />
                 {ismodify ? (
                   <Button
                     variant="contained"
@@ -188,13 +204,13 @@ export default function Profile() {
                     //   console.log("this is lveo");
                     // }}
                     style={{
+                      borderRadius: radius,
                       padding: "0.5rem",
                       paddingLeft: "1rem",
                       paddingRight: "1rem",
                       color: "white",
                       backgroundColor: primarycolor,
                       marginBottom: "1rem",
-                      borderRadius: "0.5rem",
                     }}
                   >
                     Save
@@ -203,23 +219,28 @@ export default function Profile() {
               </Box>
             </Stack>
           </form>
-          {/* switch for allowing modifying */}
-          <Box margin="2rem">
-            <h5>Modify</h5>
-            <Switch
-              color="secondary"
-              onChange={() => setismodify(!ismodify)}
-            ></Switch>
-          </Box>
+        </Stack>
+
+        {/* switch for allowing modifying */}
+        <Box margin="2rem">
+          <h5>Modify</h5>
+          <Switch
+            color="secondary"
+            onChange={() => setismodify(!ismodify)}
+          ></Switch>
         </Box>
-      ) : null}
+      </Box>
+      {/* ) : null} */}
       <Box
         width="95%"
         backgroundColor="white"
         // margin="1rem"
         // marginRight="2rem"
+        borderRadius={radius}
+        // border={`1px solid ${primarycolor}`}
+        borderTop={borderTop}
         boxShadow={shadow}
-        borderRadius="1rem"
+        // borderRadius="1rem"
         height="100%"
       >
         {" "}

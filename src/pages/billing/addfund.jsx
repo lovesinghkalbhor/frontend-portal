@@ -1,87 +1,80 @@
 import { React, useState, useEffect, useContext } from "react";
 import Card from "react-bootstrap/Card";
-import { Box, Button, TextField, Grid, Switch } from "@mui/material";
-import { primarycolor, shadow } from "../../components/variable";
+import {
+  Box,
+  Button,
+  TextField,
+  Grid,
+  TableContainer,
+  Table,
+  TableRow,
+  TableCell,
+  TableBody,
+} from "@mui/material";
+import {
+  primarycolor,
+  shadow,
+  radius,
+  borderTop,
+} from "../../components/variable";
 import { globalcontext } from "../../routes/controler";
 import { AddFund } from "../global component/data_fetching_components/billing_endpoints";
 import { useFormik } from "formik";
-import { viewInvoice } from "../global component/data_fetching_components/billing_endpoints";
 import { Link } from "react-router-dom";
+import { calculat_percentage, totalAmount } from "./helperfunction";
+import { add } from "lodash";
 
+/**  this page adds the payment*/
 function AddFunds() {
+  // this destructure the variable and funtion form the globalcontext
   const { is_screen_sm, is_session_valid, servererror, setservererror } =
     useContext(globalcontext);
-  useEffect(() => {
-    is_session_valid();
-  });
+
+  const [platformfee, setplatformfee] = useState(false);
+  const [showpaymentbtn, setshowpaymentbtn] = useState(false);
+  const [isclicked, setisclicked] = useState(false);
   const [addfunddata, setaddfunddata] = useState({});
   const [transfertype, settransfertype] = useState({
     net_banking: "3",
-
     credit_card: "1",
-
     debit_card: "2",
   });
-  const [platformfee, setplatformfee] = useState(false);
-  const [showpaymentbtn, setshowpaymentbtn] = useState(false);
-  const [showdetails, setshowdetails] = useState(false);
 
-  // formik here is
+  // this is_session_valid is the function form the globalcontext object that check for the valid session Id for every render with useEffect
+  useEffect(() => {
+    is_session_valid();
+  }, []);
 
+  // formik start form here is
   const initialValues = {
-    // firstname: userinfo.firstName, // Set default value to empty string if userinfo.firstName is undefined
     amount: "",
   };
-  const { values, handleBlur, handleChange, handleSubmit, setValues } =
-    useFormik({
-      initialValues: initialValues,
-      onSubmit: async (values) => {
-        // console.log(orgdata, "hereis the org data that apperarsfsdf");
-        let total = totalAmount(18, values.amount, platformfee);
-        if (total > 0) {
-          let a = await AddFund(total);
-          if (a.status === 1) {
-            console.log(a.billing);
-            setaddfunddata(a.billing);
-          } else {
-            console.log("55555555555555555555555550000000000000000000");
-          }
-        } else {
-          setservererror("amount should be more than 0");
+  const { values, handleBlur, handleChange, handleSubmit } = useFormik({
+    initialValues: initialValues,
+    onSubmit: async (values) => {
+      let total = totalAmount(18, values.amount, platformfee);
+      //only adding the amount if its more than 0
+      if (total > 0) {
+        let a = await AddFund(total);
+        // if api status true then set the response in state else give error
+        if (a.status === 1) {
+          console.log(
+            a.billing,
+            "rrrrrrrrrrrrrrrrrgggggggggggggggggtttttttttttth"
+          );
+          setaddfunddata(a.billing);
+        } else if (a.status === 0) {
+          setservererror(a.error);
         }
-      },
-    });
-
-  // useEffect(() => {
-  //   async function b() {
-  //     let a = await AddFund(values.amount);
-  //     if (a.status === 1) {
-  //       console.log(a.billing);
-  //       setaddfunddata(a.billing);
-  //       console.log(addfunddata.order_number, "THIS IS TRUE ,,,,,,,,,,,,,,,");
-  //     } else {
-  //       console.log("55555555555555555555555550000000000000000000");
-  //     }
-  //   }
-  //   b();
-  // }, []);
-  // useEffect(() => {
-  //   console.log(addfunddata, "called agian and aginasdjalkdjfklejrioq3tou34tj");
-  // }, [addfunddata]);
-
-  function calculat_percentage(percentage, amount) {
-    let fee = (amount * percentage) / 100;
-
-    return fee;
-  }
-  function totalAmount(GST, amount, platformfee) {
-    let total =
-      calculat_percentage(GST, amount) +
-      calculat_percentage(platformfee, amount) +
-      amount;
-
-    return total;
-  }
+      } else {
+        setservererror("amount should be more than 0");
+      }
+    },
+  });
+  // if (addfunddata.order_number) {
+  //   console.log("chlidked asefkj");
+  //   alert(addfunddata.order_number);
+  // }
 
   return (
     <>
@@ -90,9 +83,11 @@ function AddFunds() {
         padding={is_screen_sm ? "2rem" : "1rem"}
         margin={is_screen_sm ? "1rem" : "0rem"}
         marginTop={is_screen_sm ? "0rem" : "4rem"}
-        borderRadius="1.2rem"
         backgroundColor="#FFFFFF"
         boxShadow={shadow}
+        borderRadius={radius}
+        // border={`1px solid ${primarycolor}`}
+        borderTop={borderTop}
       >
         <Grid container spacing={4}>
           <Grid item md={6} lg={4}>
@@ -103,23 +98,16 @@ function AddFunds() {
                 backgroundColor: "#FFFFFF",
                 boxShadow: shadow,
                 cursor: "pointer",
+                borderTop: borderTop,
               }}
               onClick={() => {
-                // settransfertype({
-                //   ...transfertype,
-                //   credit_card: {
-                //     isselect: true,
-                //   },
-                //   debit_card: { isselect: false },
-                //   net_banking: { isselect: false },
-                // });
                 setplatformfee(transfertype.credit_card);
+                window.scrollTo(0, document.body.scrollHeight);
               }}
               bg="Light"
             >
               <Card.Body>
                 <Card.Title>Credit card</Card.Title>
-
                 <Card.Text>
                   Some quick example text to build on the card title and make up
                   the bulk of the card's content.
@@ -138,15 +126,16 @@ function AddFunds() {
                 backgroundColor: "#FFFFFF",
                 boxShadow: shadow,
                 cursor: "pointer",
+                borderTop: borderTop,
               }}
               onClick={() => {
                 setplatformfee(transfertype.net_banking);
+                window.scrollTo(0, document.body.scrollHeight);
               }}
               bg="Light"
             >
               <Card.Body>
                 <Card.Title>Net Banking </Card.Title>
-
                 <Card.Text>
                   Some quick example text to build on the card title and make up
                   the bulk of the card's content.
@@ -165,15 +154,16 @@ function AddFunds() {
                 backgroundColor: "#FFFFFF",
                 boxShadow: shadow,
                 cursor: "pointer",
+                borderTop: borderTop,
               }}
               onClick={() => {
                 setplatformfee(transfertype.debit_card);
+                window.scrollTo(0, document.body.scrollHeight);
               }}
               bg="Light"
             >
               <Card.Body>
                 <Card.Title>Debit Card</Card.Title>
-
                 <Card.Text>
                   Some quick example text to build on the card title and make up
                   the bulk of the card's content.
@@ -183,7 +173,7 @@ function AddFunds() {
             </Card>
           </Grid>
         </Grid>
-
+        {/* if payment mode selected then only show addfund input else show message "Select the payment method" ///////////////////////////////////////////////////////////////////} */}
         {platformfee ? (
           <Box margin="2rem">
             <Box
@@ -206,6 +196,7 @@ function AddFunds() {
                   onChange={handleChange}
                   error={!!servererror}
                   helperText={servererror}
+                  disabled={isclicked}
                   required
                   style={{ width: "100%", marginBottom: "1rem" }}
                   onBlur={handleBlur}
@@ -214,96 +205,160 @@ function AddFunds() {
                   }}
                 />
               </Grid>
-
-              {showpaymentbtn ? (
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  justifyContent="start"
-                >
+              {/* show pay button only when click to proceed ///////////////////////////////////////////////////////////////////////////// */}
+              {showpaymentbtn && values.amount ? (
+                <>
                   <Box
-                    backgroundColor="gray"
-                    marginTop="1rem"
-                    marginBottom="1rem"
-                    style={{
-                      width: "100%",
-                      padding: "1rem",
-                      backgroundColor: "#FFFFFF",
-                      boxShadow: shadow,
-                      cursor: "pointer",
-                    }}
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="start"
                   >
-                    <Box>
-                      platformfee : {values.amount}+{platformfee}% =
-                      {calculat_percentage(platformfee, values.amount) +
-                        values.amount}
-                    </Box>
-                    <br></br>
-                    <Box>
-                      GST : {values.amount}+{18}% =
-                      {calculat_percentage(18, values.amount) + values.amount}
-                    </Box>
-                    <br></br>
-                    <Box>
-                      Payable amount :
-                      {totalAmount(18, values.amount, platformfee)}
+                    <Box
+                      backgroundColor="gray"
+                      marginTop="1rem"
+                      marginBottom="1rem"
+                      borderRadius={radius}
+                      // border={`1px solid ${primarycolor}`}
+                      borderTop={borderTop}
+                      style={{
+                        width: "100%",
+                        padding: "1rem",
+                        backgroundColor: "#FFFFFF",
+                        boxShadow: shadow,
+                        cursor: "pointer",
+                      }}
+                    >
+                      {/* <Box>
+                        platformfee : {values.amount}+{platformfee}% =
+                        {calculat_percentage(platformfee, values.amount) +
+                          values.amount}
+                      </Box>
+                      <br></br>
+                      <Box>
+                        GST : {values.amount}+{18}% =
+                        {calculat_percentage(18, values.amount) + values.amount}
+                      </Box>
+                      <br></br>
+                      <Box>
+                        Payable amount :
+                        {totalAmount(18, values.amount, platformfee)}
+                      </Box>
+                    */}
+
+                      <TableContainer>
+                        <Table sx={{ minWidth: 200 }} aria-label="simple table">
+                          <TableBody>
+                            {addfunddata.order_number ? (
+                              <TableRow>
+                                <TableCell component="th" scope="row">
+                                  Order Number :
+                                </TableCell>
+                                <TableCell>
+                                  {addfunddata.order_number}
+                                </TableCell>
+                              </TableRow>
+                            ) : null}
+                            <TableRow>
+                              <TableCell component="th" scope="row">
+                                platformfee :
+                              </TableCell>
+                              <TableCell>
+                                {values.amount} + {platformfee}% =
+                                {calculat_percentage(
+                                  platformfee,
+                                  values.amount
+                                ) + values.amount}
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell component="th" scope="row">
+                                GST :
+                              </TableCell>
+                              <TableCell>
+                                {values.amount} + {18}% =
+                                {calculat_percentage(18, values.amount) +
+                                  values.amount}
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell component="th" scope="row">
+                                Payable amount :
+                              </TableCell>
+                              <TableCell>
+                                {totalAmount(18, values.amount, platformfee)}
+                              </TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
                     </Box>
                   </Box>
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    style={{
-                      padding: "0.5rem",
-                      paddingLeft: "1rem",
-                      paddingRight: "1rem",
-                      color: "white",
-                      backgroundColor: primarycolor,
-                      marginBottom: "1rem",
-                      borderRadius: "0.5rem",
-                    }}
-                  >
-                    Pay
-                  </Button>
-                </Box>
+                </>
+              ) : null}
+
+              {showpaymentbtn ? (
+                <Button
+                  type="submit"
+                  variant="contained"
+                  // onSubmit={handleSubmit}
+                  onClick={() => {
+                    if (addfunddata.payment_link) {
+                      window.open(addfunddata.payment_link, "_blank");
+                    }
+                  }}
+                  style={{
+                    padding: "0.5rem",
+                    paddingLeft: "1rem",
+                    paddingRight: "1rem",
+                    color: "white",
+                    width: "100%",
+                    backgroundColor: primarycolor,
+                    marginBottom: "1rem",
+                    borderRadius: radius,
+                  }}
+                >
+                  {addfunddata.order_number ? "pay" : "wait..."}
+                </Button>
               ) : (
-                <Box display="flex" justifyContent="start">
-                  <Button
-                    variant="contained"
-                    // type="submit"
-                    onClick={() => {
-                      setshowpaymentbtn(true);
-                    }}
-                    style={{
-                      padding: "0.5rem",
-                      paddingLeft: "1rem",
-                      paddingRight: "1rem",
-                      color: "white",
-                      backgroundColor: primarycolor,
-                      marginBottom: "1rem",
-                      borderRadius: "0.5rem",
-                    }}
-                  >
-                    Proceed
-                  </Button>
-                </Box>
+                // <Box display="flex" justifyContent="start">
+                <Button
+                  type="submit"
+                  onClick={() => {
+                    setshowpaymentbtn(true);
+                    setisclicked(true);
+                    setTimeout(() => {
+                      window.scrollTo(0, document.body.scrollHeight);
+                    }, 500);
+                  }}
+                  variant="contained"
+                  // onSubmit={handleSubmit}
+
+                  style={{
+                    padding: "0.5rem",
+                    paddingLeft: "1rem",
+                    paddingRight: "1rem",
+                    color: "white",
+                    backgroundColor: primarycolor,
+                    marginBottom: "1rem",
+                    borderRadius: radius,
+                  }}
+                >
+                  Proceed
+                </Button>
+                // </Box>
               )}
             </form>
-
-            {/* <Box margin="1rem">GST : 18%</Box>
-            <Box margin="1rem">plateform fee : {platformfee}</Box> */}
+            {/* if got the data from the server then only show the response got from the server and also amout should entered */}
             {addfunddata.order_number && values.amount ? (
               <Box>
                 <Grid container spacing={2}>
-                  <Grid item xs={6} md={4}>
+                  {/* <Grid item xs={6} md={4}>
                     <TextField
                       id="name-input"
                       label="Order Number"
                       variant="outlined"
-                      //   name="reference_number"
-
                       value={addfunddata.order_number}
                       onChange={handleChange}
-                      //   disabled
                       style={{ width: "100%", marginBottom: "1rem" }}
                       disabled
                       onBlur={handleBlur}
@@ -311,9 +366,8 @@ function AddFunds() {
                         shrink: true,
                       }}
                     />
-                  </Grid>
-
-                  <Grid item xs={6} md={4}>
+                  </Grid> */}
+                  {/* <Grid item xs={6} md={4}>
                     <TextField
                       id="address1-input"
                       label="Password"
@@ -328,8 +382,8 @@ function AddFunds() {
                         shrink: true,
                       }}
                     />
-                  </Grid>
-                  <Grid item xs={6} md={4}>
+                  </Grid> */}
+                  {/* <Grid item xs={6} md={4}>
                     <TextField
                       id="state-input"
                       label="Amount"
@@ -344,9 +398,8 @@ function AddFunds() {
                         shrink: true,
                       }}
                     />
-                  </Grid>
-
-                  <Grid item xs={6} md={4}>
+                  </Grid> */}
+                  {/* <Grid item xs={6} md={4}>
                     <TextField
                       id="country-input"
                       label="Currency"
@@ -361,8 +414,8 @@ function AddFunds() {
                         shrink: true,
                       }}
                     />
-                  </Grid>
-                  <Grid item xs={6} md={4}>
+                  </Grid> */}
+                  {/* <Grid item xs={6} md={4}>
                     <TextField
                       id="phone-input"
                       label="Currency Symbol"
@@ -375,8 +428,8 @@ function AddFunds() {
                         shrink: true,
                       }}
                     />
-                  </Grid>
-                  <Grid item xs={6} md={4}>
+                  </Grid> */}
+                  {/* <Grid item xs={6} md={4}>
                     <TextField
                       id="taxid-input"
                       label="Applicable Tax"
@@ -389,9 +442,8 @@ function AddFunds() {
                         shrink: true,
                       }}
                     />
-                  </Grid>
-
-                  <Grid item xs={6} md={4}>
+                  </Grid> */}
+                  {/* <Grid item xs={6} md={4}>
                     <TextField
                       id="pincode-input"
                       label="Tax"
@@ -421,33 +473,16 @@ function AddFunds() {
                         shrink: true,
                       }}
                     />
-                  </Grid>
+                  </Grid> */}
 
-                  <Grid item xs={6} md={4}>
+                  {/* <Grid item xs={6} md={4}>
                     <Link to={addfunddata.payment_link} target="_blank">
                       Click this link for payment
                     </Link>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </Box>
             ) : null}
-            {/* <Box display="flex" justifyContent="start">
-                <Button
-                  variant="contained"
-                  type="submit"
-                  style={{
-                    padding: "0.5rem",
-                    paddingLeft: "1rem",
-                    paddingRight: "1rem",
-                    color: "white",
-                    backgroundColor: primarycolor,
-                    marginBottom: "1rem",
-                    borderRadius: "0.5rem",
-                  }}
-                >
-                  Proceed
-                </Button>
-              </Box> */}
           </Box>
         ) : (
           <Box display="flex" justifyContent="space-between" marginTop="2rem">

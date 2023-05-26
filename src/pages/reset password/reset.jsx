@@ -7,14 +7,21 @@ import {
   TextField,
   Grid,
   FormHelperText,
+  List,
+  ListItem,
+  ListItemIcon,
 } from "@mui/material";
-import { shadow } from "../../components/variable";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import { useNavigate } from "react-router-dom";
+
+import { shadow, radius, borderTop } from "../../components/variable";
 import { Reset_password } from "../global component/data_fetching_components/auth";
 import { primarycolor } from "../../components/variable";
 import { Send_reset_email } from "../global component/data_fetching_components/auth";
 import { globalcontext } from "../../routes/controler";
 import { useFormik } from "formik";
 export default function ChangePassword() {
+  const navigate = useNavigate();
   const [message, setmessage] = useState(false);
   const [parmsdata, setparamsdata] = useState({
     vcode: false,
@@ -25,8 +32,13 @@ export default function ChangePassword() {
 
   const [error, seterror] = useState(false);
   // context for media query
-  const { servererror, setservererror, is_session_valid } =
-    useContext(globalcontext);
+  const {
+    setsuccessmessage,
+    servererror,
+    setservererror,
+    is_session_valid,
+    is_screen_sm,
+  } = useContext(globalcontext);
 
   // formik here is
 
@@ -67,6 +79,7 @@ export default function ChangePassword() {
       if (updateddata.status === 1) {
         setservererror(false);
         setmessage(updateddata.message);
+        setsuccessmessage(updateddata.message);
       } else {
         setservererror(updateddata.error);
         setmessage(false);
@@ -87,8 +100,9 @@ export default function ChangePassword() {
       if (updateddata.status === 1) {
         setservererror(false);
         setmessage(updateddata.message);
+        setsuccessmessage(updateddata.message);
         setTimeout(() => {
-          alert("navigated to the link");
+          navigate("/login");
         }, 2000);
       } else {
         setservererror(updateddata.error);
@@ -127,12 +141,14 @@ export default function ChangePassword() {
 
   return (
     <Box
-      width="95%"
+      width="100%"
       backgroundColor="white"
       marginBottom="2rem"
       marginTop="2rem"
       boxShadow={shadow}
-      borderRadius="1rem"
+      borderRadius={radius}
+      // border={`1px solid ${primarycolor}`}
+      borderTop={borderTop}
       display="flex"
       justifyContent="space-between"
       paddingTop="1rem"
@@ -149,42 +165,95 @@ export default function ChangePassword() {
           padding="1rem"
           paddingLeft="2rem"
         >
-          <Avatar
-            alt="Remy Sharp"
-            // src="/static/images/avatar/1.jpg"
-            sx={{ marginTop: "1rem", width: 100, height: 100 }}
-          />
+          {!parmsdata.vcode ? (
+            <Avatar
+              alt="Remy Sharp"
+              // src="/static/images/avatar/1.jpg"
+              sx={{ marginTop: "1rem", width: 100, height: 100 }}
+            />
+          ) : null}
           <Box>
             <FormHelperText disabled={message}>{message}</FormHelperText>
             <Grid container>
               {parmsdata.vcode ? (
-                <Grid item xs={12}>
-                  <TextField
-                    id="Current-input"
-                    label="password"
-                    variant="outlined"
-                    name="password"
-                    error={!!servererror}
-                    helperText={servererror}
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    required
-                    style={{ width: "100%", marginBottom: "1rem" }}
-                  />
-                </Grid>
+                <>
+                  <Box>
+                    <Box>
+                      <Box>
+                        <Box component="h3" margin="1rem">
+                          Password
+                        </Box>
+                        <form>
+                          <Grid container spacing={2}>
+                            <Grid item xs={12} lg={6}>
+                              <TextField
+                                id="Current-input"
+                                label="New password"
+                                variant="outlined"
+                                name="password"
+                                error={!!servererror}
+                                helperText={servererror}
+                                value={values.password}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                required
+                                style={{ width: "100%", margin: "0.5rem" }}
+                              />
+                            </Grid>
+                          </Grid>
+                        </form>
+                      </Box>
+                    </Box>
+                    <Box maxWidth={is_screen_sm ? "80%" : "100%"}>
+                      {" "}
+                      <Box component="h4" margin="1rem">
+                        {" "}
+                        Password policy
+                      </Box>
+                      <Box marginLeft={is_screen_sm ? "1ren" : "-1rem"}>
+                        <List>
+                          <ListItem>
+                            <ListItemIcon>
+                              <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
+                            </ListItemIcon>
+                            {/* <ListItemText primary="Single-line item" /> */}
+                            Password must be at least 8 characters long.
+                          </ListItem>
+                          <ListItem>
+                            <ListItemIcon>
+                              <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
+                            </ListItemIcon>
+                            {/* <ListItemText primary="Single-line item" /> */}
+                            Password should contain different types of
+                            characters, including uppercase letters, lowercase
+                            letters, numbers and special characters.
+                          </ListItem>
+                          <ListItem>
+                            <ListItemIcon>
+                              <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
+                            </ListItemIcon>
+                            {/* <ListItemText primary="Single-line item" /> */}
+                            Password should not be same or ,part of the name.
+                          </ListItem>
+                          ,
+                        </List>
+                      </Box>
+                    </Box>
+                  </Box>
+                </>
               ) : null}
               <Grid item xs={12}>
                 {!parmsdata.vcode ? (
                   <TextField
                     style={{
-                      width: "100%",
+                      // width: "",
                       marginBottom: "1rem",
                       marginTop: "1rem",
                     }}
                     id="email-input"
-                    label="Email Address"
+                    label="Email"
                     name="email"
+                    placeholder="Enter your email"
                     variant="outlined"
                     //   disabled={!ismodify}
                     value={values.email}
@@ -212,9 +281,12 @@ export default function ChangePassword() {
                 paddingLeft: "1rem",
                 paddingRight: "1rem",
                 color: "white",
+
+                marginLeft: "1rem",
                 backgroundColor: primarycolor,
-                marginBottom: "1rem",
+                marginBottom: "1.5rem",
                 borderRadius: "0.5rem",
+                borderRadius: radius,
               }}
             >
               Save

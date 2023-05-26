@@ -3,16 +3,21 @@ import { Box, Button, TextField, Grid, Switch } from "@mui/material";
 import { primarycolor } from "../../components/variable";
 import { useFormik } from "formik";
 import { UpdateOrgData } from "../global component/data_fetching_components/org";
-import { orgcontext } from "./organization page";
 import { globalcontext } from "../../routes/controler";
 export default function OrganizationSetting() {
-  const [ismodify, setismodify] = useState(false);
-  const { orgdata, setorgdata, setsuccessmessage } = useContext(globalcontext);
+  const [ismodify, setismodify, is_screen_sm] = useState(false);
+  const {
+    orgdata,
+    setorgdata,
+    setsuccessmessage,
+    is_session_valid,
+    seterrormessage,
+    setservererror,
+  } = useContext(globalcontext);
 
   // formik here is
-
   const initialValues = {
-    // firstname: userinfo.firstName, // Set default value to empty string if userinfo.firstName is undefined
+    // Set default value to empty string if userinfo.firstName is undefined
     organization_name: "",
     address1: "",
     address2: "",
@@ -28,9 +33,11 @@ export default function OrganizationSetting() {
         if (a.status === 1) {
           setsuccessmessage("Organization data has been updated successfully");
           setorgdata(a.organization);
+        } else if (a.status === 0) {
+          setservererror(a.error);
+        } else if (a.servererror) {
+          seterrormessage(a.servererror);
         }
-
-        console.log(values, "called data update");
       },
     });
 
@@ -47,9 +54,12 @@ export default function OrganizationSetting() {
       });
     }
   }, [orgdata]);
+  useEffect(() => {
+    is_session_valid();
+  }, []);
 
   return (
-    <Box margin="2rem">
+    <Box margin={is_screen_sm ? "0rem" : "2rem"}>
       <Box display="flex" justifyContent="space-between">
         <h3>Organization Setting</h3>
         <Box>
@@ -62,13 +72,13 @@ export default function OrganizationSetting() {
       </Box>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="name-input"
               label="name"
               variant="outlined"
               name="organization_name"
-              value={values.organization_name}
+              value={values.organization_name || " "}
               onChange={handleChange}
               required
               style={{ width: "100%", marginBottom: "1rem" }}
@@ -79,13 +89,13 @@ export default function OrganizationSetting() {
               }}
             />
           </Grid>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="address1-input"
               label="address1"
               variant="outlined"
               name="address1"
-              value={values.address1}
+              value={values.address1 || " "}
               onChange={handleChange}
               required
               style={{ width: "100%", marginBottom: "1rem" }}
@@ -96,13 +106,13 @@ export default function OrganizationSetting() {
               }}
             />
           </Grid>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="address2-input"
               label="address2"
               variant="outlined"
               name="address2"
-              value={values.address2}
+              value={values.address2 || " "}
               onChange={handleChange}
               required
               style={{ width: "100%", marginBottom: "1rem" }}
@@ -114,13 +124,13 @@ export default function OrganizationSetting() {
             />
           </Grid>
 
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="city-input"
               label="city"
               variant="outlined"
               name="city"
-              value={values.city}
+              value={values.city || " "}
               onChange={handleChange}
               required
               style={{ width: "100%", marginBottom: "1rem" }}
@@ -132,13 +142,13 @@ export default function OrganizationSetting() {
             />
           </Grid>
 
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="state-input"
               label="state"
               variant="outlined"
               name="state"
-              value={values.state}
+              value={values.state || " "}
               onChange={handleChange}
               required
               style={{ width: "100%", marginBottom: "1rem" }}
@@ -149,13 +159,13 @@ export default function OrganizationSetting() {
               }}
             />
           </Grid>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="country-input"
               label="country"
               variant="outlined"
               name="country"
-              value={values.country}
+              value={values.country || " "}
               onChange={handleChange}
               required
               style={{ width: "100%", marginBottom: "1rem" }}
@@ -166,69 +176,69 @@ export default function OrganizationSetting() {
               }}
             />
           </Grid>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="phone-input"
               label="phone"
               variant="outlined"
               name="phone"
               disabled
-              value={orgdata.phone}
+              value={orgdata.phone || " "}
               style={{ width: "100%", marginBottom: "1rem" }}
               InputLabelProps={{
                 shrink: true,
               }}
             />
           </Grid>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="taxid-input"
               label="tax"
               variant="outlined"
               name="tax_id"
               disabled
-              value={orgdata.tax_id}
+              value={orgdata.tax_id || " "}
               style={{ width: "100%", marginBottom: "1rem" }}
               InputLabelProps={{
                 shrink: true,
               }}
             />
           </Grid>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="pincode-input"
               label="pincode"
               variant="outlined"
               name="pincode"
               disabled
-              value={orgdata.pincode}
+              value={orgdata.pincode || " "}
               style={{ width: "100%", marginBottom: "1rem" }}
               InputLabelProps={{
                 shrink: true,
               }}
             />
           </Grid>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="currency-input"
               label="currency"
               variant="outlined"
               name="currency"
               disabled
-              value={orgdata.currency}
+              value={orgdata.currency || " "}
               style={{ width: "100%", marginBottom: "1rem" }}
               InputLabelProps={{
                 shrink: true,
               }}
             />
           </Grid>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="org-input"
               label="org id"
               variant="outlined"
               name="org_id"
-              value={orgdata.org_id}
+              value={orgdata.org_id || " "}
               disabled
               style={{ width: "100%", marginBottom: "1rem" }}
               InputLabelProps={{

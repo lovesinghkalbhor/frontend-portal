@@ -15,7 +15,6 @@ export default function Customer() {
       <Box>
         <Box
           borderRadius="1.2rem"
-          // height="50vh"
           backgroundColor="#FFFFFF"
           width={is_screen_sm ? "95%" : "100%"}
           padding={is_screen_sm ? "2rem" : "0.5rem"}

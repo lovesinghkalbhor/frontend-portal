@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { Box, FormControl, TextField, Button } from "@mui/material";
 import { useFormik } from "formik";
-import { primarycolor, shadow } from "../../components/variable";
-
+import { primarycolor, shadow, radius } from "../../components/variable";
+import { globalcontext } from "../../routes/controler";
 export default function DomaintransferTab() {
+  const { is_session_valid } = useContext(globalcontext);
+
+  useEffect(() => {
+    is_session_valid();
+  }, []);
   const initialValues = {
     // Set default value to empty string if userinfo.firstName is undefined
     domain: "",
@@ -35,6 +40,9 @@ export default function DomaintransferTab() {
   //       });
   //     }
   //   }, [userinfo]);
+  useEffect(() => {
+    is_session_valid();
+  }, []);
 
   return (
     <>
@@ -63,7 +71,7 @@ export default function DomaintransferTab() {
                   color: "white",
                   backgroundColor: primarycolor,
                   marginBottom: "1rem",
-                  borderRadius: "0.5rem",
+                  borderRadius: radius,
                   margin: "2rem",
                   marginLeft: "0.5rem",
                 }}
