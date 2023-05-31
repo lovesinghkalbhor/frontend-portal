@@ -1,19 +1,35 @@
 #menu_item:hover {
-  color: black;
-  background-color: #04112d !important;
+  /* color: black; */
+  /* background-color: #703cda !important; */
+  /* background-color: #c261f9 !important; */
+  background-color: #f7f1ff !important;
+  color: #7a1de0 !important;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+  /* background-color: #04112d !important; */
 }
 #sub_menu_item:hover {
-  color: white;
+  /* color: white;
 
-  background-color: #08193e !important;
+  background-color: #08193e !important; */
+
+  background-color: #f7f1ff !important;
+  color: #7a1de0 !important;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
 }
 #sub_menu_item {
   color: white;
-  background-color: #04112d;
+  /* background-color: #703cda; */
+  background-color: #7a1de0;
   margin-left: -1rem;
 }
 #submenu:hover {
-  background-color: #04112d !important;
+  background-color: #f7f1ff !important;
+  /* background-color: #703cda !important; */
+  /* border-radius: 2rem; */
+  color: #7a1de0 !important;
+  /* background-color: #04112d !important; */
 }
 .menu_link {
   text-decoration: none !important;

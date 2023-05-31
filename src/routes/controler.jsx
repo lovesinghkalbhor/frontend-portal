@@ -26,6 +26,7 @@ import AddFunds from "../pages/billing/addfund";
 import UpdateUser from "../pages/organization detail/updateUserTab";
 import ViewTransaction from "../pages/billing/ViewTransactionTab copy";
 import ViewInvoice from "../pages/billing/ViewInvoiceTab";
+import { cardcolor } from "../components/variable";
 const globalcontext = createContext();
 export default function App() {
   const [userinfo, setuserinfo] = useState({});
@@ -50,6 +51,7 @@ export default function App() {
   const [path, setPath] = useState(false);
   useEffect(
     () => {
+      setservererror("");
       if (
         location.pathname === "/" ||
         location.pathname === "/login" ||
@@ -144,7 +146,12 @@ export default function App() {
         {path ? (
           <main
             className="content"
-            style={{ width: "100%", height: "100%", overflowX: "auto" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              overflowX: "auto",
+              // backgroundColor: { cardcolor },
+            }}
           >
             <Topbar></Topbar>
             <div style={{ margin: "1rem" }}>
@@ -167,7 +174,7 @@ export default function App() {
                 <Route path="/profile" element={<Profile></Profile>} />
                 <Route path="/addfund" element={<AddFunds></AddFunds>} />
                 <Route
-                  path="/org"
+                  path="/organization"
                   element={<OrganizationPage></OrganizationPage>}
                 ></Route>
                 <Route path="/org/update" element={<UpdateUser></UpdateUser>} />

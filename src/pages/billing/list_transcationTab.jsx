@@ -30,14 +30,14 @@ const columns = [
       `${params.row.currency_symbol} ${params.row.amount}`,
   },
   { field: "currency", headerName: "Currency", width: 100 },
-  { field: "tax", headerName: "Tax", width: 200 },
-  {
-    field: "net_amount",
-    headerName: "Net Amount",
-    width: 150,
-    valueGetter: (params) =>
-      `${params.row.currency_symbol} ${params.row.net_amount}`,
-  },
+  // { field: "tax", headerName: "Tax", width: 200 },
+  // {
+  //   field: "net_amount",
+  //   headerName: "Net Amount",
+  //   width: 150,
+  //   valueGetter: (params) =>
+  //     `${params.row.currency_symbol} ${params.row.net_amount}`,
+  // },
   { field: "datetime", headerName: "Datetime", width: 200 },
 ];
 

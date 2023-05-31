@@ -14,7 +14,7 @@ const OrgEndpoint = async () => {
     });
 
     data = userdata.data;
-    // console.log(data, "50000000000000000000sdffffffffffffff");
+    console.log(data, "50000000000000000000sdffffffffffffff");
   } catch (err) {
     data.error = "Failed to fetch data. Please try again later.";
   }

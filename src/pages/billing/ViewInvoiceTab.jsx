@@ -7,6 +7,7 @@ import {
   List,
   ListItem,
   ListItemIcon,
+  Divider,
 } from "@mui/material";
 import {
   primarycolor,
@@ -116,24 +117,38 @@ export default function ViewInvoice() {
           <div className="container">
             <div className="row">
               {/* company logo */}
-              <div className="col-12 col-md-6 mt-3 mb-md-3">
+              <div className="mt-4 col-12 col-md-6 mt-3 mb-md-3">
                 <img
-                  src="./asset/footer linkedin.png"
+                  src="/meta.png"
                   alt="placeholder"
                   style={{
-                    backgroundColor: "black",
-                    border: "2px solid red",
-                    width: "10rem",
+                    // border: "2px solid red",
+                    width: "15rem",
                     marginBottom: "1rem",
                   }}
                 />
-                <h5 className="mt-5">Order Info:</h5>
+              </div>
+              <div className=" mt-5 col-12 col-md-6 text-md-end ">
+                {/* <h5 className="mt-5">Order Info:</h5> */}
                 <h6>Invoice No. : {transactiondata.invoice_number}</h6>
                 <h6>Date: {transactiondata.date}</h6>
                 <h6>Reseller ID: {orgdata.org_id}</h6>
               </div>
+              <Divider light={false} sx={{ opacity: 1 }}></Divider>
               {/* billing address and name */}
-              <div className=" mb-5 mt-5 col-12 col-md-6 text-md-end ">
+              <div className=" mb-5 mt-3 col-12 col-md-6 ">
+                <div>
+                  <h5 className="mt-md-5 mb-3">
+                    Own Web Solution Private Limited
+                  </h5>
+                  <h6>31-A, Govindpuri-H,</h6>
+                  <h6>Swej Farm, Jaipur,</h6>
+                  <h6>RJ, India (302019),</h6>
+                  <h6>GSTIN:</h6>
+                  <h6>CIN: </h6>
+                </div>
+              </div>
+              <div className=" mb-5 mt-3 col-12 col-md-6 text-md-end ">
                 <div>
                   <h5 className="mt-md-5 mb-3">Invoice To:</h5>
                   <h6>{orgdata.name}</h6>
@@ -237,86 +252,21 @@ export default function ViewInvoice() {
         {/* payment options like paypal visa etc.. */}
 
         {/* details on bottom */}
-        <footer>
-          <div className="container">
-            <div className="row">
-              {/* company logo */}
-              <div className="col">
-                <Box component="h4" margin="2rem">
-                  Instruction:
-                </Box>
-                <Box marginLeft={is_screen_sm ? "1ren" : "-1rem"}>
-                  <List>
-                    <ListItem>
-                      <ListItemIcon>
-                        <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
-                      </ListItemIcon>
-                      {/* <ListItemText primary="Single-line item" /> */}
-                      Send your draft / Pay Order / Cheque / e-Payment in the
-                      name of Own Web Solution Private Limited payable at
-                      Mumbai.{" "}
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon>
-                        <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
-                      </ListItemIcon>
-                      {/* <ListItemText primary="Single-line item" /> */}
-                      Non-payment within 7 days will return in suspension of the
-                      services automatically without notice.{" "}
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon>
-                        <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
-                      </ListItemIcon>
-                      {/* <ListItemText primary="Single-line item" /> */}.
-                      Mumbai Jurisdiction only.
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon>
-                        <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
-                      </ListItemIcon>
-                      {/* <ListItemText primary="Single-line item" /> */}
-                      PAN of our Company is AADCO6118K
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon>
-                        <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
-                      </ListItemIcon>
-                      {/* <ListItemText primary="Single-line item" /> */}
-                      All payment of this invoice is subjected to applicable TDS
-                      provisions of to the buyer.
-                    </ListItem>
-                    <ListItem>
-                      <ListItemIcon>
-                        <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
-                      </ListItemIcon>
-                      {/* <ListItemText primary="Single-line item" /> */}
-                      Please note for auto GST Input Credit is only available to
-                      those buyers who have already updated their GSTIN with our
-                      portal and those who wanted to claim GST Input Credit
-                      off-line are advised to file/upload GSTR 2A with GST
-                      Portal and intimate to Accounts Department at
-                      billing@connectreseller.com{" "}
-                    </ListItem>
-                  </List>
-                </Box>
-              </div>
-            </div>
-          </div>
-        </footer>
+        {/*  */}
         <Button
           id="printButton"
           variant="contained"
           onClick={() => {
-            let originalContent = document.body.innerHTML;
+            window.open(transactiondata.url);
+            // let originalContent = document.body.innerHTML;
 
-            let printable = document.getElementById("printable");
-            printable.querySelector("#printButton").remove();
-            let printableContent = printable.innerHTML;
+            // let printable = document.getElementById("printable");
+            // printable.querySelector("#printButton").remove();
+            // let printableContent = printable.innerHTML;
 
-            document.body.innerHTML = printableContent;
-            window.print();
-            document.body.innerHTML = originalContent;
+            // document.body.innerHTML = printableContent;
+            // window.print();
+            // document.body.innerHTML = originalContent;
           }}
           style={{
             padding: "0.5rem",
@@ -556,3 +506,70 @@ export default function ViewInvoice() {
 //     </form>
 //   </Box>
 // );
+// {/* <footer>
+//           <div className="container">
+//             <div className="row">
+//               {/* company logo */}
+//               <div className="col">
+//                 <Box component="h4" margin="2rem">
+//                   Instruction:
+//                 </Box>
+//                 <Box marginLeft={is_screen_sm ? "1ren" : "-1rem"}>
+//                   <List>
+//                     <ListItem>
+//                       <ListItemIcon>
+//                         <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
+//                       </ListItemIcon>
+//                       {/* <ListItemText primary="Single-line item" /> */}
+//                       Send your draft / Pay Order / Cheque / e-Payment in the
+//                       name of Own Web Solution Private Limited payable at
+//                       Mumbai.{" "}
+//                     </ListItem>
+//                     <ListItem>
+//                       <ListItemIcon>
+//                         <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
+//                       </ListItemIcon>
+//                       {/* <ListItemText primary="Single-line item" /> */}
+//                       Non-payment within 7 days will return in suspension of the
+//                       services automatically without notice.{" "}
+//                     </ListItem>
+//                     <ListItem>
+//                       <ListItemIcon>
+//                         <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
+//                       </ListItemIcon>
+//                       {/* <ListItemText primary="Single-line item" /> */}.
+//                       Mumbai Jurisdiction only.
+//                     </ListItem>
+//                     <ListItem>
+//                       <ListItemIcon>
+//                         <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
+//                       </ListItemIcon>
+//                       {/* <ListItemText primary="Single-line item" /> */}
+//                       PAN of our Company is AADCO6118K
+//                     </ListItem>
+//                     <ListItem>
+//                       <ListItemIcon>
+//                         <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
+//                       </ListItemIcon>
+//                       {/* <ListItemText primary="Single-line item" /> */}
+//                       All payment of this invoice is subjected to applicable TDS
+//                       provisions of to the buyer.
+//                     </ListItem>
+//                     <ListItem>
+//                       <ListItemIcon>
+//                         <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
+//                       </ListItemIcon>
+//                       {/* <ListItemText primary="Single-line item" /> */}
+//                       Please note for auto GST Input Credit is only available to
+//                       those buyers who have already updated their GSTIN with our
+//                       portal and those who wanted to claim GST Input Credit
+//                       off-line are advised to file/upload GSTR 2A with GST
+//                       Portal and intimate to Accounts Department at
+//                       billing@connectreseller.com{" "}
+//                     </ListItem>
+//                   </List>
+//                 </Box>
+//               </div>
+//             </div>
+//           </div>
+//         </footer> */}

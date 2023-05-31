@@ -14,14 +14,18 @@ import {
   InputLabel,
   OutlinedInput,
 } from "@mui/material";
+import Spinner from "react-bootstrap/Spinner";
+
 import { Logindata } from "../../global component/data_fetching_components/auth";
 import validationSchema from "../../global component/schema for validation";
 import { globalcontext } from "../../../routes/controler";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 function Login() {
   const { seterrormessage, is_session_valid } = useContext(globalcontext);
+  const [loading, setloading] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -48,6 +52,7 @@ function Login() {
     validationSchema,
     onSubmit: async (parms) => {
       // parms.preventDefault();
+      setloading(true);
       console.log(values.email, values.password);
       let data = await Logindata(values.email, values.password);
       console.log(data, "this is s");
@@ -56,6 +61,7 @@ function Login() {
         Cookies.set("session_id", data.session_id);
         navigate("/dashboard");
       } else if (data.status === 0) {
+        setloading(false);
         setservererror(data.error);
       } else if (data.servererror) {
         seterrormessage(data.servererror);
@@ -72,15 +78,20 @@ function Login() {
   return (
     <div className="full-screen" style={{ overflow: "hidden" }}>
       <div className="form-box d-flex justify-content-center align-items-center">
-        <div className="sign-in  d-none d-md-inline">
+        {/* <div className="sign-in  d-none d-md-inline">
           <label className="input-label ">Don't have an account ? </label>
 
           <Link className="sign-link" to="/signup">
             Contact us
           </Link>
-        </div>
+        </div> */}
         <div className="inner-from-box text-center">
-          <h4 className="mb-4">Login</h4>
+          <img
+            className="mb-4 me-4"
+            src="./meta.png"
+            // alt="METAMONIX Logo"
+            style={{ width: "250px", height: "auto", filter: "invert(100%)" }}
+          />
           <Box marginBottom="1rem">
             {servererror ? (
               <FormHelperText error>{servererror}</FormHelperText>
@@ -91,12 +102,18 @@ function Login() {
             className="form d-flex flex-column text-start "
             onSubmit={handleSubmit}
           >
+            <InputLabel
+              htmlFor="outlined-adornment-password"
+              sx={{ color: "white", marginBottom: "10px" }}
+            >
+              User Email
+            </InputLabel>
             <TextField
               name="email"
               type="text"
               // label="Email Address"
               placeholder="Email"
-              style={{ marginBottom: "1rem" }}
+              style={{ marginBottom: "2rem" }}
               value={values.email}
               onChange={handleChange}
               error={(touched.email && errors.email) || null}
@@ -137,10 +154,13 @@ function Login() {
               />
             </FormControl> */}
 
+            <InputLabel
+              htmlFor="outlined-adornment-password"
+              sx={{ color: "white", marginBottom: "10px" }}
+            >
+              Password
+            </InputLabel>
             <FormControl sx={{ m: 0 }} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">
-                Password
-              </InputLabel>
               <OutlinedInput
                 name="password"
                 id="outlined-adornment-password"
@@ -167,15 +187,30 @@ function Login() {
               />
             </FormControl>
             {/* {touched.email && errors.email ? <div>{errors.email}</div> : null} */}
-            <Button className="submit-button inputs" type="submit">
-              Login
+            <Button
+              className="submit-button inputs"
+              type="submit"
+              sx={{ borderRadius: "0px" }}
+              disabled={loading}
+            >
+              {!loading ? (
+                "Login"
+              ) : (
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              )}
             </Button>
-            <div className="text-center d-md-none">
+            {/* <div className="text-center d-md-none">
               <h5>OR</h5>
               <Link className="sign-link text-center d-md-none" to="/dashboard">
                 Contact us
               </Link>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>

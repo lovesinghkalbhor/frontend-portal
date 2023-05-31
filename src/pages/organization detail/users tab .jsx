@@ -311,9 +311,9 @@ export default function Users() {
       setorguserdata(data.users);
     }
   }
-  useEffect(() => {
-    console.log(orguserdata);
-  }, [orguserdata]);
+  // useEffect(() => {
+  //   console.log(orguserdata);
+  // }, [orguserdata]);
 
   useEffect(() => {
     getorguserdata();
@@ -332,6 +332,7 @@ export default function Users() {
     // ]);
   }
   function clearSearch() {
+    // setorguserdata();
     getorguserdata();
   }
   return (

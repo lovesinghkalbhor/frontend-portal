@@ -11,7 +11,7 @@ import { primarycolor, radius } from "../../components/variable";
 import { useFormik } from "formik";
 import { UpdateOrgData } from "../global component/data_fetching_components/org";
 import { globalcontext } from "../../routes/controler";
-export default function OrganizationSetting() {
+export default function AddCostumerTab() {
   const [ismodify, setismodify, is_screen_sm] = useState(false);
   const {
     orgdata,
@@ -61,7 +61,6 @@ export default function OrganizationSetting() {
       });
     }
   }, [orgdata]);
-
   useEffect(() => {
     is_session_valid();
   }, []);
@@ -69,7 +68,7 @@ export default function OrganizationSetting() {
   return (
     <Box margin={is_screen_sm ? "0rem" : "2rem"}>
       <Box display="flex" justifyContent="space-between">
-        <h3>Organization Setting</h3>
+        <h3>Add Costumer</h3>
         <Box>
           <h5>Modify</h5>
           <Switch
@@ -273,7 +272,7 @@ export default function OrganizationSetting() {
                 borderRadius: radius,
               }}
             >
-              Save
+              Add Customer
             </Button>
           ) : null}
         </Box>

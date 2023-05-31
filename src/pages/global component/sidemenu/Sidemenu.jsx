@@ -31,13 +31,16 @@ import {
   iconcolor,
   primarycolor,
   sidemenucolor,
+  toprightbordersidemenu,
 } from "../../../components/variable";
 import { globalcontext } from "../../../routes/controler";
 import CorporateFareIcon from "@mui/icons-material/CorporateFare";
 import { styled, alpha } from "@mui/material/styles";
+// import { useMediaQuery } from "@mui/material";
 
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { transform } from "lodash";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -90,7 +93,7 @@ export default function Sidemenu() {
     {
       icon: <CorporateFareIcon></CorporateFareIcon>,
       name: "Organization",
-      path: "/org",
+      path: "/organization",
     },
 
     {
@@ -150,6 +153,7 @@ export default function Sidemenu() {
       ],
     },
   ];
+  const is_screen_md = useMediaQuery("(min-width:767px)");
 
   const { is_screen_sm, is_session_valid } = useContext(globalcontext);
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
@@ -163,7 +167,7 @@ export default function Sidemenu() {
   return (
     <>
       <Box
-        boxShadow="0px 2px 4px rgba(2, 4, 10, 0.1)"
+        // boxShadow="0px 2px 4px rgba(2, 4, 10, 0.1)"
         // onMouseEnter={() => {
         //   toggled();
 
@@ -174,30 +178,70 @@ export default function Sidemenu() {
 
         //   setiscollapsed(collapsed);
         // }}
+        // style={
+        //   {
+        //     // borderRight: "1px solid white",
+        //   }
+        // }
+        // backgroundColor={primarycolor}
         style={{
-          borderRight: "1px solid white",
+          borderTopRightRadius: collapsed ? toprightbordersidemenu : "2rem",
+          borderTopLeftRadius: collapsed ? toprightbordersidemenu : "0rem",
         }}
-        backgroundColor={primarycolor}
+        backgroundColor={is_screen_sm ? primarycolor : "transparent"}
         // backgroundColor="rgb(255, 255, 255, 100%)"
         // paddingTop="rem"
         position="relative"
+        marginTop="0.3rem"
         // height="100vh"
         // style={{ borderTopRightRadius: "1rem" }}
       >
-        <IconButton
-          style={{
-            margin: is_screen_sm ? "0.5rem" : "0rem",
-            marginLeft: "1rem",
-            color: sidemenucolor,
-          }}
-          onClick={() => {
-            collapseSidebar();
-            setiscollapsed(collapsed);
-            toggleSidebar();
-          }}
-        >
-          <MenuIcon></MenuIcon>
-        </IconButton>
+        <Box>
+          <IconButton
+            // <IconButton
+            style={{
+              margin: is_screen_sm ? "1rem" : "0rem",
+              marginLeft: is_screen_sm ? "1.2rem" : "0rem",
+              marginRight: "0.3rem",
+
+              color: is_screen_sm ? sidemenucolor : primarycolor,
+              // color: sidemenucolor,
+            }}
+            onClick={() => {
+              collapseSidebar();
+              setiscollapsed(collapsed);
+              toggleSidebar();
+            }}
+          >
+            <MenuIcon></MenuIcon>
+            {/* {is_screen_md ? (
+            <img
+              className="ms-3"
+              src="/meta.png"
+              alt="METAMONIX Logo"
+              style={{
+                width: "100px",
+                height: "auto",
+                display: iscollapsed ? "block" : "none",
+                filter: "invert(100%)",
+              }}
+            />
+          ) : null} */}
+          </IconButton>
+          {is_screen_md ? (
+            <img
+              // className="ms-1"
+              src="/meta.png"
+              alt="METAMONIX Logo"
+              style={{
+                width: "100px",
+                height: "auto",
+                display: iscollapsed ? "inline-block" : "none",
+                filter: "invert(100%)",
+              }}
+            />
+          ) : null}
+        </Box>
         {/* <Search>
           <SearchIconWrapper>
             <SearchIcon />
@@ -218,6 +262,7 @@ export default function Sidemenu() {
           }}
           breakPoint="md"
           width="200px"
+          transitionDuration="0"
         >
           <Menu
             style={

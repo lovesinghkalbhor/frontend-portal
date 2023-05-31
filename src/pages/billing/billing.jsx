@@ -8,6 +8,7 @@ import {
   primarycolor,
   radius,
   borderTop,
+  cardcolor,
 } from "../../components/variable";
 import { globalcontext } from "../../routes/controler";
 import ListTranscationTab from "./list_transcationTab";
@@ -31,13 +32,15 @@ export default function Billing() {
   return (
     <>
       <Box
-        width={is_screen_sm ? "95%" : "100%"}
+        width={is_screen_sm ? "98%" : "100%"}
+        // width={is_screen_sm ? "100%" : "100%"}
         // padding={is_screen_sm ? "2rem" : "0.2rem"}
         padding={is_screen_sm ? "1rem" : "0.2rem"}
         margin={is_screen_sm ? "0.5rem" : "0rem"}
         // borderRadius="1.2rem"
         marginTop="2rem"
         backgroundColor="#FFFFFF"
+        // backgroundColor={cardcolor}
         paddingLeft="0.5rem"
         paddingRight="0.5rem"
         boxShadow={shadow}
@@ -57,6 +60,9 @@ export default function Billing() {
                 [`& .${tabsClasses.scrollButtons}`]: {
                   "&.Mui-disabled": { opacity: 0.3 },
                 },
+                "& .MuiTabPanel-root ": {
+                  padding: "0px !important",
+                },
               }}
             >
               <Tab
@@ -69,26 +75,38 @@ export default function Billing() {
               {/* <Tab label="View Invoice" value="4" /> */}
             </TabList>
           </Box>
-          <TabPanel value="1">
-            <Box width="99%" borderRadius="1.2rem" backgroundColor="#FFFFFF">
-              <ListTranscationTab></ListTranscationTab>
-            </Box>
-          </TabPanel>
-
-          <TabPanel value="2">
-            <Box>
-              <Box width="100%" borderRadius="1.2rem" backgroundColor="#FFFFFF">
-                <ListInvoice></ListInvoice>
+          <Box
+            sx={{
+              "& .MuiTabPanel-root ": {
+                padding: "5px !important",
+              },
+            }}
+          >
+            <TabPanel value="1">
+              <Box width="99%" borderRadius="1.2rem" backgroundColor="#FFFFFF">
+                <ListTranscationTab></ListTranscationTab>
               </Box>
-            </Box>
-          </TabPanel>
-          {/* <TabPanel value="4">
+            </TabPanel>
+
+            <TabPanel value="2">
+              <Box>
+                <Box
+                  width="100%"
+                  borderRadius="1.2rem"
+                  backgroundColor="#FFFFFF"
+                >
+                  <ListInvoice></ListInvoice>
+                </Box>
+              </Box>
+            </TabPanel>
+            {/* <TabPanel value="4">
             <Box>
               <Box width="100%" borderRadius="1.2rem" backgroundColor="#FFFFFF">
                 <ViewInvoice></ViewInvoice>
               </Box>
             </Box>
           </TabPanel> */}
+          </Box>
         </TabContext>
       </Box>
     </>

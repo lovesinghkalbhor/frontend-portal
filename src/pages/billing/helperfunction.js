@@ -1,7 +1,8 @@
 /**  Calculates the percentage of the given amount and percentage */
 function calculat_percentage(percentage, amount) {
   let fee = (amount * percentage) / 100;
-  return fee;
+  const roundedNumber = parseFloat(fee.toFixed(2));
+  return roundedNumber;
 }
 /**  Calculates the total amount by adding GST, platform fee, and the original amount.*/
 function totalAmount(GST, amount, platformfee) {
@@ -9,7 +10,9 @@ function totalAmount(GST, amount, platformfee) {
     calculat_percentage(GST, amount) +
     calculat_percentage(platformfee, amount) +
     amount;
-  return total;
+  const roundedNumber = parseFloat(total.toFixed(2));
+
+  return roundedNumber;
 }
 
 export { calculat_percentage, totalAmount };

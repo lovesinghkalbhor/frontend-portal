@@ -1,5 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Box, Grid, TextField, Button } from "@mui/material";
+import {
+  Box,
+  Grid,
+  TextField,
+  Button,
+  IconButton,
+  InputAdornment,
+  OutlinedInput,
+} from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
+import SearchIcon from "@mui/icons-material/Search";
 import { useFormik } from "formik";
 import DataTable from "../../components/datatable";
 import { SearchUser } from "../global component/data_fetching_components/org";
@@ -73,12 +83,12 @@ export default function SearchUserTab(props) {
 
   return (
     <>
-      <Box margin={is_screen_sm ? "1rem" : "0.5rem"} width="100%">
+      <Box marginBottom={is_screen_sm ? "0.5rem" : "0.5rem"} width="100%">
         <Box marginBottom="1rem">{/* <h3></h3> */}</Box>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <TextField
+            <Grid item xs={10} sm={6}>
+              <OutlinedInput
                 id="name-input"
                 label="Search User"
                 variant="outlined"
@@ -87,52 +97,80 @@ export default function SearchUserTab(props) {
                 value={values.search_data}
                 onChange={handleChange}
                 required
-                style={{ width: "100%", marginBottom: "1rem" }}
+                style={{ width: "100%" }}
                 onBlur={handleBlur}
                 InputLabelProps={{
                   shrink: true,
+                  color: "black",
                 }}
-              />
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => {
+                        setValues({
+                          ...values,
+                          search_data: "",
+                        });
+                        props.clearsearch();
+                      }}
+                      variant="contained"
+                      type="submit"
+                      // style={{
+                      //   // padding: "0.5rem",
+                      //   // paddingLeft: "1rem",
+                      //   // paddingRight: "1rem",
+                      //   color: "white",
+                      //   backgroundColor: primarycolor,
+                      //   marginTop: "0.5rem",
+                      //   borderRadius: radius,
+                      // }}
+                    >
+                      <ClearIcon></ClearIcon>
+                    </IconButton>
+                  </InputAdornment>
+                }
+              ></OutlinedInput>
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={2}>
               {/* {ismodify ? ( */}
-              <Button
+              <IconButton
                 variant="contained"
                 type="submit"
                 style={{
-                  padding: "0.5rem",
-                  paddingLeft: "1rem",
-                  paddingRight: "1rem",
+                  // padding: "0.5rem",
+                  // paddingLeft: "1rem",
+                  // paddingRight: "1rem",
                   color: "white",
                   backgroundColor: primarycolor,
                   marginTop: "0.5rem",
+                  marginRight: "0.2rem",
                   borderRadius: radius,
                 }}
               >
-                Search
-              </Button>
+                <SearchIcon></SearchIcon>
+              </IconButton>
               {/* ) : null} */}
-            </Grid>
-            <Grid item xs={12} md={2}>
+              {/* </Grid>
+            <Grid item xs={12} md={2}> */}
               {/* {ismodify ? ( */}
-              <Button
+              {/* <IconButton
                 onClick={() => {
                   props.clearsearch();
                 }}
                 variant="contained"
                 type="submit"
                 style={{
-                  padding: "0.5rem",
-                  paddingLeft: "1rem",
-                  paddingRight: "1rem",
+                  // padding: "0.5rem",
+                  // paddingLeft: "1rem",
+                  // paddingRight: "1rem",
                   color: "white",
                   backgroundColor: primarycolor,
                   marginTop: "0.5rem",
                   borderRadius: radius,
                 }}
               >
-                Clear
-              </Button>
+                <ClearIcon></ClearIcon>
+              </IconButton> */}
               {/* ) : null} */}
             </Grid>
           </Grid>

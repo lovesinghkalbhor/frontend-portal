@@ -5,6 +5,8 @@ import {
   shadow,
   radius,
   borderTop,
+  topbarcolor,
+  cardcolor,
 } from "../../components/variable";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -15,7 +17,7 @@ import SearchUserTab from "./searchUserTab";
 import OrganizationSetting from "./organization setting tab";
 import { globalcontext } from "../../routes/controler";
 import { OrgEndpoint } from "../global component/data_fetching_components/org";
-
+import AddCostumerTab from "./addCustomerTab";
 export default function OrganizationPage() {
   const [value, setValue] = useState("1");
   const { is_screen_sm, is_session_valid, setorgdata, seterrormessage } =
@@ -40,11 +42,14 @@ export default function OrganizationPage() {
 
   return (
     <Box
-      width="95%"
+      // width="95%"
+      width="100%"
       backgroundColor="white"
       marginTop="2rem"
       boxShadow={shadow}
       // borderRadius="1rem"
+      // backgroundColor={topbarcolor}
+      // backgroundColor={cardcolor}
       borderRadius={radius}
       // border={`1px solid ${primarycolor}`}
       borderTop={borderTop}
@@ -64,6 +69,7 @@ export default function OrganizationPage() {
           >
             <Tab label="Organization" value="1" />
             <Tab label="Users" value="2" />
+            <Tab label="Add customer" value="3" />
             {/* <Tab label="Search User" value="3" /> */}
           </TabList>
         </Box>
@@ -72,6 +78,9 @@ export default function OrganizationPage() {
         </TabPanel>
         <TabPanel value="2">
           <Users screenSize={is_screen_sm}></Users>
+        </TabPanel>
+        <TabPanel value="3">
+          <AddCostumerTab screenSize={is_screen_sm}></AddCostumerTab>
         </TabPanel>
         {/* <TabPanel value="3">
           <SearchUserTab></SearchUserTab>

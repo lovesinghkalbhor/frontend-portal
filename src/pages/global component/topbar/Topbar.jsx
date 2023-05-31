@@ -15,7 +15,10 @@ import {
   Typography,
   Button,
   SvgIcon,
+  radioClasses,
 } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Logout from "@mui/icons-material/Logout";
@@ -28,6 +31,11 @@ import {
   iconbackgroundcolor,
   iconcolor,
   sidemenucolor,
+  topbarcolor,
+  topbarpadding,
+  borderTop,
+  radius,
+  margintopbar,
 } from "../../../components/variable";
 import { globalcontext } from "../../../routes/controler";
 import Sidemenu from "../sidemenu/Sidemenu";
@@ -72,6 +80,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 export default function Topbar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const is_screen_md = useMediaQuery("(min-width:767px)");
 
   let path = location.pathname;
   let showpath = path.split("/").filter((value, index) => value != "tools");
@@ -143,15 +152,21 @@ export default function Topbar() {
   return (
     // main box covers full width
     <Box
-      width={"100%"}
+      width={"97%"}
       display="flex"
       justifyContent="space-between"
       paddingLeft="1rem"
       alignItems="center"
       // backgroundColor="#FFFFFF"
-      // boxShadow={shadow}
+      boxShadow={shadow}
       color={primarycolor}
-      backgroundColor={"#DDE6ED"}
+      backgroundColor={topbarcolor}
+      borderLeft={borderTop}
+      borderRight={borderTop}
+      borderRadius={radius}
+      marginLeft={margintopbar}
+      marginRight={margintopbar}
+      marginTop="0.4rem"
       // style={{
       //   margin: is_screen_sm ? "0.5rem" : "0rem",
       //   marginLeft: "1rem",
@@ -178,7 +193,7 @@ export default function Topbar() {
           alignItems="center"
           justifyContent="space-between"
           width="30rem"
-          // padding="1rem"
+          padding={topbarpadding}
           paddingRight="1rem"
         >
           {/* boxes accets like html tags  */}

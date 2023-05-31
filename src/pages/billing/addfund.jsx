@@ -17,6 +17,10 @@ import {
   radius,
   borderTop,
 } from "../../components/variable";
+import Spinner from "react-bootstrap/Spinner";
+
+import LoadingButton from "@mui/lab/LoadingButton";
+
 import { globalcontext } from "../../routes/controler";
 import { AddFund } from "../global component/data_fetching_components/billing_endpoints";
 import { useFormik } from "formik";
@@ -27,8 +31,13 @@ import { add } from "lodash";
 /**  this page adds the payment*/
 function AddFunds() {
   // this destructure the variable and funtion form the globalcontext
-  const { is_screen_sm, is_session_valid, servererror, setservererror } =
-    useContext(globalcontext);
+  const {
+    is_screen_sm,
+    is_session_valid,
+    servererror,
+    setservererror,
+    orgdata,
+  } = useContext(globalcontext);
 
   const [platformfee, setplatformfee] = useState(false);
   const [showpaymentbtn, setshowpaymentbtn] = useState(false);
@@ -55,7 +64,8 @@ function AddFunds() {
       let total = totalAmount(18, values.amount, platformfee);
       //only adding the amount if its more than 0
       if (total > 0) {
-        let a = await AddFund(total);
+        // let a = await AddFund(total);
+        let a = await AddFund(values.amount);
         // if api status true then set the response in state else give error
         if (a.status === 1) {
           console.log(
@@ -79,7 +89,7 @@ function AddFunds() {
   return (
     <>
       <Box
-        width={is_screen_sm ? "95%" : "100%"}
+        width={is_screen_sm ? "99%" : "100%"}
         padding={is_screen_sm ? "2rem" : "1rem"}
         margin={is_screen_sm ? "1rem" : "0rem"}
         marginTop={is_screen_sm ? "0rem" : "4rem"}
@@ -228,26 +238,10 @@ function AddFunds() {
                         cursor: "pointer",
                       }}
                     >
-                      {/* <Box>
-                        platformfee : {values.amount}+{platformfee}% =
-                        {calculat_percentage(platformfee, values.amount) +
-                          values.amount}
-                      </Box>
-                      <br></br>
-                      <Box>
-                        GST : {values.amount}+{18}% =
-                        {calculat_percentage(18, values.amount) + values.amount}
-                      </Box>
-                      <br></br>
-                      <Box>
-                        Payable amount :
-                        {totalAmount(18, values.amount, platformfee)}
-                      </Box>
-                    */}
-
                       <TableContainer>
                         <Table sx={{ minWidth: 200 }} aria-label="simple table">
                           <TableBody>
+                            {/* if got the data from the server then only show the response got from the server and also amout should entered */}
                             {addfunddata.order_number ? (
                               <TableRow>
                                 <TableCell component="th" scope="row">
@@ -263,7 +257,8 @@ function AddFunds() {
                                 platformfee :
                               </TableCell>
                               <TableCell>
-                                {values.amount} + {platformfee}% =
+                                {orgdata.currency?.symbol} {values.amount} +{" "}
+                                {platformfee}% = {orgdata.currency?.symbol}{" "}
                                 {calculat_percentage(
                                   platformfee,
                                   values.amount
@@ -275,7 +270,8 @@ function AddFunds() {
                                 GST :
                               </TableCell>
                               <TableCell>
-                                {values.amount} + {18}% =
+                                {orgdata.currency?.symbol} {values.amount} +{" "}
+                                {18}% = {orgdata.currency?.symbol}{" "}
                                 {calculat_percentage(18, values.amount) +
                                   values.amount}
                               </TableCell>
@@ -285,6 +281,7 @@ function AddFunds() {
                                 Payable amount :
                               </TableCell>
                               <TableCell>
+                                {orgdata.currency?.symbol}{" "}
                                 {totalAmount(18, values.amount, platformfee)}
                               </TableCell>
                             </TableRow>
@@ -297,7 +294,7 @@ function AddFunds() {
               ) : null}
 
               {showpaymentbtn ? (
-                <Button
+                <LoadingButton
                   type="submit"
                   variant="contained"
                   // onSubmit={handleSubmit}
@@ -317,11 +314,20 @@ function AddFunds() {
                     borderRadius: radius,
                   }}
                 >
-                  {addfunddata.order_number ? "pay" : "wait..."}
-                </Button>
+                  {addfunddata.order_number ? (
+                    "pay"
+                  ) : (
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  )}
+                </LoadingButton>
               ) : (
-                // <Box display="flex" justifyContent="start">
-                <Button
+                <LoadingButton
                   type="submit"
                   onClick={() => {
                     setshowpaymentbtn(true);
@@ -331,8 +337,6 @@ function AddFunds() {
                     }, 500);
                   }}
                   variant="contained"
-                  // onSubmit={handleSubmit}
-
                   style={{
                     padding: "0.5rem",
                     paddingLeft: "1rem",
@@ -344,145 +348,9 @@ function AddFunds() {
                   }}
                 >
                   Proceed
-                </Button>
-                // </Box>
+                </LoadingButton>
               )}
             </form>
-            {/* if got the data from the server then only show the response got from the server and also amout should entered */}
-            {addfunddata.order_number && values.amount ? (
-              <Box>
-                <Grid container spacing={2}>
-                  {/* <Grid item xs={6} md={4}>
-                    <TextField
-                      id="name-input"
-                      label="Order Number"
-                      variant="outlined"
-                      value={addfunddata.order_number}
-                      onChange={handleChange}
-                      style={{ width: "100%", marginBottom: "1rem" }}
-                      disabled
-                      onBlur={handleBlur}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Grid> */}
-                  {/* <Grid item xs={6} md={4}>
-                    <TextField
-                      id="address1-input"
-                      label="Password"
-                      variant="outlined"
-                      name="password"
-                      value={addfunddata.password || "unknown"}
-                      onChange={handleChange}
-                      disabled
-                      style={{ width: "100%", marginBottom: "1rem" }}
-                      onBlur={handleBlur}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Grid> */}
-                  {/* <Grid item xs={6} md={4}>
-                    <TextField
-                      id="state-input"
-                      label="Amount"
-                      variant="outlined"
-                      name="amount"
-                      value={addfunddata.amount || "unknown"}
-                      onChange={handleChange}
-                      style={{ width: "100%", marginBottom: "1rem" }}
-                      disabled
-                      onBlur={handleBlur}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Grid> */}
-                  {/* <Grid item xs={6} md={4}>
-                    <TextField
-                      id="country-input"
-                      label="Currency"
-                      variant="outlined"
-                      name="currency"
-                      value={addfunddata.currency || "unknown"}
-                      onChange={handleChange}
-                      style={{ width: "100%", marginBottom: "1rem" }}
-                      disabled
-                      onBlur={handleBlur}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Grid> */}
-                  {/* <Grid item xs={6} md={4}>
-                    <TextField
-                      id="phone-input"
-                      label="Currency Symbol"
-                      variant="outlined"
-                      name="currency_symbol"
-                      disabled
-                      value={addfunddata.currency_symbol || "unknown"}
-                      style={{ width: "100%", marginBottom: "1rem" }}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Grid> */}
-                  {/* <Grid item xs={6} md={4}>
-                    <TextField
-                      id="taxid-input"
-                      label="Applicable Tax"
-                      variant="outlined"
-                      name="applicable_tax"
-                      disabled
-                      value={addfunddata.applicable_tax || "unknown"}
-                      style={{ width: "100%", marginBottom: "1rem" }}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Grid> */}
-                  {/* <Grid item xs={6} md={4}>
-                    <TextField
-                      id="pincode-input"
-                      label="Tax"
-                      variant="outlined"
-                      name="tax"
-                      disabled
-                      value={addfunddata.tax || "unknown"}
-                      style={{
-                        width: "100%",
-                        marginBottom: "1rem",
-                      }}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={6} md={4}>
-                    <TextField
-                      id="currency-input"
-                      label="Net Amount"
-                      variant="outlined"
-                      name="net_amount"
-                      disabled
-                      value={addfunddata.net_amount || "unknown"}
-                      style={{ width: "100%", marginBottom: "1rem" }}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Grid> */}
-
-                  {/* <Grid item xs={6} md={4}>
-                    <Link to={addfunddata.payment_link} target="_blank">
-                      Click this link for payment
-                    </Link>
-                  </Grid> */}
-                </Grid>
-              </Box>
-            ) : null}
           </Box>
         ) : (
           <Box display="flex" justifyContent="space-between" marginTop="2rem">
