@@ -17,16 +17,15 @@ import {
 import Spinner from "react-bootstrap/Spinner";
 import Carousel from "react-bootstrap/Carousel";
 
-import { Logindata } from "../../global component/data_fetching_components/auth";
+import { TwoFactorAuth } from "../../global component/data_fetching_components/auth";
 import validationSchema from "../../global component/schema for validation";
 import { globalcontext } from "../../../routes/controler";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-function Login() {
-  const { seterrormessage, is_session_valid, setsuccessmessage } =
-    useContext(globalcontext);
+function Two_Factor() {
+  const { seterrormessage, is_session_valid } = useContext(globalcontext);
   const [loading, setloading] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -38,8 +37,7 @@ function Login() {
   const navigate = useNavigate();
   const [servererror, setservererror] = useState("");
   const initialValues = {
-    password: "",
-    email: "",
+    passcode: "",
   };
   const {
     values,
@@ -55,27 +53,18 @@ function Login() {
     onSubmit: async (parms) => {
       // parms.preventDefault();
       setloading(true);
-      console.log(values.email, values.password);
-      let data = await Logindata(values.email, values.password);
+      console.log(values.passcode);
+      let data = await TwoFactorAuth(values.passcode);
       console.log(data, "this is s");
 
       if (data.status === 1) {
-        // for login
-        Cookies.set("session_id", data.session_id);
+        // Cookies.set("session_id", data.session_id);
         navigate("/dashboard");
       } else if (data.status === 0) {
-        //if credentials are wrong
         setloading(false);
         setservererror(data.error);
-      } else if (data.status === 2) {
-        //for two factor authentication
-        Cookies.set("session_id", data.session_id);
-        setsuccessmessage("passcode has been sent to your email address");
-
-        navigate("/2fa");
-        setloading(false);
       } else if (data.servererror) {
-        //for internat errors
+        setloading(false);
         seterrormessage(data.servererror);
       }
     },
@@ -116,7 +105,7 @@ function Login() {
             // alt="METAMONIX Logo"
             style={{ width: "250px", height: "auto", filter: "invert(100%)" }}
           /> */}
-          <h3>Login</h3>
+          <h3>Two Factor Authentication</h3>
           <Box marginBottom="1rem">
             {servererror ? (
               <FormHelperText error>{servererror}</FormHelperText>
@@ -127,25 +116,6 @@ function Login() {
             className="form d-flex flex-column text-start "
             onSubmit={handleSubmit}
           >
-            <InputLabel
-              htmlFor="outlined-adornment-password"
-              sx={{ color: "white", marginBottom: "10px" }}
-            >
-              User Email
-            </InputLabel>
-            <TextField
-              name="email"
-              type="text"
-              // label="Email Address"
-              placeholder="Email"
-              style={{ marginBottom: "2rem" }}
-              value={values.email}
-              onChange={handleChange}
-              error={(touched.email && errors.email) || null}
-              helperText={errors.email}
-              onBlur={handleBlur}
-              id="outlined-error-helper-text"
-            />
             {/* <FormControl sx={{ m: 0 }} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">
                 Password
@@ -183,16 +153,16 @@ function Login() {
               htmlFor="outlined-adornment-password"
               sx={{ color: "white", marginBottom: "10px" }}
             >
-              Password
+              Enter passcode
             </InputLabel>
             <FormControl sx={{ m: 0 }} variant="outlined">
               <OutlinedInput
-                name="password"
+                name="passcode"
                 id="outlined-adornment-password"
-                placeholder="Password"
-                value={values.password}
+                placeholder="passcode"
+                value={values.passcode}
                 onChange={handleChange}
-                error={(touched.password && errors.password) || null}
+                error={(touched.passcode && errors.passcode) || null}
                 onBlur={handleBlur}
                 style={{ backgroundColor: "rgb(240 240 240)" }}
                 type={showPassword ? "text" : "password"}
@@ -212,7 +182,6 @@ function Login() {
               />
             </FormControl>
             {/* {touched.email && errors.email ? <div>{errors.email}</div> : null} */}
-            <Link className="mt-3 text-end">Forgot password</Link>
             <Button
               className="submit-button inputs"
               type="submit"
@@ -231,12 +200,6 @@ function Login() {
                 />
               )}
             </Button>
-            <div className="text-center mt-3">
-              <h5>OR</h5>
-              <Link className="sign-link text-center" to="/dashboard">
-                Contact Us
-              </Link>
-            </div>
           </form>
         </div>
         <Box
@@ -308,4 +271,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Two_Factor;

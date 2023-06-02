@@ -306,7 +306,7 @@ export default function Users() {
   // const { orgdata } = useContext(orgcontext);
 
   async function getorguserdata() {
-    let data = await OrgUserData(orgdata.org_id);
+    let data = await OrgUserData(orgdata?.org_id);
     if (data.status === 1) {
       setorguserdata(data.users);
     }
@@ -318,18 +318,10 @@ export default function Users() {
   useEffect(() => {
     getorguserdata();
     is_session_valid();
-  }, []);
+  }, [orgdata]);
 
   function search(data) {
     setorguserdata(data);
-    // setorguserdata([
-    //   {
-    //     email: "lovesinghkabhor.com",
-    //     first_name: "rahul",
-    //     last_name: "Singh",
-    //     user_type: "admin",
-    //   },
-    // ]);
   }
   function clearSearch() {
     // setorguserdata();

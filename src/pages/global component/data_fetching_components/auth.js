@@ -24,6 +24,29 @@ const Logindata = async (email, password) => {
   }
   return data;
 };
+const TwoFactorAuth = async (passcode) => {
+  const apiUrl = `${url}/auth/2fa`;
+  const session_id = Cookies.get("session_id");
+
+  console.log("in login");
+  const requestBody = {
+    session_id,
+    passcode,
+  };
+  let data = {};
+  try {
+    const response = await axios.post(apiUrl, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    data = response.data;
+  } catch (error) {
+    data.servererror = error.message;
+    console.error("Error:", error);
+  }
+  return data;
+};
 
 /** This function send the reset link to your email */
 const Send_reset_email = async (email) => {
@@ -137,4 +160,5 @@ export {
   Logoutallfunction,
   Send_reset_email,
   Reset_password,
+  TwoFactorAuth,
 };

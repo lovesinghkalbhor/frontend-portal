@@ -39,6 +39,7 @@ export default function OrganizationSetting() {
         let a = await UpdateOrgData(values);
         if (a.status === 1) {
           setsuccessmessage("Organization data has been updated successfully");
+          console.log(a.organization, "this is the starusa of the code ");
           setorgdata(a.organization);
         } else if (a.status === 0) {
           setservererror(a.error);
@@ -49,15 +50,15 @@ export default function OrganizationSetting() {
     });
 
   useEffect(() => {
-    if (orgdata.name && orgdata.address1) {
+    if (orgdata?.name && orgdata?.address1) {
       setValues({
         ...values,
-        organization_name: orgdata.name,
-        address1: orgdata.address1,
-        address2: orgdata.address2,
-        city: orgdata.city,
-        state: orgdata.state,
-        country: orgdata.country,
+        organization_name: orgdata?.name,
+        address1: orgdata?.address1,
+        address2: orgdata?.address2,
+        city: orgdata?.city,
+        state: orgdata?.state,
+        country: orgdata?.country,
       });
     }
   }, [orgdata]);
@@ -191,7 +192,7 @@ export default function OrganizationSetting() {
               variant="outlined"
               name="phone"
               disabled
-              value={orgdata.phone || " "}
+              value={orgdata?.phone || " "}
               style={{ width: "100%", marginBottom: "1rem" }}
               InputLabelProps={{
                 shrink: true,
@@ -205,7 +206,7 @@ export default function OrganizationSetting() {
               variant="outlined"
               name="tax_id"
               disabled
-              value={orgdata.tax_id || " "}
+              value={orgdata?.tax_id || " "}
               style={{ width: "100%", marginBottom: "1rem" }}
               InputLabelProps={{
                 shrink: true,
@@ -219,7 +220,7 @@ export default function OrganizationSetting() {
               variant="outlined"
               name="pincode"
               disabled
-              value={orgdata.pincode || " "}
+              value={orgdata?.pincode || " "}
               style={{ width: "100%", marginBottom: "1rem" }}
               InputLabelProps={{
                 shrink: true,
@@ -248,7 +249,7 @@ export default function OrganizationSetting() {
               label="org id"
               variant="outlined"
               name="org_id"
-              value={orgdata.org_id || " "}
+              value={orgdata?.org_id || " "}
               disabled
               style={{ width: "100%", marginBottom: "1rem" }}
               InputLabelProps={{

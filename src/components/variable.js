@@ -92,5 +92,5 @@ export const borderTop = `2px solid ${primarycolor}`;
 export const iconbackgroundcolor = "rgb(235 235 235);";
 export const sidemenucolor = "white";
 // this is the url for the actual api
-export const url = "https://portal-api-connect.onrender.com";
-// export const url = "http://localhost:5000";
+// export const url = "https://portal-api-connect.onrender.com";
+export const url = "http://localhost:5000";

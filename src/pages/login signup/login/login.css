@@ -19,7 +19,14 @@ body {
 }
 body .full-screen {
   min-width: 100vw;
-  background: #27374d;
+  background: #ffffff;
+  background-image: url("./Rectangle.svg");
+  background-repeat: no-repeat;
+}
+@media only screen and (max-width: 992px) {
+  body .full-screen {
+    background-image: url("");
+  }
 }
 body .form-box {
   min-height: 100vh;
@@ -46,13 +53,21 @@ body .form-box .sign-in .sign-link {
 }
 body .form-box .inner-from-box {
   max-height: 98vh;
-  background-color: transparent;
+  max-width: 10%;
+  border: 5px solid black;
+  border: 5px solid #dde6ed;
+  border-bottom: 1px solid #dde6ed;
+  border-right: 3px;
+  border-left: 3px;
+  background-color: #dde6ed;
+  background-color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 1rem 2rem 3.5rem 2rem;
   max-width: 30rem;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
+  box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.25);
 }
 @media only screen and (max-width: 576px) {
   body .form-box .inner-from-box {
@@ -74,6 +89,7 @@ body .form-box .inner-from-box h4 {
 body .form-box .inner-from-box input,
 body .form-box .inner-from-box .submit-button,
 body .form-box .inner-from-box .input-group {
+  border-radius: 5px;
   border: 0px solid;
   padding: 1rem;
   margin-bottom: 0rem;

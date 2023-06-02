@@ -26,6 +26,7 @@ import AddFunds from "../pages/billing/addfund";
 import UpdateUser from "../pages/organization detail/updateUserTab";
 import ViewTransaction from "../pages/billing/ViewTransactionTab copy";
 import ViewInvoice from "../pages/billing/ViewInvoiceTab";
+import Two_Factor from "../pages/login signup/login/two_factor_auth";
 import { cardcolor } from "../components/variable";
 const globalcontext = createContext();
 export default function App() {
@@ -55,7 +56,8 @@ export default function App() {
       if (
         location.pathname === "/" ||
         location.pathname === "/login" ||
-        location.pathname === "/signup"
+        location.pathname === "/signup" ||
+        location.pathname === "/2fa"
         // location.pathname === "/logoutall"
       ) {
         setPath(false);
@@ -138,7 +140,9 @@ export default function App() {
         <Routes>
           <Route exact path="/" element={<Login />}></Route>
           <Route exact path="/login" element={<Login />}></Route>
+          <Route exact path="/2fa" element={<Two_Factor />}></Route>
           <Route exact path="/signup" element={<SignUp />}></Route>
+          <Route exact path="/logoutall" element={<Logoutall />}></Route>
         </Routes>
         {/* if path is not login or signup then only show side bar */}
         {is_screen_sm && path ? <Sidemenu></Sidemenu> : null}
@@ -182,7 +186,7 @@ export default function App() {
                   path="/reset"
                   element={<ChangePassword></ChangePassword>}
                 />
-                <Route exact path="/logoutall" element={<Logoutall />}></Route>
+                {/* <Route exact path="/logoutall" element={<Logoutall />}></Route> */}
                 <Route path="/tools">
                   <Route
                     path="domain-transferout-list"

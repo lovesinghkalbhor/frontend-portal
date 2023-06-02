@@ -22,17 +22,18 @@ const OrgEndpoint = async () => {
 };
 
 /**This function update organization data */
-const UpdateOrgData = async (...orgdata) => {
+const UpdateOrgData = async (orgdata) => {
   const session_id = Cookies.get("session_id");
 
+  console.log(orgdata, "0000000000000000");
   let data = {
     session_id,
-    ...orgdata[0],
+    ...orgdata,
   };
-
   let upadtedData = {};
   try {
     const userdata = await axios.post(`${url}/org/update`, data);
+    console.log(userdata);
     upadtedData = userdata;
   } catch (err) {
     upadtedData.error = "Failed to fetch data. Please try again later.";
@@ -143,6 +144,25 @@ const EditUser = async (org_id, edit_data, user_id) => {
   }
   return data;
 };
+const AddUser = async (org_id, dataobj) => {
+  let data = {};
+  const session_id = Cookies.get("session_id");
+  console.log(session_id);
+  console.log(dataobj, "orgdataag");
+  try {
+    const userdata = await axios.post(`${url}/org/addUser`, {
+      org_id,
+      session_id,
+      ...dataobj,
+    });
+
+    data = userdata.data;
+    console.log(data, "50000000000000000000sdffffffffffffff");
+  } catch (err) {
+    data.error = "Failed to fetch data. Please try again later.";
+  }
+  return data;
+};
 
 export {
   OrgEndpoint,
@@ -152,4 +172,5 @@ export {
   RevokeUser,
   SearchUser,
   EditUser,
+  AddUser,
 };
