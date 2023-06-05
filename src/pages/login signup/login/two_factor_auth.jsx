@@ -189,7 +189,7 @@ function Two_Factor() {
               disabled={loading}
             >
               {!loading ? (
-                "Login"
+                "Submit"
               ) : (
                 <Spinner
                   as="span"

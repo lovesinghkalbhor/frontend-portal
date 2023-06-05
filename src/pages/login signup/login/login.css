@@ -20,12 +20,13 @@ body {
 body .full-screen {
   min-width: 100vw;
   background: #ffffff;
-  background-image: url("./Rectangle.svg");
+  background-image: url("./Rectangle_voilet.svg");
   background-repeat: no-repeat;
 }
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 767px) {
   body .full-screen {
     background-image: url("");
+    background-color: #7a1de0;
   }
 }
 body .form-box {
@@ -53,12 +54,7 @@ body .form-box .sign-in .sign-link {
 }
 body .form-box .inner-from-box {
   max-height: 98vh;
-  max-width: 10%;
-  border: 5px solid black;
-  border: 5px solid #dde6ed;
-  border-bottom: 1px solid #dde6ed;
-  border-right: 3px;
-  border-left: 3px;
+  border-radius: 1rem !important;
   background-color: #dde6ed;
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
@@ -72,7 +68,7 @@ body .form-box .inner-from-box {
 @media only screen and (max-width: 576px) {
   body .form-box .inner-from-box {
     max-width: 100%;
-    min-width: 70%;
+    min-width: 60%;
   }
 }
 body .form-box .inner-from-box InputLabel {
@@ -81,10 +77,17 @@ body .form-box .inner-from-box InputLabel {
 }
 body .form-box .inner-from-box h4 {
   font-family: "Poppins";
-  color: #dde6ed;
+  color: rgba(0, 0, 0, 0.527);
   font-weight: 600;
-  font-size: 30px;
+  font-size: 35px;
   line-height: normal;
+}
+body .form-box .inner-from-box hr {
+  color: black;
+  opacity: 1;
+  height: 2px;
+  width: 40%;
+  display: flex;
 }
 body .form-box .inner-from-box input,
 body .form-box .inner-from-box .submit-button,
@@ -94,6 +97,7 @@ body .form-box .inner-from-box .input-group {
   padding: 1rem;
   margin-bottom: 0rem;
   margin-top: 0rem;
+  min-width: 15rem;
   min-width: 15rem;
   height: 0.5rem;
   background-color: rgb(240, 240, 240);
@@ -105,6 +109,9 @@ body .form-box .inner-from-box .input-group {
     max-width: 100%;
     min-width: 70%;
   }
+}
+body .form-box .inner-from-box .link {
+  text-decoration: none;
 }
 body .form-box .inner-from-box .selected-flag {
   z-index: 13;
@@ -133,7 +140,7 @@ body .form-box .inner-from-box .submit-button {
   font-family: "Poppins";
   padding: 0.5rem;
   color: white;
-  background-color: #179bd7;
+  background-color: #7a1de0;
   border-radius: 5px;
   border: 2px solid transparent;
 }

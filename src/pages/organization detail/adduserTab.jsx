@@ -36,9 +36,9 @@ export default function AddUserTab() {
     useFormik({
       initialValues: initialValues,
       onSubmit: async (values) => {
-        let a = await AddUser(orgdata.org_id, values);
+        let a = await AddUser(1, values);
         if (a.status === 1) {
-          setsuccessmessage("User added successfully");
+          setsuccessmessage(a.error);
         } else if (a.status === 0) {
           setservererror(a.error);
         } else if (a.servererror) {

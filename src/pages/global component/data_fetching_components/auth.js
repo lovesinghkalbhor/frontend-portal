@@ -25,7 +25,7 @@ const Logindata = async (email, password) => {
   return data;
 };
 const TwoFactorAuth = async (passcode) => {
-  const apiUrl = `${url}/auth/2fa`;
+  const apiUrl = `${url}/auth/twofa`;
   const session_id = Cookies.get("session_id");
 
   console.log("in login");

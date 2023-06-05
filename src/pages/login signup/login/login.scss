@@ -42,10 +42,12 @@ body {
   .full-screen {
     min-width: 100vw;
     background: $primary;
-    background-image: url("./Rectangle.svg");
+    background-image: url("./Rectangle_voilet.svg");
     background-repeat: no-repeat;
-    @media only screen and (max-width: 992px) {
+    // background-position: -60px;
+    @media only screen and (max-width: 767px) {
       background-image: url("");
+      background-color: #7a1de0;
     }
 
     // background: linear-gradient(142deg, $primary 0%, rgb(2, 31, 144) 100%);
@@ -70,30 +72,44 @@ body {
         margin-left: 1rem;
       }
     }
+
     .inner-from-box {
       max-height: 98vh;
+      // border: 0px solid;
 
-      max-width: 10%;
-      border: 5px solid black;
-      border: 5px solid $secondary;
-      border-bottom: 1px solid $secondary;
-      border-right: 3px;
-      border-left: 3px;
+      border-radius: 1rem !important;
+      // max-width: 10%;
+
+      // border: 0px solid;
+      // border: 5px solid $secondary;
+      // border-bottom: 1px solid $secondary;
+      // border-right: 3px;
+      // border-left: 3px;
+      // border-radius: 2rem;
 
       // background-color: transparent;
       background-color: $secondary;
       background-color: rgb(255, 255, 255);
       @media only screen and (max-width: 576px) {
         max-width: 100%;
-        min-width: 70%;
+        min-width: 60%;
       }
       InputLabel {
         color: $secondary;
         background-color: #179bd7;
+        // background-color: #179bd7;
       }
       h4 {
-        @include font("Poppins", $secondary, 600, 30px);
+        @include font("Poppins", rgba(0, 0, 0, 0.527), 600, 35px);
       }
+      hr {
+        color: black;
+        opacity: 1;
+        height: 2px;
+        width: 40%;
+        display: flex;
+      }
+
       input,
       .submit-button,
       .input-group {
@@ -103,13 +119,17 @@ body {
         margin-bottom: 0rem;
         margin-top: 0rem;
         min-width: 15rem;
+        min-width: 15rem;
         height: 0.5rem;
         background-color: rgb(240 240 240);
-        //
+
         @media only screen and (max-width: 576px) {
           max-width: 100%;
           min-width: 70%;
         }
+      }
+      .link {
+        text-decoration: none;
       }
       .selected-flag {
         // border: none;
@@ -138,8 +158,8 @@ body {
         height: 2.5rem;
         // color: #27374d !important;
         color: $secondary !important;
-        @include main-button(#179bd7, transparent);
-        // @include main-button(black, transparent);
+        // @include main-button(#179bd7, transparent);
+        @include main-button(#7a1de0, transparent);
       }
       border-radius: 5px;
       padding: 01rem 2rem 3.5rem 2rem;

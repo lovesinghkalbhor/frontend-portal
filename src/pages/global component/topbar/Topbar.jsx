@@ -114,6 +114,7 @@ export default function Topbar() {
         if (billing_data.status === 1) {
           setbillinginfo(billing_data.billing);
         }
+
         // console.log(userData.users[0], "inthe topbar");
       } catch (error) {
         console.log("Failed to fetch data: in top bar");
@@ -187,6 +188,7 @@ export default function Topbar() {
         <Sidemenu></Sidemenu>
       )}
       {/* inner box for icons end */}
+      {/* if screen width if lg then only show this box else show below box commented by  "small size" */}
       {is_screen_sm ? (
         <Box
           display="flex"
@@ -319,6 +321,7 @@ export default function Topbar() {
           </Tooltip>
         </Box>
       ) : (
+        // small size////////////////////////////////////////////////
         <>
           <Box
             component="h5"
@@ -401,7 +404,7 @@ export default function Topbar() {
               <Logout fontSize="small" />
             </IconButton>
           </ListItemIcon>
-          Logout all
+          Log out of all sessions
         </MenuItem>
       </Menu>
     </Box>

@@ -27,6 +27,7 @@ export default function DataTable(props) {
       }))
     : [];
   console.log(props.datacolumn, "this is column of the data");
+
   return (
     <Box
       style={{

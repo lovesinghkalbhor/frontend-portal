@@ -27,7 +27,7 @@ import UpdateUser from "../pages/organization detail/updateUserTab";
 import ViewTransaction from "../pages/billing/ViewTransactionTab copy";
 import ViewInvoice from "../pages/billing/ViewInvoiceTab";
 import Two_Factor from "../pages/login signup/login/two_factor_auth";
-import { cardcolor } from "../components/variable";
+import { cardcolor, shadow } from "../components/variable";
 const globalcontext = createContext();
 export default function App() {
   const [userinfo, setuserinfo] = useState({});
@@ -57,8 +57,8 @@ export default function App() {
         location.pathname === "/" ||
         location.pathname === "/login" ||
         location.pathname === "/signup" ||
-        location.pathname === "/2fa"
-        // location.pathname === "/logoutall"
+        location.pathname === "/2fa" ||
+        location.pathname === "/logoutall"
       ) {
         setPath(false);
       } else {
@@ -75,8 +75,12 @@ export default function App() {
         style={{
           position: "fixed",
           zIndex: 1000,
-          width: "100%",
-          marginTop: "1rem",
+          width: "50%",
+          marginTop: "2rem",
+          marginLeft: "2rem",
+          border: "1px solid lightgray",
+          boxShadow: shadow,
+          borderRadius: "2rem",
         }}
       >
         <AlertTitle>Success</AlertTitle>
@@ -92,7 +96,10 @@ export default function App() {
           position: "fixed",
           zIndex: 1000,
           width: "100%",
-          marginTop: "1rem",
+          marginTop: "2rem",
+          border: "1px solid lightgray",
+          boxShadow: shadow,
+          borderRadius: "2rem",
         }}
       >
         <AlertTitle>Error</AlertTitle>
@@ -104,7 +111,7 @@ export default function App() {
     setTimeout(() => {
       setsuccessmessage("");
       seterrormessage("");
-    }, 5000);
+    }, 10000);
   }, [successmessage, errormessage]);
 
   return (
@@ -127,7 +134,9 @@ export default function App() {
     >
       {/* this is global aler box///////////////////////////////// */}
       {successmessage ? <Box>{renderSuccessAlert(successmessage)}</Box> : null}
+      {/* {<Box>{renderSuccessAlert(successmessage)}</Box>} */}
       {errormessage ? <Box>{renderErrorAlert(errormessage)}</Box> : null}
+      {/* {<Box>{renderErrorAlert(errormessage)}</Box>} */}
       {/* the page is start form here */}
       <div
         style={{

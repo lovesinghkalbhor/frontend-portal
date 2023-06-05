@@ -148,13 +148,11 @@ const AddUser = async (org_id, dataobj) => {
   let data = {};
   const session_id = Cookies.get("session_id");
   console.log(session_id);
+  console.log(org_id, "this is hte id e fo ,,,,,,,,,,,,,,,,...........");
   console.log(dataobj, "orgdataag");
+  const obj = { session_id, org_id: 1, ...dataobj };
   try {
-    const userdata = await axios.post(`${url}/org/addUser`, {
-      org_id,
-      session_id,
-      ...dataobj,
-    });
+    const userdata = await axios.post(`${url}/org/addUser`, obj);
 
     data = userdata.data;
     console.log(data, "50000000000000000000sdffffffffffffff");

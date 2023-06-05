@@ -187,12 +187,14 @@ export default function Sidemenu() {
         style={{
           borderTopRightRadius: collapsed ? toprightbordersidemenu : "2rem",
           borderTopLeftRadius: collapsed ? toprightbordersidemenu : "0rem",
+          marginLeft: collapsed ? "0.3rem" : "0rem",
         }}
         backgroundColor={is_screen_sm ? primarycolor : "transparent"}
         // backgroundColor="rgb(255, 255, 255, 100%)"
         // paddingTop="rem"
         position="relative"
         marginTop="0.3rem"
+        marginLeft={collapsed ? "0" : "0.3"}
         // height="100vh"
         // style={{ borderTopRightRadius: "1rem" }}
       >

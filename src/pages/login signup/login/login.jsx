@@ -13,6 +13,7 @@ import {
   IconButton,
   InputLabel,
   OutlinedInput,
+  Divider,
 } from "@mui/material";
 import Spinner from "react-bootstrap/Spinner";
 import Carousel from "react-bootstrap/Carousel";
@@ -76,6 +77,8 @@ function Login() {
         setloading(false);
       } else if (data.servererror) {
         //for internat errors
+        setloading(false);
+
         seterrormessage(data.servererror);
       }
     },
@@ -109,14 +112,14 @@ function Login() {
             Contact us
           </Link>
         </div> */}
-        <div className="inner-from-box text-center">
+        <div className="inner-from-box text-center ">
           {/* <img
             className="mb-4 me-4"
             src="./meta.png"
             // alt="METAMONIX Logo"
             style={{ width: "250px", height: "auto", filter: "invert(100%)" }}
           /> */}
-          <h3>Login</h3>
+          <h4>Login</h4>
           <Box marginBottom="1rem">
             {servererror ? (
               <FormHelperText error>{servererror}</FormHelperText>
@@ -129,22 +132,22 @@ function Login() {
           >
             <InputLabel
               htmlFor="outlined-adornment-password"
-              sx={{ color: "white", marginBottom: "10px" }}
+              sx={{ margin: "10px" }}
             >
               User Email
             </InputLabel>
             <TextField
+              id="outlined-error-helper-text"
               name="email"
               type="text"
               // label="Email Address"
               placeholder="Email"
-              style={{ marginBottom: "2rem" }}
+              style={{ marginBottom: "1rem" }}
               value={values.email}
               onChange={handleChange}
               error={(touched.email && errors.email) || null}
               helperText={errors.email}
               onBlur={handleBlur}
-              id="outlined-error-helper-text"
             />
             {/* <FormControl sx={{ m: 0 }} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">
@@ -181,7 +184,7 @@ function Login() {
 
             <InputLabel
               htmlFor="outlined-adornment-password"
-              sx={{ color: "white", marginBottom: "10px" }}
+              sx={{ margin: "10px" }}
             >
               Password
             </InputLabel>
@@ -212,7 +215,7 @@ function Login() {
               />
             </FormControl>
             {/* {touched.email && errors.email ? <div>{errors.email}</div> : null} */}
-            <Link className="mt-3 text-end">Forgot password</Link>
+            <Link className="mt-1 text-end fs-6 link ">Forgot password</Link>
             <Button
               className="submit-button inputs"
               type="submit"
@@ -231,11 +234,18 @@ function Login() {
                 />
               )}
             </Button>
-            <div className="text-center mt-3">
-              <h5>OR</h5>
-              <Link className="sign-link text-center" to="/dashboard">
-                Contact Us
-              </Link>
+            <div className="text-center mt-3 ">
+              <div className="d-flex justify-content-between">
+                <hr></hr>
+                <h5 className="fw-bold">OR</h5>
+                <hr></hr>
+              </div>
+              <Box>
+                Don't have account ?{" "}
+                <Link className="sign-link link fs-6" to="/dashboard">
+                  Contact Us
+                </Link>
+              </Box>
             </div>
           </form>
         </div>
@@ -247,7 +257,7 @@ function Login() {
           justifyContent="center"
         >
           <img
-            className=" me-4 mt-3"
+            className=" me-4 "
             src="./meta.png"
             // alt="METAMONIX Logo"
             style={{ width: "150px", height: "auto" }}
