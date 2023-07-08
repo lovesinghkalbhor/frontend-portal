@@ -8,16 +8,7 @@ import {
 } from "react-pro-sidebar";
 import "./style.css"; // Import your custom styles
 
-import {
-  Box,
-  IconButton,
-  Typography,
-  useTheme,
-  Button,
-  useMediaQuery,
-  Tooltip,
-  Zoom,
-} from "@mui/material";
+import { Box, IconButton, useMediaQuery, Tooltip, Zoom } from "@mui/material";
 import { Link } from "react-router-dom";
 import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
 import LanguageRoundedIcon from "@mui/icons-material/LanguageRounded";
@@ -36,11 +27,8 @@ import {
 import { globalcontext } from "../../../routes/controler";
 import CorporateFareIcon from "@mui/icons-material/CorporateFare";
 import { styled, alpha } from "@mui/material/styles";
-// import { useMediaQuery } from "@mui/material";
 
 import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-import { transform } from "lodash";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -159,7 +147,6 @@ export default function Sidemenu() {
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
     useProSidebar();
   const [iscollapsed, setiscollapsed] = useState(1);
-  // const is_screen_sm = useMediaQuery("(min-width:600px)");
   useEffect(() => {
     is_session_valid();
   }, []);
@@ -167,47 +154,24 @@ export default function Sidemenu() {
   return (
     <>
       <Box
-        // boxShadow="0px 2px 4px rgba(2, 4, 10, 0.1)"
-        // onMouseEnter={() => {
-        //   toggled();
-
-        //   setiscollapsed(toggled);
-        // }}
-        // onMouseLeave={() => {
-        //   collapseSidebar();
-
-        //   setiscollapsed(collapsed);
-        // }}
-        // style={
-        //   {
-        //     // borderRight: "1px solid white",
-        //   }
-        // }
-        // backgroundColor={primarycolor}
         style={{
           borderTopRightRadius: collapsed ? toprightbordersidemenu : "2rem",
           borderTopLeftRadius: collapsed ? toprightbordersidemenu : "0rem",
           marginLeft: collapsed ? "0.3rem" : "0rem",
         }}
         backgroundColor={is_screen_sm ? primarycolor : "transparent"}
-        // backgroundColor="rgb(255, 255, 255, 100%)"
-        // paddingTop="rem"
         position="relative"
         marginTop="0.3rem"
         marginLeft={collapsed ? "0" : "0.3"}
-        // height="100vh"
-        // style={{ borderTopRightRadius: "1rem" }}
       >
         <Box>
           <IconButton
-            // <IconButton
             style={{
               margin: is_screen_sm ? "1rem" : "0rem",
               marginLeft: is_screen_sm ? "1.2rem" : "0rem",
               marginRight: "0.3rem",
 
               color: is_screen_sm ? sidemenucolor : primarycolor,
-              // color: sidemenucolor,
             }}
             onClick={() => {
               collapseSidebar();
@@ -216,23 +180,9 @@ export default function Sidemenu() {
             }}
           >
             <MenuIcon></MenuIcon>
-            {/* {is_screen_md ? (
-            <img
-              className="ms-3"
-              src="/meta.png"
-              alt="METAMONIX Logo"
-              style={{
-                width: "100px",
-                height: "auto",
-                display: iscollapsed ? "block" : "none",
-                filter: "invert(100%)",
-              }}
-            />
-          ) : null} */}
           </IconButton>
           {is_screen_md ? (
             <img
-              // className="ms-1"
               src="/meta.png"
               alt="METAMONIX Logo"
               style={{
@@ -244,19 +194,10 @@ export default function Sidemenu() {
             />
           ) : null}
         </Box>
-        {/* <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search> */}
+
         <Sidebar
           display="none !important"
           backgroundColor={primarycolor}
-          // backgroundColor="rgb(255, 255, 255, 100%)"
           style={{
             height: "100vh",
             paddingTop: "1rem",
@@ -266,15 +207,7 @@ export default function Sidemenu() {
           width="200px"
           transitionDuration="0"
         >
-          <Menu
-            style={
-              {
-                // display: "flex",
-                // alignContent: "space-between",
-                // width: "100%",
-              }
-            }
-          >
+          <Menu>
             <Box>
               {menus.map((element, index) => {
                 return (
@@ -291,20 +224,14 @@ export default function Sidemenu() {
                           },
                         }}
                       >
-                        <Link
-                          className="menu_link"
-                          // style={{ textDecoration: "none", color: "white" }}
-                          to={element.path}
-                        >
+                        <Link className="menu_link" to={element.path}>
                           <MenuItem
                             id="menu_item"
                             style={{
-                              // borderRadius: "0.5rem",
                               color: sidemenucolor,
                             }}
                             icon={element.icon}
                             component="div"
-                            // component={<Link to={element.path} />}
                           >
                             {iscollapsed ? element.name : ""}
                           </MenuItem>
@@ -323,9 +250,7 @@ export default function Sidemenu() {
                           icon={element.icon}
                           label={element.name}
                           key={element.name}
-                          // backgroundColor="#7C43F2"
                           style={{
-                            // backdropFilter: primarycolor,
                             color: sidemenucolor,
                           }}
                         >
@@ -356,7 +281,6 @@ export default function Sidemenu() {
           </Menu>
         </Sidebar>
       </Box>
-      {/* </Box> */}
     </>
   );
 }

@@ -1,19 +1,7 @@
 import React, { useContext, useEffect } from "react";
 
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
-import {
-  TextField,
-  InputLabel,
-  FormControl,
-  Button,
-  Box,
-  Tab,
-  Grid,
-  tabsClasses,
-} from "@mui/material";
-import { primarycolor, shadow, radius } from "../../components/variable";
+import { TextField, Button, Box, Grid } from "@mui/material";
+import { primarycolor, radius } from "../../components/variable";
 import { useFormik } from "formik";
 import { globalcontext } from "../../routes/controler";
 
@@ -21,12 +9,8 @@ export default function AddCostumerTab() {
   const [value, setValue] = React.useState("1");
   const { is_session_valid } = useContext(globalcontext);
 
-  const TabhandleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
   const initialValues = {
-    // firstname: userinfo.firstName, // Set default value to empty string if userinfo.firstName is undefined
+    // Set default value to empty string if userinfo.firstName is undefined
     name: "",
     email: "",
     password: "",
@@ -43,11 +27,6 @@ export default function AddCostumerTab() {
       initialValues: initialValues,
       onSubmit: (values) => {
         console.log(values);
-        // let a = updateprofiledata(
-        //   values.firstname,
-        //   values.lastname,
-        //   values.email
-        // );
 
         console.log(values, "called data update");
       },
@@ -56,26 +35,8 @@ export default function AddCostumerTab() {
     is_session_valid();
   }, []);
 
-  // it is usefull dont erase it for now i have commented it
-  //   useEffect(() => {
-  //     // it sets the input value after fetchform the api
-  //     if (userinfo.firstName && userinfo.lastName && userinfo.email) {
-  //       setValues({
-  //         ...values,
-  //         name: userinfo.name,
-  //         company_name: userinfo.lastName,
-  //         email: userinfo.email,
-  //       });
-  //     }
-  //   }, [userinfo]);
-
   return (
-    <Box
-      component="form"
-      noValidate
-      autoComplete="off"
-      // width="100%"
-    >
+    <Box component="form" noValidate autoComplete="off">
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={4}>
@@ -89,9 +50,6 @@ export default function AddCostumerTab() {
               required
               style={{ width: "100%", marginBottom: "1rem" }}
               onBlur={handleBlur}
-              // InputLabelProps={{
-              //   shrink: true,
-              // }}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -105,9 +63,6 @@ export default function AddCostumerTab() {
               required
               style={{ width: "100%", marginBottom: "1rem" }}
               onBlur={handleBlur}
-              // InputLabelProps={{
-              //   shrink: true,
-              // }}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -121,9 +76,6 @@ export default function AddCostumerTab() {
               required
               style={{ width: "100%", marginBottom: "1rem" }}
               onBlur={handleBlur}
-              // InputLabelProps={{
-              //   shrink: true,
-              // }}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -137,9 +89,6 @@ export default function AddCostumerTab() {
               required
               style={{ width: "100%", marginBottom: "1rem" }}
               onBlur={handleBlur}
-              // InputLabelProps={{
-              //   shrink: true,
-              // }}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -153,9 +102,6 @@ export default function AddCostumerTab() {
               required
               style={{ width: "100%", marginBottom: "1rem" }}
               onBlur={handleBlur}
-              // InputLabelProps={{
-              //   shrink: true,
-              // }}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -169,9 +115,6 @@ export default function AddCostumerTab() {
               required
               style={{ width: "100%", marginBottom: "1rem" }}
               onBlur={handleBlur}
-              // InputLabelProps={{
-              //   shrink: true,
-              // }}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -185,9 +128,6 @@ export default function AddCostumerTab() {
               required
               style={{ width: "100%", marginBottom: "1rem" }}
               onBlur={handleBlur}
-              // InputLabelProps={{
-              //   shrink: true,
-              // }}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -201,9 +141,6 @@ export default function AddCostumerTab() {
               required
               style={{ width: "100%", marginBottom: "1rem" }}
               onBlur={handleBlur}
-              // InputLabelProps={{
-              //   shrink: true,
-              // }}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -217,9 +154,6 @@ export default function AddCostumerTab() {
               required
               style={{ width: "100%", marginBottom: "1rem" }}
               onBlur={handleBlur}
-              // InputLabelProps={{
-              //   shrink: true,
-              // }}
             />
           </Grid>
 
@@ -234,9 +168,6 @@ export default function AddCostumerTab() {
               required
               style={{ width: "100%", marginBottom: "1rem" }}
               onBlur={handleBlur}
-              // InputLabelProps={{
-              //   shrink: true,
-              // }}
             />
           </Grid>
         </Grid>
@@ -258,21 +189,6 @@ export default function AddCostumerTab() {
           >
             Save
           </Button>{" "}
-          {/* <Button
-            variant="contained"
-            style={{
-              padding: "0.5rem",
-              paddingLeft: "1rem",
-              paddingRight: "1rem",
-              color: "white",
-              backgroundColor: "gray",
-              marginBottom: "1rem",
-              borderRadius: "0.5rem",
-              margin: "2rem",
-            }}
-          >
-            Cancel
-          </Button> */}
         </Box>
       </form>
     </Box>

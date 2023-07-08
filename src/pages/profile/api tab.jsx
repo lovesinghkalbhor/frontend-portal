@@ -32,7 +32,6 @@ export default function Api_Tab(props) {
             backgroundColor: primarycolor,
             marginBottom: "1rem",
             borderRadius: "0.5rem",
-            // margin: "2rem",
             marginLeft: "1rem",
           }}
         >
@@ -119,7 +118,6 @@ export default function Api_Tab(props) {
             marginBottom: "1rem",
             marginTop: "1rem",
             borderRadius: "0.5rem",
-            // margin: "2rem",
             marginLeft: "1rem",
           }}
         >

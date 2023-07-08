@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
-import { Box, Icon, IconButton, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import DataTable from "../../components/datatable";
-import { primarycolor, shadow } from "../../components/variable";
+import { shadow } from "../../components/variable";
 import { globalcontext } from "../../routes/controler";
 
 export default function Domain() {
@@ -21,23 +21,6 @@ export default function Domain() {
           margin={is_screen_sm ? "0.5rem" : "0rem"}
           boxShadow={shadow}
         >
-          {/* <Button
-            variant="contained"
-            // backgroundColor={primarycolor}
-            style={{
-              padding: "0.5rem",
-              paddingLeft: "1rem",
-              paddingRight: "1rem",
-              color: "white",
-              backgroundColor: primarycolor,
-              marginBottom: "1rem",
-              borderRadius: "0.5rem",
-              marginLeft: "1rem",
-            }}
-          >
-            Renew domain
-          </Button> */}
-
           <DataTable></DataTable>
         </Box>
       </Box>

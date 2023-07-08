@@ -1,27 +1,19 @@
 import { React, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import { MenuItem, IconButton, Avatar } from "@mui/material";
-import LockRoundedIcon from "@mui/icons-material/LockRounded";
+import { MenuItem, IconButton } from "@mui/material";
 import { Logoutfunction } from "../data_fetching_components/auth";
-import Logout from "@mui/icons-material/Logout";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 export default function TopbarSidemenu() {
   const [state, setState] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
   const handleClose = () => {
@@ -60,6 +52,13 @@ export default function TopbarSidemenu() {
     </MenuItem>,
     <MenuItem onClick={logoutfunctionbutton}>Logout</MenuItem>,
     <MenuItem onClick={logoutallfunctionbutton}>Logout all</MenuItem>,
+    <MenuItem
+      onClick={() => {
+        navigate("/addfund");
+      }}
+    >
+      Add Funds
+    </MenuItem>,
   ];
 
   const list = () => (

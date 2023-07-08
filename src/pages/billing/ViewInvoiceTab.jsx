@@ -1,21 +1,11 @@
 import { React, useState, useEffect, useContext } from "react";
-import {
-  Box,
-  Button,
-  TextField,
-  Grid,
-  List,
-  ListItem,
-  ListItemIcon,
-  Divider,
-} from "@mui/material";
+import { Box, Button, Divider } from "@mui/material";
 import {
   primarycolor,
   shadow,
   radius,
   borderTop,
 } from "../../components/variable";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { calculat_percentage, totalAmount } from "./helperfunction";
 import { useFormik } from "formik";
 import { viewInvoice } from "../global component/data_fetching_components/billing_endpoints";
@@ -25,7 +15,6 @@ import { OrgEndpoint } from "../global component/data_fetching_components/org";
 export default function ViewInvoice() {
   const [transactiondata, settransactiondata] = useState({});
   const {
-    setservererror,
     is_session_valid,
     is_screen_sm,
     orgdata,
@@ -107,10 +96,7 @@ export default function ViewInvoice() {
         marginTop={is_screen_sm ? "0rem" : "4rem"}
         backgroundColor="#FFFFFF"
         boxShadow={shadow}
-        // borderRadius="1.2rem"
-        // border={`1px solid ${primarycolor}`}
         borderRadius={radius}
-        // border={`1px solid ${primarycolor}`}
         borderTop={borderTop}
       >
         <billing-info-section className="billing_info">
@@ -122,14 +108,12 @@ export default function ViewInvoice() {
                   src="/meta.png"
                   alt="placeholder"
                   style={{
-                    // border: "2px solid red",
                     width: "15rem",
                     marginBottom: "1rem",
                   }}
                 />
               </div>
               <div className=" mt-5 col-12 col-md-6 text-md-end ">
-                {/* <h5 className="mt-5">Order Info:</h5> */}
                 <h6>Invoice No. : {transactiondata.invoice_number}</h6>
                 <h6>Date: {transactiondata.date}</h6>
                 <h6>Reseller ID: {orgdata.org_id}</h6>
@@ -258,15 +242,6 @@ export default function ViewInvoice() {
           variant="contained"
           onClick={() => {
             window.open(transactiondata.url);
-            // let originalContent = document.body.innerHTML;
-
-            // let printable = document.getElementById("printable");
-            // printable.querySelector("#printButton").remove();
-            // let printableContent = printable.innerHTML;
-
-            // document.body.innerHTML = printableContent;
-            // window.print();
-            // document.body.innerHTML = originalContent;
           }}
           style={{
             padding: "0.5rem",
@@ -284,292 +259,3 @@ export default function ViewInvoice() {
     </>
   );
 }
-
-// return (
-//   <Box margin="2rem">
-//     <Box display="flex" justifyContent="space-between" marginBottom="1rem">
-//       <h3>Invoice Detail</h3>
-//     </Box>
-//     <form onSubmit={handleSubmit}>
-//       {/* <Grid item xs={6} md={4}>
-//         <TextField
-//           id="name-input"
-//           label="Invoice Number"
-//           variant="outlined"
-//           name="invoice_number"
-//           placeholder="Enter Invoice Number"
-//           value={values.invoice_number}
-//           onChange={handleChange}
-//           required
-//           style={{ width: "100%", marginBottom: "1rem" }}
-//           onBlur={handleBlur}
-//           InputLabelProps={{
-//             shrink: true,
-//           }}
-//         />
-//       </Grid> */}
-//       {/* {transactiondata.invoice_number ? ( */}
-//       <Box>
-//         <Grid container spacing={2}>
-//           <Grid item xs={6} md={4}>
-//             <TextField
-//               id="org-input"
-//               label="Date Time"
-//               variant="outlined"
-//               name="date"
-//               value={transactiondata.date || "unknown"}
-//               disabled
-//               style={{ width: "100%", marginBottom: "1rem" }}
-//               InputLabelProps={{
-//                 shrink: true,
-//               }}
-//             />
-//           </Grid>
-//           <Grid item xs={6} md={4}>
-//             <TextField
-//               id="name-input"
-//               label="Reference Number"
-//               variant="outlined"
-//               value={transactiondata.invoice_number}
-//               onChange={handleChange}
-//               style={{ width: "100%", marginBottom: "1rem" }}
-//               disabled
-//               onBlur={handleBlur}
-//               InputLabelProps={{
-//                 shrink: true,
-//               }}
-//             />
-//           </Grid>
-//           <Grid item xs={6} md={4}>
-//             <TextField
-//               id="address2-input"
-//               label="Gateway"
-//               variant="outlined"
-//               name="status"
-//               value={transactiondata.status || "unknown"}
-//               onChange={handleChange}
-//               style={{ width: "100%", marginBottom: "1rem" }}
-//               disabled
-//               onBlur={handleBlur}
-//               InputLabelProps={{
-//                 shrink: true,
-//               }}
-//             />
-//           </Grid>
-//           <Grid item xs={6} md={4}>
-//             <TextField
-//               id="address1-input"
-//               label="Password"
-//               variant="outlined"
-//               name="password"
-//               value={transactiondata.password || "unknown"}
-//               onChange={handleChange}
-//               disabled
-//               style={{ width: "100%", marginBottom: "1rem" }}
-//               onBlur={handleBlur}
-//               InputLabelProps={{
-//                 shrink: true,
-//               }}
-//             />
-//           </Grid>
-//           <Grid item xs={6} md={4}>
-//             <TextField
-//               id="state-input"
-//               label="Amount"
-//               variant="outlined"
-//               name="amount"
-//               value={transactiondata.amount || "unknown"}
-//               onChange={handleChange}
-//               style={{ width: "100%", marginBottom: "1rem" }}
-//               disabled
-//               onBlur={handleBlur}
-//               InputLabelProps={{
-//                 shrink: true,
-//               }}
-//             />
-//           </Grid>
-//           <Grid item xs={6} md={4}>
-//             <TextField
-//               id="country-input"
-//               label="Currency"
-//               variant="outlined"
-//               name="currency"
-//               value={transactiondata.currency || "unknown"}
-//               onChange={handleChange}
-//               style={{ width: "100%", marginBottom: "1rem" }}
-//               disabled
-//               onBlur={handleBlur}
-//               InputLabelProps={{
-//                 shrink: true,
-//               }}
-//             />
-//           </Grid>
-//           <Grid item xs={6} md={4}>
-//             <TextField
-//               id="phone-input"
-//               label="Currency Symbol"
-//               variant="outlined"
-//               name="currency_symbol"
-//               disabled
-//               value={transactiondata.currency_symbol || "unknown"}
-//               style={{ width: "100%", marginBottom: "1rem" }}
-//               InputLabelProps={{
-//                 shrink: true,
-//               }}
-//             />
-//           </Grid>
-//           <Grid item xs={6} md={4}>
-//             <TextField
-//               id="taxid-input"
-//               label="Applicable Tax"
-//               variant="outlined"
-//               name="applicable_tax"
-//               disabled
-//               value={transactiondata.applicable_tax || "unknown"}
-//               style={{ width: "100%", marginBottom: "1rem" }}
-//               InputLabelProps={{
-//                 shrink: true,
-//               }}
-//             />
-//           </Grid>
-//           <Grid item xs={6} md={4}>
-//             <TextField
-//               id="pincode-input"
-//               label="Tax"
-//               variant="outlined"
-//               name="tax"
-//               disabled
-//               value={transactiondata.tax || "unknown"}
-//               style={{
-//                 width: "100%",
-//                 marginBottom: "1rem",
-//               }}
-//               InputLabelProps={{
-//                 shrink: true,
-//               }}
-//             />
-//           </Grid>
-//           <Grid item xs={6} md={4}>
-//             <TextField
-//               id="currency-input"
-//               label="Net Amount"
-//               variant="outlined"
-//               name="net_amount"
-//               disabled
-//               value={transactiondata.net_amount || "unknown"}
-//               style={{ width: "100%", marginBottom: "1rem" }}
-//               InputLabelProps={{
-//                 shrink: true,
-//               }}
-//             />
-//           </Grid>
-//           <Grid item xs={6} md={4}>
-//             <TextField
-//               id="city-input"
-//               label="Transaction ID"
-//               variant="outlined"
-//               name="transaction_id"
-//               value={transactiondata.transaction_id || "unknown"}
-//               onChange={handleChange}
-//               style={{ width: "100%", marginBottom: "1rem" }}
-//               disabled
-//               onBlur={handleBlur}
-//               InputLabelProps={{
-//                 shrink: true,
-//               }}
-//             />
-//           </Grid>
-//           <Grid item xs={6} md={4}>
-//             <Link to={transactiondata.url}> Go to invoice</Link>
-//           </Grid>
-//         </Grid>
-//       </Box>
-//       {/* ) : null} */}
-
-//       <Box display="flex" justifyContent="start">
-//         <Button
-//           variant="contained"
-//           type="submit"
-//           style={{
-//             padding: "0.5rem",
-//             paddingLeft: "1rem",
-//             paddingRight: "1rem",
-//             color: "white",
-//             backgroundColor: primarycolor,
-//             marginBottom: "1rem",
-//             borderRadius: "0.5rem",
-//           }}
-//         >
-//           Get data
-//         </Button>
-//       </Box>
-//     </form>
-//   </Box>
-// );
-// {/* <footer>
-//           <div className="container">
-//             <div className="row">
-//               {/* company logo */}
-//               <div className="col">
-//                 <Box component="h4" margin="2rem">
-//                   Instruction:
-//                 </Box>
-//                 <Box marginLeft={is_screen_sm ? "1ren" : "-1rem"}>
-//                   <List>
-//                     <ListItem>
-//                       <ListItemIcon>
-//                         <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
-//                       </ListItemIcon>
-//                       {/* <ListItemText primary="Single-line item" /> */}
-//                       Send your draft / Pay Order / Cheque / e-Payment in the
-//                       name of Own Web Solution Private Limited payable at
-//                       Mumbai.{" "}
-//                     </ListItem>
-//                     <ListItem>
-//                       <ListItemIcon>
-//                         <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
-//                       </ListItemIcon>
-//                       {/* <ListItemText primary="Single-line item" /> */}
-//                       Non-payment within 7 days will return in suspension of the
-//                       services automatically without notice.{" "}
-//                     </ListItem>
-//                     <ListItem>
-//                       <ListItemIcon>
-//                         <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
-//                       </ListItemIcon>
-//                       {/* <ListItemText primary="Single-line item" /> */}.
-//                       Mumbai Jurisdiction only.
-//                     </ListItem>
-//                     <ListItem>
-//                       <ListItemIcon>
-//                         <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
-//                       </ListItemIcon>
-//                       {/* <ListItemText primary="Single-line item" /> */}
-//                       PAN of our Company is AADCO6118K
-//                     </ListItem>
-//                     <ListItem>
-//                       <ListItemIcon>
-//                         <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
-//                       </ListItemIcon>
-//                       {/* <ListItemText primary="Single-line item" /> */}
-//                       All payment of this invoice is subjected to applicable TDS
-//                       provisions of to the buyer.
-//                     </ListItem>
-//                     <ListItem>
-//                       <ListItemIcon>
-//                         <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
-//                       </ListItemIcon>
-//                       {/* <ListItemText primary="Single-line item" /> */}
-//                       Please note for auto GST Input Credit is only available to
-//                       those buyers who have already updated their GSTIN with our
-//                       portal and those who wanted to claim GST Input Credit
-//                       off-line are advised to file/upload GSTR 2A with GST
-//                       Portal and intimate to Accounts Department at
-//                       billing@connectreseller.com{" "}
-//                     </ListItem>
-//                   </List>
-//                 </Box>
-//               </div>
-//             </div>
-//           </div>
-//         </footer> */}

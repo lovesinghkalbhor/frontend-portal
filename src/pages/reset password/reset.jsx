@@ -43,7 +43,7 @@ export default function ChangePassword() {
   // formik here is
 
   const initialValues = {
-    // firstname: userinfo.firstName, // Set default value to empty string if userinfo.firstName is undefined
+    // Set default value to empty string if userinfo.firstName is undefined
     password: "",
     email: "",
   };
@@ -62,8 +62,7 @@ export default function ChangePassword() {
           parmsdata.vcode,
           parmsdata.vcode2,
           parmsdata.email,
-          values.password,
-          "5555555555555555550000000000000000000000000"
+          values.password
         );
       } else {
         isemailcorrect(values);
@@ -147,7 +146,6 @@ export default function ChangePassword() {
       marginTop="2rem"
       boxShadow={shadow}
       borderRadius={radius}
-      // border={`1px solid ${primarycolor}`}
       borderTop={borderTop}
       display="flex"
       justifyContent="space-between"
@@ -168,7 +166,6 @@ export default function ChangePassword() {
           {!parmsdata.vcode ? (
             <Avatar
               alt="Remy Sharp"
-              // src="/static/images/avatar/1.jpg"
               sx={{ marginTop: "1rem", width: 100, height: 100 }}
             />
           ) : null}
@@ -216,14 +213,12 @@ export default function ChangePassword() {
                             <ListItemIcon>
                               <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
                             </ListItemIcon>
-                            {/* <ListItemText primary="Single-line item" /> */}
                             Password must be at least 8 characters long.
                           </ListItem>
                           <ListItem>
                             <ListItemIcon>
                               <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
                             </ListItemIcon>
-                            {/* <ListItemText primary="Single-line item" /> */}
                             Password should contain different types of
                             characters, including uppercase letters, lowercase
                             letters, numbers and special characters.
@@ -232,7 +227,6 @@ export default function ChangePassword() {
                             <ListItemIcon>
                               <FiberManualRecordIcon fontSize="1rem"></FiberManualRecordIcon>
                             </ListItemIcon>
-                            {/* <ListItemText primary="Single-line item" /> */}
                             Password should not be same or ,part of the name.
                           </ListItem>
                           ,
@@ -246,7 +240,6 @@ export default function ChangePassword() {
                 {!parmsdata.vcode ? (
                   <TextField
                     style={{
-                      // width: "",
                       marginBottom: "1rem",
                       marginTop: "1rem",
                     }}
@@ -255,7 +248,6 @@ export default function ChangePassword() {
                     name="email"
                     placeholder="Enter your email"
                     variant="outlined"
-                    //   disabled={!ismodify}
                     value={values.email}
                     error={!!servererror}
                     helperText={servererror}
@@ -273,9 +265,6 @@ export default function ChangePassword() {
             <Button
               variant="contained"
               type="submit"
-              // onClick={() => {
-              //   console.log("this is lveo");
-              // }}
               style={{
                 padding: "0.5rem",
                 paddingLeft: "1rem",

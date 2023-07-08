@@ -1,8 +1,6 @@
 import "../login/login";
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Cookies from "js-cookie";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { useFormik } from "formik";

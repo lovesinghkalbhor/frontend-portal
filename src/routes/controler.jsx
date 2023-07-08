@@ -27,7 +27,7 @@ import UpdateUser from "../pages/organization detail/updateUserTab";
 import ViewTransaction from "../pages/billing/ViewTransactionTab copy";
 import ViewInvoice from "../pages/billing/ViewInvoiceTab";
 import Two_Factor from "../pages/login signup/login/two_factor_auth";
-import { cardcolor, shadow } from "../components/variable";
+import { shadow } from "../components/variable";
 const globalcontext = createContext();
 export default function App() {
   const [userinfo, setuserinfo] = useState({});
@@ -134,9 +134,9 @@ export default function App() {
     >
       {/* this is global aler box///////////////////////////////// */}
       {successmessage ? <Box>{renderSuccessAlert(successmessage)}</Box> : null}
-      {/* {<Box>{renderSuccessAlert(successmessage)}</Box>} */}
+
       {errormessage ? <Box>{renderErrorAlert(errormessage)}</Box> : null}
-      {/* {<Box>{renderErrorAlert(errormessage)}</Box>} */}
+
       {/* the page is start form here */}
       <div
         style={{
@@ -164,8 +164,6 @@ export default function App() {
               width: "100%",
               height: "100%",
               overflowX: "auto",
-
-              // backgroundColor: { cardcolor },
             }}
           >
             <Topbar></Topbar>

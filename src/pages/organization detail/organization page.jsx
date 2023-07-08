@@ -1,19 +1,11 @@
 import { React, useContext, useState, useEffect } from "react";
 import { Box, tabsClasses } from "@mui/material";
-import {
-  primarycolor,
-  shadow,
-  radius,
-  borderTop,
-  topbarcolor,
-  cardcolor,
-} from "../../components/variable";
+import { shadow, radius, borderTop } from "../../components/variable";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Users from "./users tab ";
-import SearchUserTab from "./searchUserTab";
 import OrganizationSetting from "./organization setting tab";
 import { globalcontext } from "../../routes/controler";
 import { OrgEndpoint } from "../global component/data_fetching_components/org";
@@ -42,16 +34,11 @@ export default function OrganizationPage() {
 
   return (
     <Box
-      // width="95%"
       width="100%"
       backgroundColor="white"
       marginTop="2rem"
       boxShadow={shadow}
-      // borderRadius="1rem"
-      // backgroundColor={topbarcolor}
-      // backgroundColor={cardcolor}
       borderRadius={radius}
-      // border={`1px solid ${primarycolor}`}
       borderTop={borderTop}
     >
       <TabContext value={value}>
@@ -70,7 +57,6 @@ export default function OrganizationPage() {
             <Tab label="Organization" value="1" />
             <Tab label="Users" value="2" />
             <Tab label="Add User" value="3" />
-            {/* <Tab label="Search User" value="3" /> */}
           </TabList>
         </Box>
         <TabPanel value="1">
@@ -82,9 +68,6 @@ export default function OrganizationPage() {
         <TabPanel value="3">
           <AddUserTab screenSize={is_screen_sm}></AddUserTab>
         </TabPanel>
-        {/* <TabPanel value="3">
-          <SearchUserTab></SearchUserTab>
-        </TabPanel> */}
       </TabContext>
     </Box>
   );

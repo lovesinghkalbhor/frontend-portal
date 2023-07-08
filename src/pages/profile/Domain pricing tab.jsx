@@ -1,13 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import {
-  Avatar,
-  Stack,
-  Box,
-  Divider,
-  Button,
-  TextField,
-  MenuItem,
-} from "@mui/material";
+import { Box, TextField, MenuItem } from "@mui/material";
 import { globalcontext } from "../../routes/controler";
 
 export default function Domain_Pricing_Tab() {

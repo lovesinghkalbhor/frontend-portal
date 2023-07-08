@@ -8,13 +8,10 @@ import {
   primarycolor,
   radius,
   borderTop,
-  cardcolor,
 } from "../../components/variable";
 import { globalcontext } from "../../routes/controler";
 import ListTranscationTab from "./list_transcationTab";
 import ListInvoice from "./Listinvoice";
-import ViewInvoice from "./ViewInvoiceTab";
-import ViewTransaction from "./ViewTransactionTab copy";
 
 export default function Billing() {
   // this destructure the variable and funtion form the globalcontext
@@ -33,21 +30,15 @@ export default function Billing() {
     <>
       <Box
         width={is_screen_sm ? "98%" : "100%"}
-        // width={is_screen_sm ? "100%" : "100%"}
-        // padding={is_screen_sm ? "2rem" : "0.2rem"}
         padding={is_screen_sm ? "1rem" : "0.2rem"}
         margin={is_screen_sm ? "0.5rem" : "0rem"}
-        // borderRadius="1.2rem"
         marginTop="2rem"
         backgroundColor="#FFFFFF"
-        // backgroundColor={cardcolor}
         paddingLeft="0.5rem"
         paddingRight="0.5rem"
         boxShadow={shadow}
         borderRadius={radius}
-        // border={`1px solid ${primarycolor}`}
         borderTop={borderTop}
-        // border={`1px solid ${primarycolor}`}
       >
         <TabContext value={value}>
           <Box sx={{ borderBottom: 2, borderColor: "divider" }}>
@@ -70,9 +61,7 @@ export default function Billing() {
                 value="1"
                 style={{ color: primarycolor }}
               />
-              {/* <Tab label="View Transaction" value="2" /> */}
               <Tab label="Invoice List" value="2" />
-              {/* <Tab label="View Invoice" value="4" /> */}
             </TabList>
           </Box>
           <Box
@@ -99,13 +88,6 @@ export default function Billing() {
                 </Box>
               </Box>
             </TabPanel>
-            {/* <TabPanel value="4">
-            <Box>
-              <Box width="100%" borderRadius="1.2rem" backgroundColor="#FFFFFF">
-                <ViewInvoice></ViewInvoice>
-              </Box>
-            </Box>
-          </TabPanel> */}
           </Box>
         </TabContext>
       </Box>

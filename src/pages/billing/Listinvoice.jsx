@@ -37,8 +37,6 @@ export default function ListInvoice(props) {
         `${params.row.currency_symbol} ${params.row.amount}`,
     },
     { field: "currency", headerName: "Currency", width: 100 },
-    // { field: "tax", headerName: "Tax", width: 250 },
-    // { field: "net_amount", headerName: "Net Amount", width: 150 },
   ];
   /**this function handels the async behaviour invoiceList function*/
   async function getInvoicelist() {

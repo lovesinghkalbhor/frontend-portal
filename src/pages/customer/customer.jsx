@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Box, Icon, IconButton, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import DataTable from "../../components/datatable";
 import { primarycolor, shadow } from "../../components/variable";
 import { globalcontext } from "../../routes/controler";
@@ -23,7 +23,6 @@ export default function Customer() {
         >
           <Button
             variant="contained"
-            // backgroundColor={primarycolor}
             style={{
               padding: "0.5rem",
               paddingLeft: "1rem",

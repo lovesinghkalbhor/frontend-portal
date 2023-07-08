@@ -3,20 +3,14 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { Box, Tab, tabsClasses } from "@mui/material";
-import {
-  primarycolor,
-  shadow,
-  radius,
-  borderTop,
-} from "../../components/variable";
+import { shadow, radius, borderTop } from "../../components/variable";
 import AddCostumerTab from "./addCustomerTab";
 import SearchDomainTab from "./searchDomainTab";
 import DomaintransferTab from "./domaintransferTab";
 import { globalcontext } from "../../routes/controler";
 export default function PlaceOrders() {
   const [value, setValue] = React.useState("1");
-  const { is_screen_sm, userinfo, setuserinfo, is_session_valid } =
-    useContext(globalcontext);
+  const { is_session_valid } = useContext(globalcontext);
   const TabhandleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -29,7 +23,6 @@ export default function PlaceOrders() {
       sx={{ width: "100%", typography: "body1" }}
       boxShadow={shadow}
       borderRadius={radius}
-      // border={`1px solid ${primarycolor}`}
       borderTop={borderTop}
       backgroundColor="white"
       padding="1rem"

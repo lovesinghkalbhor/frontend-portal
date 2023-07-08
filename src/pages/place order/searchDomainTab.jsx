@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Box, FormControl, TextField, Button } from "@mui/material";
 import { useFormik } from "formik";
-import { primarycolor, shadow, radius } from "../../components/variable";
+import { primarycolor, radius } from "../../components/variable";
 import { globalcontext } from "../../routes/controler";
 
 export default function SearchDomainTab() {
@@ -15,28 +15,11 @@ export default function SearchDomainTab() {
       initialValues: initialValues,
       onSubmit: (values) => {
         console.log(values);
-        // let a = updateprofiledata(
-        //   values.firstname,
-        //   values.lastname,
-        //   values.email
-        // );
 
         console.log(values, "called data update");
       },
     });
 
-  // it is usefull dont erase it for now i have commented it
-  //   useEffect(() => {
-  //     // it sets the input value after fetchform the api
-  //     if (userinfo.firstName && userinfo.lastName && userinfo.email) {
-  //       setValues({
-  //         ...values,
-  //         name: userinfo.name,
-  //         company_name: userinfo.lastName,
-  //         email: userinfo.email,
-  //       });
-  //     }
-  //   }, [userinfo]);
   useEffect(() => {
     is_session_valid();
   }, []);

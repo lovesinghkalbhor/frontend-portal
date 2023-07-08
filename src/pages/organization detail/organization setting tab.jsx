@@ -1,14 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
-import {
-  Box,
-  Button,
-  TextField,
-  Grid,
-  Switch,
-  FormControl,
-} from "@mui/material";
+import { Box, Button, TextField, Grid, FormControl } from "@mui/material";
 import Spinner from "react-bootstrap/Spinner";
-
 import { primarycolor, radius } from "../../components/variable";
 import { useFormik } from "formik";
 import { UpdateOrgData } from "../global component/data_fetching_components/org";
@@ -299,7 +291,6 @@ export default function OrganizationSetting() {
             variant="contained"
             type="submit"
             disabled={!ismodify}
-            // onClick={() => setismodify(!ismodify)}
             style={{
               margin: "1rem",
               padding: "0.5rem",

@@ -94,6 +94,6 @@ export const sidemenucolor = "white";
 // this is the url for the actual api
 // export const url = "https://portal-api-connect.onrender.com";
 // export const url = "https://new-server-2ya3.onrender.com";
-// export const url = "https://new-url-server.onrender.com";
+export const url = "https://new-url-server.onrender.com";
 
-export const url = "http://localhost:5000";
+// export const url = "http://localhost:5000";

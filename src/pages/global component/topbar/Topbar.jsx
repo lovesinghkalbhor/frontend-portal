@@ -14,8 +14,6 @@ import {
   Divider,
   Typography,
   Button,
-  SvgIcon,
-  radioClasses,
 } from "@mui/material";
 import Cookies from "js-cookie";
 
@@ -23,7 +21,6 @@ import Spinner from "react-bootstrap/Spinner";
 
 import { useMediaQuery } from "@mui/material";
 
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Logout from "@mui/icons-material/Logout";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
@@ -33,8 +30,6 @@ import {
   iconbordercolor,
   shadow,
   iconbackgroundcolor,
-  iconcolor,
-  sidemenucolor,
   topbarcolor,
   topbarpadding,
   borderTop,
@@ -46,10 +41,7 @@ import Sidemenu from "../sidemenu/Sidemenu";
 import { Me_Endpoint } from "../data_fetching_components/me_endpoint";
 import { billing_view_Data } from "../data_fetching_components/billing_endpoints";
 import lodash from "lodash";
-import {
-  Logoutfunction,
-  Logoutallfunction,
-} from "../data_fetching_components/auth";
+import { Logoutfunction } from "../data_fetching_components/auth";
 
 // styled componendt is used to modifyi precomponent here we modifying Badge
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -89,7 +81,6 @@ export default function Topbar() {
   let path = location.pathname;
   let showpath = path.split("/").filter((value, index) => value != "tools");
   showpath.join("/").replace(/\//g, "");
-  // let showpathUpperCase = lodash.capitalize(showpath);
   showpath = lodash.startCase(showpath);
 
   const {
@@ -118,8 +109,6 @@ export default function Topbar() {
         if (billing_data.status === 1) {
           setbillinginfo(billing_data.billing);
         }
-
-        // console.log(userData.users[0], "inthe topbar");
       } catch (error) {
         console.log("Failed to fetch data: in top bar");
         // Handle any errors that may occur during the fetch operation
@@ -133,9 +122,6 @@ export default function Topbar() {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  // const is_screen_sm = useContext(globalcontext);
-  // const [ismediumscreen, setismediumscreen] = useState(0);
-  // setismediumscreen(is_screen_sm);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -165,7 +151,6 @@ export default function Topbar() {
       justifyContent="space-between"
       paddingLeft="1rem"
       alignItems="center"
-      // backgroundColor="#FFFFFF"
       boxShadow={shadow}
       color={primarycolor}
       backgroundColor={topbarcolor}
@@ -175,12 +160,6 @@ export default function Topbar() {
       marginLeft={margintopbar}
       marginRight={margintopbar}
       marginTop="0.4rem"
-      // style={{
-      //   margin: is_screen_sm ? "0.5rem" : "0rem",
-      //   marginLeft: "1rem",
-      // }}
-      // border={`1px solid ${primarycolor}`}
-      // borderRadius="0.5rem"
     >
       {/* show spinner if the data is not fetched yet */}
       {is_screen_sm ? (
@@ -225,19 +204,10 @@ export default function Topbar() {
           <Box
             component="h6"
             margin="0rem"
-            // backgroundColor={iconbackgroundcolor}
-            // backgroundColor="lightgray"
-            // padding="0.5rem"
             padding="0.3rem"
             paddingLeft="1rem"
             paddingRight="1rem"
             borderRadius="1rem"
-            // borderRadius="0.5rem"
-
-            // paddingLeft="10px"
-            // paddingRight="10px"
-            // borderRadius="1.5rem"
-            // border={`1px solid ${primarycolor}`}
             color={primarycolor}
             border={`1px solid ${iconbordercolor}`}
           >
@@ -249,40 +219,24 @@ export default function Topbar() {
             {/* <IconButton */}
             <Button
               style={{
-                // margin: "1rem"
                 cursor: "pointer",
-                // backgroundColor: "#FF6C2C",
                 backgroundColor: primarycolor,
-                // backgroundColor: "lightgray",
-                // border: `1px solid lightgray`,
+
                 borderRadius: "1rem",
                 paddingLeft: "10px",
                 paddingRight: "10px",
-                // color: primarycolor,
                 color: "white",
               }}
               onClick={() => navigate("/addfund")}
             >
-              {/* <CurrencyRupeeIcon
-                fontSize="small"
-                // margin="1rem"
-              ></CurrencyRupeeIcon> */}
-
               <Typography
-                // variant="h6"
                 component="span"
                 fontSize="small"
-                // width="1.5rem"
-                // width="1.2rem"
-                // height="1.5rem"
-                // height="1.2rem"
                 paddingTop="0"
                 marginTop="0"
               >
-                {/* {billinginfo.currency_symbol} */}
                 Add fund
               </Typography>
-              {/* </IconButton> */}
             </Button>
           </Tooltip>
 
@@ -290,7 +244,6 @@ export default function Topbar() {
           <Box backgroundColor={iconbackgroundcolor} borderRadius="4rem">
             <IconButton
               style={{
-                // margin: "1rem",
                 padding: "0.5rem",
                 color: primarycolor,
                 border: `1px solid ${iconbordercolor}`,
@@ -309,15 +262,11 @@ export default function Topbar() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                // backgroundColor: iconbackgroundcolor,
-                // padding: "0.2rem",
                 paddingLeft: "0.5rem",
                 paddingRight: "0.5rem",
-                // borderRadius: "2rem",
                 borderRadius: "1.1rem",
                 cursor: "pointer",
               }}
-              // border={`1px solid ${primarycolor}`}
               border={`1px solid ${iconbordercolor}`}
               onClick={handleClick}
               aria-controls={open ? "account-menu" : undefined}
@@ -333,11 +282,7 @@ export default function Topbar() {
                     variant="dot"
                   >
                     {/* avtar display photo if available else display alt names */}
-                    <Avatar
-                      alt="H Sharp"
-                      sx={{ width: 26, height: 26 }}
-                      // src="/static/images/avatar/1.jpg"
-                    />
+                    <Avatar alt="H Sharp" sx={{ width: 26, height: 26 }} />
                   </StyledBadge>
                 </Stack>
               </IconButton>
@@ -350,12 +295,7 @@ export default function Topbar() {
       ) : (
         // small size////////////////////////////////////////////////
         <>
-          <Box
-            component="h5"
-            // margin="1rem"
-            // color={iconcolor}
-            style={{ opacity: 0.7 }}
-          >
+          <Box component="h5" style={{ opacity: 0.7 }}>
             {showpath}
           </Box>
 

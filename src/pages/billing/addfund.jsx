@@ -2,7 +2,6 @@ import { React, useState, useEffect, useContext } from "react";
 import Card from "react-bootstrap/Card";
 import {
   Box,
-  Button,
   TextField,
   Grid,
   TableContainer,
@@ -18,15 +17,11 @@ import {
   borderTop,
 } from "../../components/variable";
 import Spinner from "react-bootstrap/Spinner";
-
 import LoadingButton from "@mui/lab/LoadingButton";
-
 import { globalcontext } from "../../routes/controler";
 import { AddFund } from "../global component/data_fetching_components/billing_endpoints";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
 import { calculat_percentage, totalAmount } from "./helperfunction";
-import { add } from "lodash";
 
 /**  this page adds the payment*/
 function AddFunds() {
@@ -43,7 +38,7 @@ function AddFunds() {
   const [showpaymentbtn, setshowpaymentbtn] = useState(false);
   const [isclicked, setisclicked] = useState(false);
   const [addfunddata, setaddfunddata] = useState({});
-  const [transfertype, settransfertype] = useState({
+  const [transfertype] = useState({
     net_banking: "3",
     credit_card: "1",
     debit_card: "2",
@@ -64,7 +59,6 @@ function AddFunds() {
       let total = totalAmount(18, values.amount, platformfee);
       //only adding the amount if its more than 0
       if (total > 0) {
-        // let a = await AddFund(total);
         let a = await AddFund(values.amount);
         // if api status true then set the response in state else give error
         if (a.status === 1) {
@@ -81,10 +75,6 @@ function AddFunds() {
       }
     },
   });
-  // if (addfunddata.order_number) {
-  //   console.log("chlidked asefkj");
-  //   alert(addfunddata.order_number);
-  // }
 
   return (
     <>
@@ -96,7 +86,6 @@ function AddFunds() {
         backgroundColor="#FFFFFF"
         boxShadow={shadow}
         borderRadius={radius}
-        // border={`1px solid ${primarycolor}`}
         borderTop={borderTop}
       >
         <Grid container spacing={4}>
@@ -228,7 +217,6 @@ function AddFunds() {
                       marginTop="1rem"
                       marginBottom="1rem"
                       borderRadius={radius}
-                      // border={`1px solid ${primarycolor}`}
                       borderTop={borderTop}
                       style={{
                         width: "100%",
@@ -297,7 +285,6 @@ function AddFunds() {
                 <LoadingButton
                   type="submit"
                   variant="contained"
-                  // onSubmit={handleSubmit}
                   onClick={() => {
                     if (addfunddata.payment_link) {
                       window.open(addfunddata.payment_link, "_blank");

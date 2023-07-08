@@ -1,13 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import {
-  Box,
-  Button,
-  TextField,
-  Grid,
-  Switch,
-  Stack,
-  Avatar,
-} from "@mui/material";
+import { Box, Button, TextField, Grid, Stack, Avatar } from "@mui/material";
 import Spinner from "react-bootstrap/Spinner";
 
 import {
@@ -25,12 +17,9 @@ export default function UpdateUser() {
 
   const {
     orgdata,
-    setorgdata,
     is_screen_sm,
     servererror,
     is_session_valid,
-    successmessage,
-
     setservererror,
     setsuccessmessage,
   } = useContext(globalcontext);
@@ -43,7 +32,7 @@ export default function UpdateUser() {
   // formik here is
 
   const initialValues = {
-    // firstname: userinfo.firstName, // Set default value to empty string if userinfo.firstName is undefined
+    // Set default value to empty string if userinfo.firstName is undefined
     first_name: "",
     last_name: "",
     email: "",
@@ -69,7 +58,6 @@ export default function UpdateUser() {
           });
         } else {
           setservererror(a.error);
-          // alert(error);
         }
 
         console.log(values, "called data update");
@@ -109,12 +97,10 @@ export default function UpdateUser() {
           marginBottom="2rem"
           marginTop="2rem"
           boxShadow={shadow}
-          // borderRadius="1rem"
           display="flex"
           justifyContent="space-between"
           paddingTop="1rem"
           borderRadius={radius}
-          // border={`1px solid ${primarycolor}`}
           borderTop={borderTop}
         >
           <form
@@ -193,7 +179,6 @@ export default function UpdateUser() {
                 <Box>
                   <Button
                     variant="contained"
-                    // type="submit"
                     onClick={() => setismodify(!ismodify)}
                     style={{
                       margin: "1rem",
@@ -213,7 +198,6 @@ export default function UpdateUser() {
                     variant="contained"
                     type="submit"
                     disabled={!ismodify}
-                    // onClick={() => setismodify(!ismodify)}
                     style={{
                       margin: "1rem",
                       padding: "0.5rem",

@@ -2,8 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import {
   Box,
   Grid,
-  TextField,
-  Button,
   IconButton,
   InputAdornment,
   OutlinedInput,
@@ -13,7 +11,6 @@ import Spinner from "react-bootstrap/Spinner";
 import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import { useFormik } from "formik";
-import DataTable from "../../components/datatable";
 import { SearchUser } from "../global component/data_fetching_components/org";
 import validationSchema from "../global component/schema for validation";
 import { globalcontext } from "../../routes/controler";
@@ -21,26 +18,8 @@ import { primarycolor, radius } from "../../components/variable";
 export default function SearchUserTab(props) {
   const { is_session_valid, orgdata, seterrormessage, is_screen_sm } =
     useContext(globalcontext);
-  const [column, setcolumn] = useState([]);
   const [orguserdata, setorguserdata] = useState([]);
   const [loading, setloading] = useState(false);
-
-  let columns = [
-    { field: "id", headerName: "ID", width: 130 },
-    {
-      field: "full_name",
-      headerName: "User Name",
-      width: 200,
-      valueGetter: (params) =>
-        `${params.row.first_name} ${params.row.last_name}`,
-    },
-    { field: "email", headerName: "Email", width: 200 },
-    {
-      field: "user_type",
-      headerName: "User Type",
-      width: 160,
-    },
-  ];
 
   // formik here is
 
@@ -53,7 +32,6 @@ export default function SearchUserTab(props) {
     useFormik({
       initialValues: initialValues,
       onSubmit: async (values) => {
-        // setcolumn(columns);
         setloading(true);
         let data = {};
         let trimdata = values.search_data.trimEnd();
@@ -123,15 +101,6 @@ export default function SearchUserTab(props) {
                       }}
                       variant="contained"
                       type="submit"
-                      // style={{
-                      //   // padding: "0.5rem",
-                      //   // paddingLeft: "1rem",
-                      //   // paddingRight: "1rem",
-                      //   color: "white",
-                      //   backgroundColor: primarycolor,
-                      //   marginTop: "0.5rem",
-                      //   borderRadius: radius,
-                      // }}
                     >
                       <ClearIcon></ClearIcon>
                     </IconButton>
@@ -140,14 +109,10 @@ export default function SearchUserTab(props) {
               ></OutlinedInput>
             </Grid>
             <Grid item xs={2}>
-              {/* {ismodify ? ( */}
               <IconButton
                 variant="contained"
                 type="submit"
                 style={{
-                  // padding: "0.5rem",
-                  // paddingLeft: "1rem",
-                  // paddingRight: "1rem",
                   color: "white",
                   backgroundColor: primarycolor,
                   marginTop: "0.5rem",
@@ -167,36 +132,9 @@ export default function SearchUserTab(props) {
                   <SearchIcon></SearchIcon>
                 )}
               </IconButton>
-              {/* ) : null} */}
-              {/* </Grid>
-            <Grid item xs={12} md={2}> */}
-              {/* {ismodify ? ( */}
-              {/* <IconButton
-                onClick={() => {
-                  props.clearsearch();
-                }}
-                variant="contained"
-                type="submit"
-                style={{
-                  // padding: "0.5rem",
-                  // paddingLeft: "1rem",
-                  // paddingRight: "1rem",
-                  color: "white",
-                  backgroundColor: primarycolor,
-                  marginTop: "0.5rem",
-                  borderRadius: radius,
-                }}
-              >
-                <ClearIcon></ClearIcon>
-              </IconButton> */}
-              {/* ) : null} */}
             </Grid>
           </Grid>
         </form>
-        {/* {orguserdata[0] ? (
-          <DataTable datarow={orguserdata} datacolumn={columns}></DataTable>
-        ) : //   <Box>No user found</Box>
-        null} */}
       </Box>
     </>
   );
