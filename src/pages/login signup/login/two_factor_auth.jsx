@@ -52,23 +52,27 @@ function Two_Factor() {
     validationSchema,
     onSubmit: async (parms) => {
       // parms.preventDefault();
-      setloading(true);
-      console.log(values.passcode);
-      let data = await TwoFactorAuth(values.passcode);
-      console.log(data, "this is s");
+      try {
+        setloading(true);
+        console.log(values.passcode);
+        let data = await TwoFactorAuth(values.passcode);
+        console.log(data, "this is s");
 
-      if (data.status === 1) {
-        // Cookies.set("session_id", data.session_id);
-        navigate("/dashboard");
-      } else if (data.status === 0) {
+        if (data.status === 1) {
+          // Cookies.set("session_id", data.session_id);
+          navigate("/dashboard");
+        } else if (data.status === 0) {
+          setloading(false);
+          setservererror(data.error);
+        }
+      } catch (err) {
         setloading(false);
-        setservererror(data.error);
-      } else if (data.servererror) {
-        setloading(false);
-        seterrormessage(data.servererror);
+        seterrormessage(err);
+        // seterrormessage(data.servererror);
       }
     },
   });
+  //write a function for add two numbers
 
   // useEffect(() => {
   //   if (is_session_valid()) {
@@ -160,6 +164,7 @@ function Two_Factor() {
                 name="passcode"
                 id="outlined-adornment-password"
                 placeholder="passcode"
+                disabled={loading}
                 value={values.passcode}
                 onChange={handleChange}
                 error={(touched.passcode && errors.passcode) || null}

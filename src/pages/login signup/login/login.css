@@ -9,12 +9,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(180, 167, 183, 0.7490196078); /* Thumb color */
+  background-color: #af76ed; /* Thumb color */
   border-radius: 4px; /* Rounded corners */
 }
 
 body {
-  background: #f7f1ff;
+  background: #f6f0fd;
   filter: blur(0.4);
 }
 body .full-screen {
@@ -77,7 +77,7 @@ body .form-box .inner-from-box InputLabel {
 }
 body .form-box .inner-from-box h4 {
   font-family: "Poppins";
-  color: rgba(0, 0, 0, 0.527);
+  color: rgba(0, 0, 0, 0.5);
   font-weight: 600;
   font-size: 35px;
   line-height: normal;

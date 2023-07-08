@@ -8,6 +8,8 @@ import {
   InputAdornment,
   OutlinedInput,
 } from "@mui/material";
+import Spinner from "react-bootstrap/Spinner";
+
 import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import { useFormik } from "formik";
@@ -21,6 +23,7 @@ export default function SearchUserTab(props) {
     useContext(globalcontext);
   const [column, setcolumn] = useState([]);
   const [orguserdata, setorguserdata] = useState([]);
+  const [loading, setloading] = useState(false);
 
   let columns = [
     { field: "id", headerName: "ID", width: 130 },
@@ -51,19 +54,23 @@ export default function SearchUserTab(props) {
       initialValues: initialValues,
       onSubmit: async (values) => {
         // setcolumn(columns);
+        setloading(true);
         let data = {};
+        let trimdata = values.search_data.trimEnd();
         try {
-          await validationSchema.validate({ email: values.search_data });
+          await validationSchema.validate({ email: trimdata });
           console.log("Email is valid");
-          data.email = values.search_data;
+
+          data.email = trimdata;
         } catch (error) {
           console.log(error.message);
-          data.first_name = values.search_data;
-          data.last_name = values.search_data;
+          data.first_name = trimdata;
+          data.last_name = trimdata;
         }
         let a = await SearchUser(orgdata.org_id, data);
         if (a.status === 1) {
           console.log(a);
+          setloading(false);
           setorguserdata(a.users);
           console.log(orguserdata[0], "THIS IS TRUE ,,,,,,,,,,,,,,,");
         } else if (a.servererror) {
@@ -111,6 +118,7 @@ export default function SearchUserTab(props) {
                           ...values,
                           search_data: "",
                         });
+                        setloading(false);
                         props.clearsearch();
                       }}
                       variant="contained"
@@ -147,7 +155,17 @@ export default function SearchUserTab(props) {
                   borderRadius: radius,
                 }}
               >
-                <SearchIcon></SearchIcon>
+                {loading ? (
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <SearchIcon></SearchIcon>
+                )}
               </IconButton>
               {/* ) : null} */}
               {/* </Grid>

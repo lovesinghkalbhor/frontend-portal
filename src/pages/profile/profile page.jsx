@@ -9,6 +9,8 @@ import {
   tabsClasses,
   Switch,
 } from "@mui/material";
+import Spinner from "react-bootstrap/Spinner";
+
 import { shadow, radius, borderTop } from "../../components/variable";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -26,6 +28,7 @@ import { useFormik } from "formik";
 // import validationSchema from "./index";
 export default function Profile() {
   const [value, setValue] = useState("1");
+  const [loading, setloading] = useState(false);
 
   const [ismodify, setismodify] = useState(false);
   const [error, seterror] = useState(false);
@@ -58,6 +61,8 @@ export default function Profile() {
       initialValues: initialValues,
       // validationSchema,
       onSubmit: async (values) => {
+        setloading(true);
+        setismodify(!ismodify);
         try {
           console.log("in the update lvoe saveasdf");
           let updateddata = await updateprofiledata(
@@ -67,6 +72,8 @@ export default function Profile() {
           );
           console.log(updateddata.userinfo, "this si sis sisis sisisi");
           if (updateddata.status === 1) {
+            setloading(loading);
+            setismodify(!ismodify);
             setuserinfo(updateddata.userinfo);
             setsuccessmessage("User data has been updated successfully");
             setservererror(false);
@@ -144,7 +151,7 @@ export default function Profile() {
                   <Grid item xs={12} sm={12} md={6} xl={4}>
                     <TextField
                       id="firstname-input"
-                      label="firstname"
+                      label="Firstname"
                       variant="outlined"
                       name="firstname"
                       value={values.firstname}
@@ -161,7 +168,7 @@ export default function Profile() {
                   <Grid item xs={12} sm={12} md={6} xl={4}>
                     <TextField
                       id="lastname-input"
-                      label="lastname"
+                      label="Lastname"
                       variant="outlined"
                       name="lastname"
                       value={values.lastname}
@@ -196,39 +203,67 @@ export default function Profile() {
                     />{" "}
                   </Grid>
                 </Grid>
-                {ismodify ? (
+                <Box>
                   <Button
                     variant="contained"
-                    type="submit"
-                    // onClick={() => {
-                    //   console.log("this is lveo");
-                    // }}
+                    // type="submit"
+                    onClick={() => setismodify(!ismodify)}
                     style={{
-                      borderRadius: radius,
+                      margin: "1rem",
+                      marginLeft: 0,
                       padding: "0.5rem",
                       paddingLeft: "1rem",
                       paddingRight: "1rem",
                       color: "white",
                       backgroundColor: primarycolor,
                       marginBottom: "1rem",
+                      borderRadius: radius,
                     }}
                   >
-                    Save
+                    Edit
                   </Button>
-                ) : null}
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    disabled={!ismodify}
+                    // onClick={() => setismodify(!ismodify)}
+                    style={{
+                      margin: "1rem",
+                      padding: "0.5rem",
+                      paddingLeft: "1rem",
+                      paddingRight: "1rem",
+                      color: "white",
+                      backgroundColor: primarycolor,
+                      marginBottom: "1rem",
+                      borderRadius: radius,
+                    }}
+                  >
+                    {!loading ? (
+                      "Update"
+                    ) : (
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </Button>
+                </Box>
               </Box>
             </Stack>
           </form>
         </Stack>
 
         {/* switch for allowing modifying */}
-        <Box margin="2rem">
+        {/* <Box margin="2rem">
           <h5>Modify</h5>
           <Switch
             color="secondary"
             onChange={() => setismodify(!ismodify)}
           ></Switch>
-        </Box>
+        </Box> */}
       </Box>
       {/* ) : null} */}
       <Box

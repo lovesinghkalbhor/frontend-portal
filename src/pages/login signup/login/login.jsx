@@ -83,12 +83,12 @@ function Login() {
       }
     },
   });
-
-  // useEffect(() => {
-  //   if (is_session_valid()) {
-  //     navigate("/dashboard");
-  //   }
-  // }, []);
+  //  if the session id already exists then redirect to dashboard
+  useEffect(() => {
+    if (is_session_valid()) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   return (
     <Box
@@ -100,6 +100,7 @@ function Login() {
       // }}
       style={{
         overflow: "hidden",
+
         // backgroundImage: "url('./Rectangle.svg')",
         // backgroundRepeat: "no-repeat",
       }}
@@ -148,6 +149,7 @@ function Login() {
               error={(touched.email && errors.email) || null}
               helperText={errors.email}
               onBlur={handleBlur}
+              disabled={loading}
             />
             {/* <FormControl sx={{ m: 0 }} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">
@@ -194,6 +196,7 @@ function Login() {
                 id="outlined-adornment-password"
                 placeholder="Password"
                 value={values.password}
+                disabled={loading}
                 onChange={handleChange}
                 error={(touched.password && errors.password) || null}
                 onBlur={handleBlur}

@@ -7,15 +7,21 @@ import {
   Switch,
   FormControl,
 } from "@mui/material";
+import Spinner from "react-bootstrap/Spinner";
+
 import { primarycolor, radius } from "../../components/variable";
 import { useFormik } from "formik";
 import { UpdateOrgData } from "../global component/data_fetching_components/org";
 import { globalcontext } from "../../routes/controler";
+
 export default function OrganizationSetting() {
-  const [ismodify, setismodify, is_screen_sm] = useState(false);
+  const [ismodify, setismodify] = useState(false);
+  const [loading, setloading] = useState(false);
+
   const {
     orgdata,
     setorgdata,
+    is_screen_sm,
     setsuccessmessage,
     is_session_valid,
     seterrormessage,
@@ -36,14 +42,20 @@ export default function OrganizationSetting() {
     useFormik({
       initialValues: initialValues,
       onSubmit: async (values) => {
+        setloading(true);
+        setismodify(!ismodify);
         let a = await UpdateOrgData(values);
         if (a.status === 1) {
+          setloading(false);
+
           setsuccessmessage("Organization data has been updated successfully");
           console.log(a.organization, "this is the starusa of the code ");
           setorgdata(a.organization);
         } else if (a.status === 0) {
+          setloading(false);
           setservererror(a.error);
         } else if (a.servererror) {
+          setloading(false);
           seterrormessage(a.servererror);
         }
       },
@@ -69,22 +81,27 @@ export default function OrganizationSetting() {
 
   return (
     <Box margin={is_screen_sm ? "0rem" : "2rem"}>
-      <Box display="flex" justifyContent="space-between">
+      <Box display="flex" justifyContent="space-between" marginBottom="1rem">
         <h3>Organization Setting</h3>
-        <Box>
-          <h5>Modify</h5>
-          <Switch
-            color="secondary"
-            onChange={() => setismodify(!ismodify)}
-          ></Switch>
-        </Box>
+        {!orgdata?.name ? (
+          <Spinner
+            as="span"
+            style={{
+              color: primarycolor,
+            }}
+            animation="border"
+            size="md"
+            role="status"
+            aria-hidden="true"
+          />
+        ) : null}
       </Box>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="name-input"
-              label="name"
+              label="Name"
               variant="outlined"
               name="organization_name"
               value={values.organization_name || " "}
@@ -101,7 +118,7 @@ export default function OrganizationSetting() {
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="address1-input"
-              label="address1"
+              label="Address1"
               variant="outlined"
               name="address1"
               value={values.address1 || " "}
@@ -118,7 +135,7 @@ export default function OrganizationSetting() {
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="address2-input"
-              label="address2"
+              label="Address2"
               variant="outlined"
               name="address2"
               value={values.address2 || " "}
@@ -136,7 +153,7 @@ export default function OrganizationSetting() {
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="city-input"
-              label="city"
+              label="City"
               variant="outlined"
               name="city"
               value={values.city || " "}
@@ -154,7 +171,7 @@ export default function OrganizationSetting() {
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="state-input"
-              label="state"
+              label="State"
               variant="outlined"
               name="state"
               value={values.state || " "}
@@ -171,7 +188,7 @@ export default function OrganizationSetting() {
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="country-input"
-              label="country"
+              label="Country"
               variant="outlined"
               name="country"
               value={values.country || " "}
@@ -188,7 +205,7 @@ export default function OrganizationSetting() {
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="phone-input"
-              label="phone"
+              label="Phone"
               variant="outlined"
               name="phone"
               disabled
@@ -202,7 +219,7 @@ export default function OrganizationSetting() {
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="taxid-input"
-              label="tax"
+              label="Tax"
               variant="outlined"
               name="tax_id"
               disabled
@@ -216,7 +233,7 @@ export default function OrganizationSetting() {
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="pincode-input"
-              label="pincode"
+              label="Pincode"
               variant="outlined"
               name="pincode"
               disabled
@@ -231,7 +248,7 @@ export default function OrganizationSetting() {
             <FormControl sx={{ m: 0 }} variant="outlined">
               <TextField
                 id="currency-input"
-                label="currency"
+                label="Currency"
                 variant="outlined"
                 name="currency"
                 disabled
@@ -246,7 +263,7 @@ export default function OrganizationSetting() {
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="org-input"
-              label="org id"
+              label="Org ID"
               variant="outlined"
               name="org_id"
               value={orgdata?.org_id || " "}
@@ -259,24 +276,53 @@ export default function OrganizationSetting() {
           </Grid>
         </Grid>
 
-        <Box display="flex" justifyContent="start">
-          {ismodify ? (
-            <Button
-              variant="contained"
-              type="submit"
-              style={{
-                padding: "0.5rem",
-                paddingLeft: "1rem",
-                paddingRight: "1rem",
-                color: "white",
-                backgroundColor: primarycolor,
-                marginBottom: "1rem",
-                borderRadius: radius,
-              }}
-            >
-              Save
-            </Button>
-          ) : null}
+        <Box>
+          <Button
+            variant="contained"
+            // type="submit"
+            onClick={() => setismodify(!ismodify)}
+            style={{
+              margin: "1rem",
+              marginLeft: 0,
+              padding: "0.5rem",
+              paddingLeft: "1rem",
+              paddingRight: "1rem",
+              color: "white",
+              backgroundColor: primarycolor,
+              marginBottom: "1rem",
+              borderRadius: radius,
+            }}
+          >
+            Edit
+          </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            disabled={!ismodify}
+            // onClick={() => setismodify(!ismodify)}
+            style={{
+              margin: "1rem",
+              padding: "0.5rem",
+              paddingLeft: "1rem",
+              paddingRight: "1rem",
+              color: "white",
+              backgroundColor: primarycolor,
+              marginBottom: "1rem",
+              borderRadius: radius,
+            }}
+          >
+            {!loading ? (
+              "Update"
+            ) : (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            )}
+          </Button>
         </Box>
       </form>
     </Box>

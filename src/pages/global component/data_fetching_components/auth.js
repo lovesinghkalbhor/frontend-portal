@@ -124,7 +124,7 @@ const Logoutfunction = async () => {
       session_id,
     });
     data = userdata.data;
-    Cookies.remove("session_id");
+    // Cookies.remove("session_id");
   } catch (error) {
     data.servererror = error.message;
     console.error("Error:", error);

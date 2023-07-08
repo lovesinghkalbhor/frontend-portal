@@ -10,6 +10,8 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
+import Spinner from "react-bootstrap/Spinner";
+
 import {
   shadow,
   primarycolor,
@@ -94,6 +96,18 @@ export default function ViewTransaction() {
     >
       <Box display="flex" justifyContent="space-between" marginBottom="1rem">
         <h3>Transaction Details</h3>
+        {!transactiondata.reference_number ? (
+          <Spinner
+            as="span"
+            style={{
+              color: primarycolor,
+            }}
+            animation="border"
+            size="md"
+            role="status"
+            aria-hidden="true"
+          />
+        ) : null}
       </Box>
       <form onSubmit={handleSubmit}>
         {/* <Grid item xs={6} md={4}>

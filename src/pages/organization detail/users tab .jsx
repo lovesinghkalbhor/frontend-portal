@@ -6,6 +6,8 @@ import {
   radius,
   borderTop,
 } from "../../components/variable";
+import Spinner from "react-bootstrap/Spinner";
+
 import {
   OrgUserData,
   RevokeUser,
@@ -36,6 +38,7 @@ import {
   ListItemIcon,
   Grid,
   Divider,
+  Skeleton,
 } from "@mui/material";
 import { globalcontext } from "../../routes/controler";
 import SearchUserTab from "./searchUserTab";
@@ -351,12 +354,33 @@ export default function Users() {
               })}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {orguserdata !== []
-              ? orguserdata?.map((row, index) => (
-                  <Row key={row.email} row={row} />
-                ))
-              : null}
+
+          <TableBody style={{ position: "relative" }}>
+            {orguserdata.length !== 0 ? (
+              orguserdata?.map((row, index) => (
+                <Row key={row.email} row={row} />
+              ))
+            ) : (
+              <>
+                <Box
+                  textAlign="center"
+                  position="absolute"
+                  top="30%"
+                  left="50%"
+                >
+                  <Spinner
+                    as="span"
+                    style={{
+                      color: primarycolor,
+                    }}
+                    animation="border"
+                    size="md"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                </Box>
+              </>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

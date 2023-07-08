@@ -17,6 +17,10 @@ import {
   SvgIcon,
   radioClasses,
 } from "@mui/material";
+import Cookies from "js-cookie";
+
+import Spinner from "react-bootstrap/Spinner";
+
 import { useMediaQuery } from "@mui/material";
 
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
@@ -144,7 +148,10 @@ export default function Topbar() {
     let a = await Logoutfunction();
     console.log(a, "this is logout funcion");
     if (a.status === 1) {
-      navigate("/login");
+      Cookies.set("session_id", "12");
+      setTimeout(() => {
+        navigate("/login");
+      }, 5000);
     }
   }
   async function logoutallfunctionbutton() {
@@ -175,6 +182,7 @@ export default function Topbar() {
       // border={`1px solid ${primarycolor}`}
       // borderRadius="0.5rem"
     >
+      {/* show spinner if the data is not fetched yet */}
       {is_screen_sm ? (
         <Box
           component="h5"
@@ -182,7 +190,17 @@ export default function Topbar() {
           // color={iconcolor}
           style={{ opacity: 0.7 }}
         >
-          {showpath}
+          {userinfo?.first_name ? (
+            showpath
+          ) : (
+            <Spinner
+              as="span"
+              animation="border"
+              size="md"
+              role="status"
+              aria-hidden="true"
+            />
+          )}
         </Box>
       ) : (
         <Sidemenu></Sidemenu>
@@ -213,7 +231,11 @@ export default function Topbar() {
             padding="0.3rem"
             paddingLeft="1rem"
             paddingRight="1rem"
-            borderRadius="0.5rem"
+            borderRadius="1rem"
+            // borderRadius="0.5rem"
+
+            // paddingLeft="10px"
+            // paddingRight="10px"
             // borderRadius="1.5rem"
             // border={`1px solid ${primarycolor}`}
             color={primarycolor}
@@ -224,15 +246,18 @@ export default function Topbar() {
 
           {/* icons */}
           <Tooltip title="Add money">
-            <IconButton
+            {/* <IconButton */}
+            <Button
               style={{
                 // margin: "1rem"
-
+                cursor: "pointer",
                 // backgroundColor: "#FF6C2C",
                 backgroundColor: primarycolor,
                 // backgroundColor: "lightgray",
-                border: `1px solid lightgray`,
-
+                // border: `1px solid lightgray`,
+                borderRadius: "1rem",
+                paddingLeft: "10px",
+                paddingRight: "10px",
                 // color: primarycolor,
                 color: "white",
               }}
@@ -246,17 +271,19 @@ export default function Topbar() {
               <Typography
                 // variant="h6"
                 component="span"
-                fontSize="large"
+                fontSize="small"
                 // width="1.5rem"
-                width="1.2rem"
+                // width="1.2rem"
                 // height="1.5rem"
-                height="1.2rem"
+                // height="1.2rem"
                 paddingTop="0"
                 marginTop="0"
               >
-                {billinginfo.currency_symbol}
+                {/* {billinginfo.currency_symbol} */}
+                Add fund
               </Typography>
-            </IconButton>
+              {/* </IconButton> */}
+            </Button>
           </Tooltip>
 
           {/* badge display notification on top */}
@@ -287,7 +314,7 @@ export default function Topbar() {
                 paddingLeft: "0.5rem",
                 paddingRight: "0.5rem",
                 // borderRadius: "2rem",
-                borderRadius: "0.5rem",
+                borderRadius: "1.1rem",
                 cursor: "pointer",
               }}
               // border={`1px solid ${primarycolor}`}

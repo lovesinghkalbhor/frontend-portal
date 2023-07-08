@@ -1,6 +1,7 @@
 $primary: #ffffff;
 // $primary: #27374d;
 $secondary: #dde6ed;
+$main-color: #7a1de0;
 // $primary: #4a6cd1;
 @mixin main-button($color, $border-color) {
   //   margin-top: 50px;
@@ -23,20 +24,23 @@ $secondary: #dde6ed;
 }
 
 ::-webkit-scrollbar-track {
-  background: #ffffff; /* Track color */
+  background: $primary; /* Track color */
   border-radius: 4px;
   border: 1px solid #676767bf;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #b4a7b7bf; /* Thumb color */
+  // lighten is preduild function that makes the color light as the give value
+  background-color: lighten($main-color, 20); /* Thumb color */
+  // background-color: #b4a7b7bf; /* Thumb color */
   border-radius: 4px; /* Rounded corners */
 }
 body {
   // for gray variant
   // background: #ebf0f4;
   // for purple variant
-  background: #f7f1ff;
+  background: lighten($main-color, 47);
+  // background: #f7f1ff;
 
   filter: blur(0.4);
   .full-screen {
@@ -47,7 +51,7 @@ body {
     // background-position: -60px;
     @media only screen and (max-width: 767px) {
       background-image: url("");
-      background-color: #7a1de0;
+      background-color: $main-color;
     }
 
     // background: linear-gradient(142deg, $primary 0%, rgb(2, 31, 144) 100%);
@@ -100,7 +104,8 @@ body {
         // background-color: #179bd7;
       }
       h4 {
-        @include font("Poppins", rgba(0, 0, 0, 0.527), 600, 35px);
+        @include font("Poppins", transparentize(black, 0.5), 600, 35px);
+        // @include font("Poppins", rgba(0, 0, 0, 0.527), 600, 35px);
       }
       hr {
         color: black;
@@ -159,7 +164,7 @@ body {
         // color: #27374d !important;
         color: $secondary !important;
         // @include main-button(#179bd7, transparent);
-        @include main-button(#7a1de0, transparent);
+        @include main-button($main-color, transparent);
       }
       border-radius: 5px;
       padding: 01rem 2rem 3.5rem 2rem;

@@ -8,6 +8,8 @@ import {
   Stack,
   Avatar,
 } from "@mui/material";
+import Spinner from "react-bootstrap/Spinner";
+
 import {
   primarycolor,
   shadow,
@@ -19,6 +21,8 @@ import { EditUser } from "../global component/data_fetching_components/org";
 import { globalcontext } from "../../routes/controler";
 export default function UpdateUser() {
   const [ismodify, setismodify] = useState(false);
+  const [loading, setloading] = useState(false);
+
   const {
     orgdata,
     setorgdata,
@@ -48,10 +52,14 @@ export default function UpdateUser() {
     useFormik({
       initialValues: initialValues,
       onSubmit: async (values) => {
+        setloading(true);
+        setismodify(!ismodify);
         console.log(orgdata.org_id, "hereis the org data that apperarsfsdf");
         let a = await EditUser(orgdata.org_id, values, user.email);
         if (a.status === 1) {
           setservererror(false);
+          setloading(false);
+
           setsuccessmessage(a.description);
           setValues({
             ...values,
@@ -182,11 +190,14 @@ export default function UpdateUser() {
                   }}
                   required
                 />
-                {ismodify ? (
+                <Box>
                   <Button
                     variant="contained"
-                    type="submit"
+                    // type="submit"
+                    onClick={() => setismodify(!ismodify)}
                     style={{
+                      margin: "1rem",
+                      marginLeft: 0,
                       padding: "0.5rem",
                       paddingLeft: "1rem",
                       paddingRight: "1rem",
@@ -196,20 +207,40 @@ export default function UpdateUser() {
                       borderRadius: radius,
                     }}
                   >
-                    Save
+                    Edit
                   </Button>
-                ) : null}
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    disabled={!ismodify}
+                    // onClick={() => setismodify(!ismodify)}
+                    style={{
+                      margin: "1rem",
+                      padding: "0.5rem",
+                      paddingLeft: "1rem",
+                      paddingRight: "1rem",
+                      color: "white",
+                      backgroundColor: primarycolor,
+                      marginBottom: "1rem",
+                      borderRadius: radius,
+                    }}
+                  >
+                    {!loading ? (
+                      "Update"
+                    ) : (
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </Button>
+                </Box>
               </Box>
             </Stack>
           </form>
-          {/* switch for allowing modifying */}
-          <Box margin="2rem">
-            <h5>Modify</h5>
-            <Switch
-              color="secondary"
-              onChange={() => setismodify(!ismodify)}
-            ></Switch>
-          </Box>
         </Box>
       ) : null}
     </Box>
