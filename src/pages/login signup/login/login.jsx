@@ -72,11 +72,11 @@ function Login() {
       },
     });
   //  if the session id already exists then redirect to dashboard
-  useEffect(() => {
-    if (is_session_valid()) {
-      navigate("/dashboard");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (is_session_valid()) {
+  //     navigate("/dashboard");
+  //   }
+  // }, []);
 
   return (
     <Box
@@ -106,6 +106,7 @@ function Login() {
             <TextField
               id="outlined-error-helper-text"
               name="email"
+              required
               type="text"
               placeholder="Email"
               style={{ marginBottom: "1rem" }}
@@ -125,6 +126,7 @@ function Login() {
             </InputLabel>
             <FormControl sx={{ m: 0 }} variant="outlined">
               <OutlinedInput
+                required
                 name="password"
                 id="outlined-adornment-password"
                 placeholder="Password"

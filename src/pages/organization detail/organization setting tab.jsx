@@ -75,7 +75,7 @@ export default function OrganizationSetting() {
     <Box margin={is_screen_sm ? "0rem" : "2rem"}>
       <Box display="flex" justifyContent="space-between" marginBottom="1rem">
         <h3>Organization Setting</h3>
-        {!orgdata?.name ? (
+        {!orgdata ? (
           <Spinner
             as="span"
             style={{
@@ -93,12 +93,12 @@ export default function OrganizationSetting() {
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               id="name-input"
+              required
               label="Name"
               variant="outlined"
               name="organization_name"
               value={values.organization_name || " "}
               onChange={handleChange}
-              required
               style={{ width: "100%", marginBottom: "1rem" }}
               disabled={!ismodify}
               onBlur={handleBlur}

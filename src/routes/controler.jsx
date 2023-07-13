@@ -138,88 +138,99 @@ export default function App() {
       {errormessage ? <Box>{renderErrorAlert(errormessage)}</Box> : null}
 
       {/* the page is start form here */}
-      <div
-        style={{
-          display: "flex",
-          // position: "relative",
-          width: "100%",
-          height: "100%",
-          position: "fixed",
-        }}
-      >
-        <Routes>
+      <Routes>
+        <Route exact path="/" element={<Login />}></Route>
+        <Route exact path="/login" element={<Login />}></Route>
+        <Route exact path="/2fa" element={<Two_Factor />}></Route>
+        <Route exact path="/signup" element={<SignUp />}></Route>
+        <Route exact path="/logoutall" element={<Logoutall />}></Route>
+      </Routes>
+      <div>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            position: "fixed",
+          }}
+        >
+          {/* <Routes>
           <Route exact path="/" element={<Login />}></Route>
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/2fa" element={<Two_Factor />}></Route>
           <Route exact path="/signup" element={<SignUp />}></Route>
           <Route exact path="/logoutall" element={<Logoutall />}></Route>
-        </Routes>
-        {/* if path is not login or signup then only show side bar */}
-        {is_screen_sm && path ? <Sidemenu></Sidemenu> : null}
-        {/* if path is not login or signup then only show main */}
-        {path ? (
-          <main
-            className="content"
-            style={{
-              width: "100%",
-              height: "100%",
-              overflowX: "auto",
-            }}
-          >
-            <Topbar></Topbar>
-            <div style={{ margin: "1rem" }}>
-              <Routes>
-                <Route path="/dashboard" element={<Dashboard />}></Route>
-                <Route path="/place_orders" element={<PlaceOrders />}></Route>
-                <Route path="/domain" element={<Domain />}></Route>
-                <Route path="/customer" element={<Customer />}></Route>
-                <Route path="/billing" element={<Billing />}></Route>
-                <Route
-                  path="/billing/transcation"
-                  element={<ViewTransaction />}
-                ></Route>
+        </Routes> */}
+          {/* if path is not login or signup then only show side bar */}
+          {is_screen_sm && path ? <Sidemenu></Sidemenu> : null}
+          {/* if path is not login or signup then only show main */}
+          {path ? (
+            <main
+              className="content"
+              style={{
+                width: "100%",
+                height: "100%",
+                overflowX: "auto",
+              }}
+            >
+              <Topbar></Topbar>
+              <div style={{ margin: "1rem" }}>
+                <Routes>
+                  <Route path="/dashboard" element={<Dashboard />}></Route>
+                  <Route path="/place_orders" element={<PlaceOrders />}></Route>
+                  <Route path="/domain" element={<Domain />}></Route>
+                  <Route path="/customer" element={<Customer />}></Route>
+                  <Route path="/billing" element={<Billing />}></Route>
+                  <Route
+                    path="/billing/transcation"
+                    element={<ViewTransaction />}
+                  ></Route>
 
-                <Route
-                  path="/billing/invoice"
-                  element={<ViewInvoice />}
-                ></Route>
+                  <Route
+                    path="/billing/invoice"
+                    element={<ViewInvoice />}
+                  ></Route>
 
-                <Route path="/profile" element={<Profile></Profile>} />
-                <Route path="/addfund" element={<AddFunds></AddFunds>} />
-                <Route
-                  path="/organization"
-                  element={<OrganizationPage></OrganizationPage>}
-                ></Route>
-                <Route path="/org/update" element={<UpdateUser></UpdateUser>} />
-                <Route
-                  path="/reset"
-                  element={<ChangePassword></ChangePassword>}
-                />
-                {/* <Route exact path="/logoutall" element={<Logoutall />}></Route> */}
-                <Route path="/tools">
+                  <Route path="/profile" element={<Profile></Profile>} />
+                  <Route path="/addfund" element={<AddFunds></AddFunds>} />
                   <Route
-                    path="domain-transferout-list"
-                    element={<DomainTransferList />}
+                    path="/organization"
+                    element={<OrganizationPage></OrganizationPage>}
+                  ></Route>
+                  <Route
+                    path="/org/update"
+                    element={<UpdateUser></UpdateUser>}
                   />
                   <Route
-                    path="pending-bulk-summary"
-                    element={<PendingBulkSummary />}
+                    path="/reset"
+                    element={<ChangePassword></ChangePassword>}
                   />
-                  <Route path="action-history" element={<Actionhistory />} />
-                  <Route
-                    path="domain-pull-request"
-                    element={<Domainpullrequest></Domainpullrequest>}
-                  />
-                  <Route path="reports" element={<Reports></Reports>} />
-                  <Route
-                    path="bulk-action-file"
-                    element={<BulkActionUpload></BulkActionUpload>}
-                  />
-                </Route>
-              </Routes>
-            </div>
-          </main>
-        ) : null}
+                  {/* <Route exact path="/logoutall" element={<Logoutall />}></Route> */}
+                  <Route path="/tools">
+                    <Route
+                      path="domain-transferout-list"
+                      element={<DomainTransferList />}
+                    />
+                    <Route
+                      path="pending-bulk-summary"
+                      element={<PendingBulkSummary />}
+                    />
+                    <Route path="action-history" element={<Actionhistory />} />
+                    <Route
+                      path="domain-pull-request"
+                      element={<Domainpullrequest></Domainpullrequest>}
+                    />
+                    <Route path="reports" element={<Reports></Reports>} />
+                    <Route
+                      path="bulk-action-file"
+                      element={<BulkActionUpload></BulkActionUpload>}
+                    />
+                  </Route>
+                </Routes>
+              </div>
+            </main>
+          ) : null}
+        </div>
       </div>
     </globalcontext.Provider>
   );

@@ -134,10 +134,8 @@ export default function Topbar() {
     let a = await Logoutfunction();
     console.log(a, "this is logout funcion");
     if (a.status === 1) {
-      Cookies.set("session_id", "12");
-      setTimeout(() => {
-        navigate("/login");
-      }, 5000);
+      navigate("/login");
+      Cookies.remove("session_id");
     }
   }
   async function logoutallfunctionbutton() {

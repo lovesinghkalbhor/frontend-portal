@@ -144,8 +144,7 @@ export default function Sidemenu() {
   const is_screen_md = useMediaQuery("(min-width:767px)");
 
   const { is_screen_sm, is_session_valid } = useContext(globalcontext);
-  const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } =
-    useProSidebar();
+  const { collapseSidebar, toggleSidebar, collapsed } = useProSidebar();
   const [iscollapsed, setiscollapsed] = useState(1);
   useEffect(() => {
     is_session_valid();

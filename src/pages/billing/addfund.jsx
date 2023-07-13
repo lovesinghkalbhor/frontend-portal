@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useContext } from "react";
+import { React, useState, useEffect, useContext, useRef } from "react";
 import Card from "react-bootstrap/Card";
 import {
   Box,
@@ -195,12 +195,18 @@ function AddFunds() {
                   onChange={handleChange}
                   error={!!servererror}
                   helperText={servererror}
-                  disabled={isclicked}
+                  // disabled={isclicked}
                   required
                   style={{ width: "100%", marginBottom: "1rem" }}
                   onBlur={handleBlur}
                   InputLabelProps={{
                     shrink: true,
+                  }}
+                  onFocus={() => {
+                    if (values.amount == 0) {
+                      setservererror("");
+                      // inputElement.current.focus();
+                    }
                   }}
                 />
               </Grid>
@@ -317,8 +323,14 @@ function AddFunds() {
                 <LoadingButton
                   type="submit"
                   onClick={() => {
-                    setshowpaymentbtn(true);
+                    {
+                      values.amount == 0
+                        ? setshowpaymentbtn(false)
+                        : setshowpaymentbtn(true);
+                    }
+
                     setisclicked(true);
+
                     setTimeout(() => {
                       window.scrollTo(0, document.body.scrollHeight);
                     }, 500);
