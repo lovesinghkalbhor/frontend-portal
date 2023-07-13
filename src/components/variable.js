@@ -93,7 +93,7 @@ export const iconbackgroundcolor = "rgb(235 235 235);";
 export const sidemenucolor = "white";
 // this is the url for the actual api
 
-export const url = "https://api-july.onrender.com";
-// export const url = "https://portal-api-connect.onrender.com";
+// export const url = "https://api-july.onrender.com";
+export const url = "https://portal-api-connect.onrender.com";
 
 // export const url = "http://localhost:5000";
