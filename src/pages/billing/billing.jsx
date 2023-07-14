@@ -61,7 +61,11 @@ export default function Billing() {
                 value="1"
                 style={{ color: primarycolor }}
               />
-              <Tab label="Invoice List" value="2" />
+              <Tab
+                label="Invoice List"
+                value="2"
+                style={{ color: primarycolor }}
+              />
             </TabList>
           </Box>
           <Box
@@ -78,14 +82,10 @@ export default function Billing() {
             </TabPanel>
 
             <TabPanel value="2">
-              <Box>
-                <Box
-                  width="100%"
-                  borderRadius="1.2rem"
-                  backgroundColor="#FFFFFF"
-                >
-                  <ListInvoice></ListInvoice>
-                </Box>
+              {/* <Box> */}
+              <Box width="100%" borderRadius="1.2rem" backgroundColor="#FFFFFF">
+                <ListInvoice></ListInvoice>
+                {/* </Box> */}
               </Box>
             </TabPanel>
           </Box>

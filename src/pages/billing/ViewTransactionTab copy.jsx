@@ -14,12 +14,15 @@ import {
   radius,
   borderTop,
 } from "../../components/variable";
+import { useNavigate } from "react-router-dom";
+
 import { useFormik } from "formik";
 import { viewTransaction } from "../global component/data_fetching_components/billing_endpoints";
 import { globalcontext } from "../../routes/controler";
 export default function ViewTransaction() {
+  const navigate = useNavigate();
   const [transactiondata, settransactiondata] = useState({});
-  const { setservererror, is_session_valid, is_screen_sm } =
+  const { seterrormessage, setservererror, is_session_valid, is_screen_sm } =
     useContext(globalcontext);
   useEffect(() => {
     console.log("in ht view transactiondatabase tab of h");
@@ -32,7 +35,10 @@ export default function ViewTransaction() {
         console.log(a.billing);
         settransactiondata(a.billing);
       } else if (a.status === 0) {
-        setservererror(a.error);
+        seterrormessage(a.error);
+
+        navigate("/billing");
+        console.log(a, "this is the lvoe singh kablor afadsf");
       }
     };
     data();

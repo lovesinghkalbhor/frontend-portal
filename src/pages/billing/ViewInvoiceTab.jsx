@@ -7,13 +7,16 @@ import {
   borderTop,
 } from "../../components/variable";
 import { calculat_percentage, totalAmount } from "./helperfunction";
-import { useFormik } from "formik";
 import { viewInvoice } from "../global component/data_fetching_components/billing_endpoints";
 import { globalcontext } from "../../routes/controler";
 import { OrgEndpoint } from "../global component/data_fetching_components/org";
 
 export default function ViewInvoice() {
   const [transactiondata, settransactiondata] = useState({});
+  const [transactiondataItem, settransactiondataItem] = useState({
+    item1: "",
+    tax: "",
+  });
   const {
     is_session_valid,
     is_screen_sm,
@@ -55,35 +58,18 @@ export default function ViewInvoice() {
       getorgdata();
     }
   }, []);
-
-  // formik here is
-  const initialValues = {
-    // Set default value to empty string if userinfo.firstName is undefined
-    invoice_number: "",
-    date: "",
-    status: "",
-    password: "",
-    amount: "",
-    currency: "",
-    currency_symbol: "",
-    applicable_tax: "",
-    tax: "",
-    net_amount: "",
-    transaction_id: "",
-    url: "",
-  };
-  const { values, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: initialValues,
-    onSubmit: async (values) => {
-      //   let a = await viewInvoice(values.invoice_number);
-      //   if (a.status === 1) {
-      //     console.log(a.invoice);
-      //     settransactiondata(a.invoice);
-      //   } else {
-      //     console.log("55555555555555555555555550000000000000000000");
-      //   }
-    },
-  });
+  useEffect(() => {
+    if (transactiondata?.items) {
+      let item = JSON.parse(transactiondata?.items);
+      let tax = JSON.parse(transactiondata?.tax);
+      console.log(item.item1, "this si lvoe singhk alhjuor asldfj");
+      settransactiondataItem({
+        ...transactiondataItem,
+        item1: item?.item1,
+        // tax: transactiondata?.tax[0],
+      });
+    }
+  }, [transactiondata]);
 
   return (
     <>
@@ -108,12 +94,24 @@ export default function ViewInvoice() {
                   src="/meta.png"
                   alt="placeholder"
                   style={{
-                    width: "15rem",
+                    width: "12rem",
                     marginBottom: "1rem",
                   }}
                 />
+                <h6 className="ms-3 text-danger">{transactiondata?.error}</h6>
+                <h6 className="ms-3 text-success-emphasis">
+                  {transactiondata?.success}
+                </h6>
               </div>
-              <div className=" mt-5 col-12 col-md-6 text-md-end ">
+              <div className=" mt-4 col-12 col-md-6 text-md-end ">
+                <h4
+                  className="fw-bold"
+                  style={{
+                    color: transactiondata.status == "PAID" ? "green" : "red",
+                  }}
+                >
+                  {transactiondata.status}
+                </h4>
                 <h6>Invoice No. : {transactiondata.invoice_number}</h6>
                 <h6>Date: {transactiondata.date}</h6>
                 <h6>Reseller ID: {orgdata.org_id}</h6>
@@ -175,21 +173,22 @@ export default function ViewInvoice() {
                     <tr>
                       <th scope="row" />
                       <td colSpan={2}>1</td>
-                      <td>1</td>
-                      <td>$22.40 USD</td>
+                      <td>{transactiondataItem.item1.name}</td>
+                      <td>{transactiondataItem.item1.sac}</td>
                       <td>
                         {transactiondata.currency_symbol}
-                        {transactiondata.net_amount}
+                        {transactiondata.amount}
                       </td>
                     </tr>
                     <tr>
                       <th scope="row" />
-                      <td colSpan={4} className="text-end">
+                      <td colSpan={4} className="text-end fw-bold">
                         GST : 18%
                       </td>
                       <td>
                         {transactiondata.currency_symbol}{" "}
-                        {calculat_percentage(18, transactiondata.net_amount)}
+                        {transactiondataItem.item1.tax_amount}{" "}
+                        {/* {calculat_percentage(18, transactiondata.net_amount)} */}
                       </td>
                     </tr>
                   </tbody>
@@ -223,7 +222,8 @@ export default function ViewInvoice() {
                         }}
                       >
                         {transactiondata.currency_symbol}{" "}
-                        {totalAmount(18, transactiondata.net_amount, 0)}
+                        {transactiondata.net_amount}{" "}
+                        {/* {totalAmount(18, transactiondata.net_amount, 0)} */}
                       </td>
                       <td scope="col" />
                     </tr>
@@ -249,7 +249,7 @@ export default function ViewInvoice() {
             paddingRight: "1rem",
             color: "white",
             backgroundColor: primarycolor,
-            marginBottom: "1rem",
+            margin: "1rem",
             borderRadius: "0.5rem",
           }}
         >
