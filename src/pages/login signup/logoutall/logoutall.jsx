@@ -25,7 +25,8 @@ function Logoutall() {
   const navigate = useNavigate();
   const [loading, setloading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const { setsuccessmessage, seterrormessage } = useContext(globalcontext);
+  const { logout, setsuccessmessage, seterrormessage } =
+    useContext(globalcontext);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -55,15 +56,14 @@ function Logoutall() {
       console.log(data, "this is s");
 
       if (data.status === 1) {
-        Cookies.set("session_id", "");
         setsuccessmessage("loged out Successfully form all the devices");
-
-        navigate("/login");
+        logout();
+        // Cookies.set("session_id", "");
+        // navigate("/login");
       } else if (data.status === 0) {
-        // alert(data.error);
         setservererror(data.error);
-      } else if (data.servererror) {
         //for internat errors
+      } else if (data.servererror) {
         setloading(false);
 
         seterrormessage(data.servererror);
@@ -166,9 +166,9 @@ function Logoutall() {
                 <hr></hr>
               </div>
               <Box>
-                Don't have account ?{" "}
+                Don not want to Logout ?{" "}
                 <Link className="sign-link link fs-6" to="/dashboard">
-                  Contact Us
+                  Go Back
                 </Link>
               </Box>
             </div>

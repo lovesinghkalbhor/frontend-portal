@@ -8,9 +8,17 @@ const Me_Endpoint = async () => {
   const session_id = Cookies.get("session_id");
 
   try {
-    const userdata = await axios.post(`${url}/me/view`, {
-      session_id,
-    });
+    const userdata = await axios.post(
+      `${url}/me/view`,
+      {
+        session_id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     data = userdata.data;
     console.log(data);
@@ -31,13 +39,21 @@ const updateprofiledata = async (
   const session_id = Cookies.get("session_id");
   let data = {};
   try {
-    const userdata = await axios.post(`${url}/me/update`, {
-      session_id,
-      first_name,
-      last_name,
-      email,
-      two_factor_authentication,
-    });
+    const userdata = await axios.post(
+      `${url}/me/update`,
+      {
+        session_id,
+        first_name,
+        last_name,
+        email,
+        "2fa": two_factor_authentication,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     data = userdata.data;
   } catch (error) {
     data.servererror = error.message;

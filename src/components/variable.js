@@ -94,7 +94,7 @@ export const sidemenucolor = "white";
 // this is the url for the actual api
 
 // export const url = "https://api-july.onrender.com";
-export const url = "https://portal-api-connect.onrender.com";
+// export const url = "https://portal-api-connect.onrender.com";
 
-// export const url = "https://127.0.0.1";
+export const url = "https://aditya1.staging.cloudmate.in";
 // export const url = "http://localhost:5000";

@@ -28,6 +28,8 @@ import ViewTransaction from "../pages/billing/ViewTransactionTab copy";
 import ViewInvoice from "../pages/billing/ViewInvoiceTab";
 import Two_Factor from "../pages/login signup/login/two_factor_auth";
 import { shadow } from "../components/variable";
+import Cookies from "js-cookie";
+
 const globalcontext = createContext();
 export default function App() {
   const [userinfo, setuserinfo] = useState({});
@@ -64,10 +66,16 @@ export default function App() {
       } else {
         setPath(true);
       }
+      is_session_valid();
     },
     [location.pathname],
+
     []
   );
+  function logout() {
+    navigate("/login");
+    Cookies.remove("session_id");
+  }
   function renderSuccessAlert(message) {
     return (
       <Alert
@@ -75,10 +83,10 @@ export default function App() {
         style={{
           position: "fixed",
           zIndex: 1000,
-          width: "50%",
+          width: "95%",
+          marginLeft: "3%",
           marginTop: "2rem",
-          marginLeft: "2rem",
-          border: "1px solid lightgray",
+          border: "1px solid gray",
           boxShadow: shadow,
           borderRadius: "2rem",
         }}
@@ -95,9 +103,10 @@ export default function App() {
         style={{
           position: "fixed",
           zIndex: 1000,
-          width: "100%",
+          width: "95%",
+          marginLeft: "3%",
           marginTop: "2rem",
-          border: "1px solid lightgray",
+          border: "1px solid gray",
           boxShadow: shadow,
           borderRadius: "2rem",
         }}
@@ -111,12 +120,13 @@ export default function App() {
     setTimeout(() => {
       setsuccessmessage("");
       seterrormessage("");
-    }, 10000);
+    }, 7000);
   }, [successmessage, errormessage]);
 
   return (
     <globalcontext.Provider
       value={{
+        logout,
         orgdata,
         setorgdata,
         is_screen_sm,
@@ -134,7 +144,6 @@ export default function App() {
     >
       {/* this is global aler box///////////////////////////////// */}
       {successmessage ? <Box>{renderSuccessAlert(successmessage)}</Box> : null}
-
       {errormessage ? <Box>{renderErrorAlert(errormessage)}</Box> : null}
 
       {/* the page is start form here */}

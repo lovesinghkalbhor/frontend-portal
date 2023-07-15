@@ -24,6 +24,7 @@ const Logindata = async (email, password) => {
   }
   return data;
 };
+// 2fa authentication api
 const TwoFactorAuth = async (passcode) => {
   const apiUrl = `${url}/auth/twofa`;
   const session_id = Cookies.get("session_id");
@@ -78,7 +79,7 @@ const Reset_password = async (vcode, vcode2, hashedEmail, password) => {
     vcode: vcode,
     vcode2: vcode2,
     email: hashedEmail,
-    password: password,
+    new_password: password,
   };
   let data = {};
   try {
@@ -103,9 +104,17 @@ const is_user_session_valid = async () => {
   console.log("in login");
   let data = {};
   try {
-    const userdata = await axios.post(apiUrl, {
-      session_id,
-    });
+    const userdata = await axios.post(
+      apiUrl,
+      {
+        session_id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     data = userdata.data;
   } catch (error) {
     data.servererror = error.message;
@@ -120,9 +129,17 @@ const Logoutfunction = async () => {
   const apiUrl = `${url}/auth/logout`;
   let data = {};
   try {
-    const userdata = await axios.post(apiUrl, {
-      session_id,
-    });
+    const userdata = await axios.post(
+      apiUrl,
+      {
+        session_id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     data = userdata.data;
     // Cookies.remove("session_id");
   } catch (error) {

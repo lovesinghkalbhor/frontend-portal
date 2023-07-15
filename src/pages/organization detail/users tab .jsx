@@ -102,7 +102,7 @@ function Row(props) {
         <TableCell>
           <Link
             style={{ cursor: "pointer", textDecoration: "none" }}
-            to={`/org/update?email=${props?.row.email}&first_name=${props?.row.first_name}&last_name=${props?.row.last_name}`}
+            to={`/org/update?email=${props?.row.email}&first_name=${props?.row.first_name}&last_name=${props?.row.last_name}&org=${orgdata.org_id}`}
           >
             {props?.row.first_name} {props?.row.last_name}
           </Link>

@@ -48,23 +48,22 @@ function Login() {
         let data = await Logindata(values.email, values.password);
         console.log(data, "this is s");
 
+        // for login
         if (data.status === 1) {
-          // for login
           Cookies.set("session_id", data.session_id);
           navigate("/dashboard");
-        } else if (data.status === 0) {
           //if credentials are wrong
+        } else if (data.status === 0) {
           setloading(false);
           setservererror(data.error);
-        } else if (data.status === 2) {
           //for two factor authentication
+        } else if (data.status === 2) {
           Cookies.set("session_id", data.session_id);
           setsuccessmessage("passcode has been sent to your email address");
-
           navigate("/2fa");
           setloading(false);
-        } else if (data.servererror) {
           //for internat errors
+        } else if (data.servererror) {
           setloading(false);
 
           seterrormessage(data.servererror);

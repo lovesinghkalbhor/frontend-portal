@@ -33,6 +33,7 @@ export default function ChangePassword() {
   const [error, seterror] = useState(false);
   // context for media query
   const {
+    logout,
     setsuccessmessage,
     servererror,
     setservererror,
@@ -101,7 +102,8 @@ export default function ChangePassword() {
         setmessage(updateddata.message);
         setsuccessmessage(updateddata.message);
         setTimeout(() => {
-          navigate("/login");
+          // navigate("/login");
+          logout();
         }, 2000);
       } else {
         setservererror(updateddata.error);
@@ -271,7 +273,7 @@ export default function ChangePassword() {
                 paddingRight: "1rem",
                 color: "white",
 
-                marginLeft: "1rem",
+                // marginLeft: "rem",
                 backgroundColor: primarycolor,
                 marginBottom: "1.5rem",
                 borderRadius: "0.5rem",

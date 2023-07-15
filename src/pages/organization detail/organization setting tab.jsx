@@ -12,6 +12,7 @@ export default function OrganizationSetting() {
 
   const {
     orgdata,
+    servererror,
     setorgdata,
     is_screen_sm,
     setsuccessmessage,
@@ -44,15 +45,20 @@ export default function OrganizationSetting() {
           console.log(a.organization, "this is the starusa of the code ");
           setorgdata(a.organization);
         } else if (a.status === 0) {
+          console.log(a);
           setloading(false);
           setservererror(a.error);
         } else if (a.servererror) {
+          console.log(a.status);
+
           setloading(false);
           seterrormessage(a.servererror);
         }
       },
     });
-
+  const OnclickEdit = () => {
+    setservererror(false);
+  };
   useEffect(() => {
     if (orgdata?.name && orgdata?.address1) {
       setValues({
@@ -75,6 +81,7 @@ export default function OrganizationSetting() {
     <Box margin={is_screen_sm ? "0rem" : "2rem"}>
       <Box display="flex" justifyContent="space-between" marginBottom="1rem">
         <h3>Organization Setting</h3>
+        {!!servererror ? <h6 className="text-danger">{servererror}</h6> : null}
         {!orgdata ? (
           <Spinner
             as="span"
@@ -271,8 +278,10 @@ export default function OrganizationSetting() {
         <Box>
           <Button
             variant="contained"
-            // type="submit"
-            onClick={() => setismodify(!ismodify)}
+            onClick={() => {
+              setismodify(!ismodify);
+              OnclickEdit();
+            }}
             style={{
               margin: "1rem",
               marginLeft: 0,

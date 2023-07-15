@@ -16,11 +16,7 @@ import {
   Button,
 } from "@mui/material";
 import Cookies from "js-cookie";
-
 import Spinner from "react-bootstrap/Spinner";
-
-import { useMediaQuery } from "@mui/material";
-
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Logout from "@mui/icons-material/Logout";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
@@ -76,7 +72,6 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 export default function Topbar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const is_screen_md = useMediaQuery("(min-width:767px)");
 
   let path = location.pathname;
   let showpath = path.split("/").filter((value, index) => value != "tools");
@@ -84,6 +79,7 @@ export default function Topbar() {
   showpath = lodash.startCase(showpath);
 
   const {
+    logout,
     is_screen_sm,
     userinfo,
     setuserinfo,
@@ -134,8 +130,7 @@ export default function Topbar() {
     let a = await Logoutfunction();
     console.log(a, "this is logout funcion");
     if (a.status === 1) {
-      navigate("/login");
-      Cookies.remove("session_id");
+      logout();
     }
   }
   async function logoutallfunctionbutton() {

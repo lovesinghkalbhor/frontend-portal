@@ -6,15 +6,21 @@ import { url } from "../../../components/variable";
 const OrgEndpoint = async () => {
   let data = {};
   const session_id = Cookies.get("session_id");
-  // console.log(session_id);
-  // console.log("in me react");
   try {
-    const userdata = await axios.post(`${url}/org/view`, {
-      session_id,
-    });
+    const userdata = await axios.post(
+      `${url}/org/view`,
+      {
+        session_id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     data = userdata.data;
-    console.log(data, "50000000000000000000sdffffffffffffff");
+    console.log(data);
   } catch (err) {
     data.error = "Failed to fetch data. Please try again later.";
   }
@@ -25,7 +31,7 @@ const OrgEndpoint = async () => {
 const UpdateOrgData = async (orgdata) => {
   const session_id = Cookies.get("session_id");
 
-  console.log(orgdata, "0000000000000000");
+  console.log(orgdata);
   let data = {
     session_id,
     ...orgdata,
@@ -102,8 +108,9 @@ const RevokeUser = async (org_id, user_id) => {
   }
   return data;
 };
+
 /** This function use to search the user */
-const SearchUser = async (org_id, search_data) => {
+const SearchUser = async (org_id, search_array) => {
   let data = {};
   const session_id = Cookies.get("session_id");
   console.log(session_id);
@@ -112,7 +119,7 @@ const SearchUser = async (org_id, search_data) => {
     const userdata = await axios.post(`${url}/org/searchUsers`, {
       session_id,
       org_id,
-      search_data,
+      search_array,
     });
 
     data = userdata.data;
@@ -132,9 +139,9 @@ const EditUser = async (org_id, edit_data, user_id) => {
   try {
     const userdata = await axios.post(`${url}/org/editUsers`, {
       session_id,
-      user_id,
       org_id,
-      edit_data,
+      user_id,
+      edit: edit_data,
     });
 
     data = userdata.data;
@@ -144,6 +151,8 @@ const EditUser = async (org_id, edit_data, user_id) => {
   }
   return data;
 };
+
+// later
 const AddUser = async (org_id, dataobj) => {
   let data = {};
   const session_id = Cookies.get("session_id");
@@ -152,7 +161,11 @@ const AddUser = async (org_id, dataobj) => {
   console.log(dataobj, "orgdataag");
   const obj = { session_id, org_id: 1, ...dataobj };
   try {
-    const userdata = await axios.post(`${url}/org/addUser`, obj);
+    const userdata = await axios.post(`${url}/org/addUser`, obj, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
 
     data = userdata.data;
     console.log(data, "50000000000000000000sdffffffffffffff");

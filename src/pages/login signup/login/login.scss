@@ -53,6 +53,10 @@ body {
       background-image: url("");
       background-color: $main-color;
     }
+    // @media only screen and (max-width: 767px) {
+    //   background-image: url("");
+    //   background-color: $main-color;
+    // }
 
     // background: linear-gradient(142deg, $primary 0%, rgb(2, 31, 144) 100%);
   }

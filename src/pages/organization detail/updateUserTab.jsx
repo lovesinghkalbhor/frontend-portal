@@ -1,88 +1,110 @@
 import { React, useState, useEffect, useContext } from "react";
 import { Box, Button, TextField, Grid, Stack, Avatar } from "@mui/material";
 import Spinner from "react-bootstrap/Spinner";
-
 import {
   primarycolor,
   shadow,
   radius,
   borderTop,
 } from "../../components/variable";
+import validationSchema from "../global component/schema for validation";
 import { useFormik } from "formik";
 import { EditUser } from "../global component/data_fetching_components/org";
 import { globalcontext } from "../../routes/controler";
 export default function UpdateUser() {
   const [ismodify, setismodify] = useState(false);
   const [loading, setloading] = useState(false);
-
   const {
     orgdata,
-    is_screen_sm,
     servererror,
     is_session_valid,
     setservererror,
     setsuccessmessage,
+    seterrormessage,
   } = useContext(globalcontext);
   const [user, setuser] = useState({
-    first_name: "",
-    last_name: "",
+    firstname: "",
+    lastname: "",
     email: "",
+    org_id: "",
   });
 
   // formik here is
-
+  const handleFocus = () => {
+    setservererror(false);
+  };
   const initialValues = {
     // Set default value to empty string if userinfo.firstName is undefined
-    first_name: "",
-    last_name: "",
+    firstname: "",
+    lastname: "",
     email: "",
   };
-  const { values, handleBlur, handleChange, handleSubmit, setValues } =
-    useFormik({
-      initialValues: initialValues,
-      onSubmit: async (values) => {
-        setloading(true);
-        setismodify(!ismodify);
-        console.log(orgdata.org_id, "hereis the org data that apperarsfsdf");
-        let a = await EditUser(orgdata.org_id, values, user.email);
-        if (a.status === 1) {
-          setservererror(false);
-          setloading(false);
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    setValues,
+  } = useFormik({
+    initialValues: initialValues,
+    validationSchema,
+    onSubmit: async (values) => {
+      let editdata = {
+        first_name: values.firstname,
+        last_name: values.lastname,
+        email: values.email,
+      };
+      setloading(true);
+      setismodify(!ismodify);
+      let a = await EditUser(user.org_id, editdata, user.email);
+      console.log(a, "called data update");
+      if (a.status === 1) {
+        setservererror(false);
+        setloading(false);
 
-          setsuccessmessage(a.description);
-          setValues({
-            ...values,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email,
-          });
-        } else {
-          setservererror(a.error);
-        }
+        setsuccessmessage(a.description);
+        setValues({
+          ...values,
+          first_name: user.firstname,
+          last_name: user.lastname,
+          email: user.email,
+        });
 
-        console.log(values, "called data update");
-      },
-    });
+        // if something wrong happens
+      } else if (a.servererror) {
+        seterrormessage(a.servererror);
+      } else {
+        setloading(false);
+        setservererror(a.error);
+      }
+
+      // console.log(values, "called data update");
+    },
+  });
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    let first_name = searchParams.get("first_name");
-    let last_name = searchParams.get("last_name");
+    let firstname = searchParams.get("first_name");
+    let lastname = searchParams.get("last_name");
     let email = searchParams.get("email");
-    console.log(first_name, last_name, email);
+    let org_id = searchParams.get("org");
+    console.log(firstname, lastname, email);
     setuser({
-      first_name: first_name,
-      last_name: last_name,
+      firstname: firstname,
+      lastname: lastname,
       email: email,
+      org_id,
     });
     is_session_valid();
   }, []);
 
   useEffect(() => {
-    if (user.first_name && user.last_name) {
+    if (user.firstname && user.lastname) {
       setValues({
         ...values,
-        first_name: user.first_name,
-        last_name: user.last_name,
+        firstname: user.firstname,
+        lastname: user.lastname,
         email: user.email,
       });
     }
@@ -90,23 +112,31 @@ export default function UpdateUser() {
 
   return (
     <Box>
-      {is_screen_sm ? (
-        <Box
-          width="95%"
-          backgroundColor="white"
-          marginBottom="2rem"
-          marginTop="2rem"
-          boxShadow={shadow}
-          display="flex"
-          justifyContent="space-between"
-          paddingTop="1rem"
-          borderRadius={radius}
-          borderTop={borderTop}
+      <Box
+        display="flex"
+        width="95%"
+        backgroundColor="white"
+        marginBottom="2rem"
+        marginTop="2rem"
+        boxShadow={shadow}
+        borderRadius={radius}
+        borderTop={borderTop}
+        justifyContent="space-between"
+        paddingTop="1rem"
+      >
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={4}
+          sx={{ alignItems: "start", justifyContent: "center" }}
+          padding="1rem"
+          paddingLeft="2rem"
         >
-          <form
+          <Avatar alt="Remy Sharp" sx={{ width: 100, height: 100 }} />
+          <form // method="POST"
             className="form d-flex flex-column text-start "
             onSubmit={handleSubmit}
           >
+            {" "}
             <Stack
               direction="row"
               spacing={4}
@@ -114,71 +144,79 @@ export default function UpdateUser() {
               padding="1rem"
               paddingLeft="2rem"
             >
-              <Avatar
-                alt="Remy Sharp"
-                sx={{ marginTop: "1rem", width: 100, height: 100 }}
-              />
               <Box>
+                {/* if server gives error then show */}
+                {!!servererror ? (
+                  <h6 className="text-danger">{servererror}</h6>
+                ) : null}
+                {/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */}
                 <Grid container spacing={2}>
-                  <Grid item sm={6}>
+                  <Grid item xs={12} sm={12} md={6} xl={4}>
                     <TextField
                       id="firstname-input"
-                      label="firstname"
+                      label="Firstname"
                       variant="outlined"
-                      name="first_name"
-                      value={values.first_name}
+                      name="firstname"
+                      value={values.firstname}
                       onChange={handleChange}
                       disabled={!ismodify}
                       onBlur={handleBlur}
-                      error={!!servererror}
-                      helperText={servererror}
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      error={!!(touched.firstname && errors.firstname) || null}
+                      helperText={errors.firstname}
+                      onFocus={handleFocus}
                       required
                       style={{ width: "100%", marginBottom: "1rem" }}
                     />
                   </Grid>
-                  <Grid item sm={6}>
+                  <Grid item xs={12} sm={12} md={6} xl={4}>
                     <TextField
                       id="lastname-input"
-                      label="lastname"
+                      label="Lastname"
                       variant="outlined"
-                      name="last_name"
-                      value={values.last_name}
+                      name="lastname"
+                      value={values.lastname}
                       onChange={handleChange}
                       disabled={!ismodify}
+                      error={!!(touched.lastname && errors.lastname) || null}
+                      helperText={errors.lastname}
                       onBlur={handleBlur}
-                      error={!!servererror}
-                      helperText={servererror}
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      onFocus={handleFocus}
                       required
                       style={{ width: "100%", marginBottom: "1rem" }}
                     />
                   </Grid>
+
+                  <Grid item xs={12} sm={12} md={6} xl={4}>
+                    <TextField
+                      style={{ width: "100%", marginBottom: "1rem" }}
+                      id="email-input"
+                      label="Email Address"
+                      name="email"
+                      variant="outlined"
+                      disabled={!ismodify}
+                      value={values.email}
+                      error={!!(touched.email && errors.email) || null}
+                      helperText={errors.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      onFocus={handleFocus}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      required
+                    />{" "}
+                  </Grid>
                 </Grid>
-                <TextField
-                  style={{ width: "100%", marginBottom: "1rem" }}
-                  id="email-input"
-                  label="Email Address"
-                  name="email"
-                  variant="outlined"
-                  disabled={!ismodify}
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={!!servererror}
-                  helperText={servererror}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  required
-                />
                 <Box>
                   <Button
                     variant="contained"
+                    // type="submit"
                     onClick={() => setismodify(!ismodify)}
                     style={{
                       margin: "1rem",
@@ -225,8 +263,8 @@ export default function UpdateUser() {
               </Box>
             </Stack>
           </form>
-        </Box>
-      ) : null}
+        </Stack>
+      </Box>
     </Box>
   );
 }

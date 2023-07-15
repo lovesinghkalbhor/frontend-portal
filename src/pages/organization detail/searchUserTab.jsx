@@ -7,7 +7,6 @@ import {
   OutlinedInput,
 } from "@mui/material";
 import Spinner from "react-bootstrap/Spinner";
-
 import ClearIcon from "@mui/icons-material/Clear";
 import SearchIcon from "@mui/icons-material/Search";
 import { useFormik } from "formik";
@@ -16,16 +15,23 @@ import validationSchema from "../global component/schema for validation";
 import { globalcontext } from "../../routes/controler";
 import { primarycolor, radius } from "../../components/variable";
 export default function SearchUserTab(props) {
-  const { is_session_valid, orgdata, seterrormessage, is_screen_sm } =
-    useContext(globalcontext);
+  const {
+    setservererror,
+    servererror,
+    is_session_valid,
+    orgdata,
+    seterrormessage,
+    is_screen_sm,
+  } = useContext(globalcontext);
   const [orguserdata, setorguserdata] = useState([]);
   const [loading, setloading] = useState(false);
 
   // formik here is
-
+  const handleFocus = () => {
+    setservererror(false);
+  };
   const initialValues = {
     search_data: "",
-
     org_id: "",
   };
   const { values, handleBlur, handleChange, handleSubmit, setValues } =
@@ -50,9 +56,13 @@ export default function SearchUserTab(props) {
           console.log(a);
           setloading(false);
           setorguserdata(a.users);
+          setservererror(false);
           console.log(orguserdata[0], "THIS IS TRUE ,,,,,,,,,,,,,,,");
         } else if (a.servererror) {
           seterrormessage(a.servererror);
+        } else {
+          setloading(false);
+          setservererror(a.error);
         }
       },
     });
@@ -70,6 +80,8 @@ export default function SearchUserTab(props) {
     <>
       <Box marginBottom={is_screen_sm ? "0.5rem" : "0.5rem"} width="100%">
         <Box marginBottom="1rem">{/* <h3></h3> */}</Box>
+        {/* if server gives error then show */}
+        {!!servererror ? <h6 className="text-danger">{servererror}</h6> : null}
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={10} sm={6}>
@@ -84,6 +96,7 @@ export default function SearchUserTab(props) {
                 required
                 style={{ width: "100%" }}
                 onBlur={handleBlur}
+                onFocus={handleFocus}
                 InputLabelProps={{
                   shrink: true,
                   color: "black",

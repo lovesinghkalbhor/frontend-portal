@@ -7,7 +7,6 @@ import {
   SubMenu,
 } from "react-pro-sidebar";
 import "./style.css"; // Import your custom styles
-
 import { Box, IconButton, useMediaQuery, Tooltip, Zoom } from "@mui/material";
 import { Link } from "react-router-dom";
 import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
@@ -19,57 +18,13 @@ import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
-  iconcolor,
   primarycolor,
   sidemenucolor,
   toprightbordersidemenu,
 } from "../../../components/variable";
 import { globalcontext } from "../../../routes/controler";
 import CorporateFareIcon from "@mui/icons-material/CorporateFare";
-import { styled, alpha } from "@mui/material/styles";
 
-import InputBase from "@mui/material/InputBase";
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(1),
-  marginLeft: 0,
-  marginBottom: theme.spacing(1),
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "12ch",
-    },
-  },
-}));
 export default function Sidemenu() {
   // const iconcolor = "#1F33F2";
   let menus = [

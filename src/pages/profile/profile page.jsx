@@ -7,10 +7,9 @@ import {
   TextField,
   Grid,
   tabsClasses,
-  Switch,
 } from "@mui/material";
 import Spinner from "react-bootstrap/Spinner";
-
+import validationSchema from "../global component/schema for validation";
 import { shadow, radius, borderTop } from "../../components/variable";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -25,7 +24,6 @@ import Profile_Tab from "./profile tab";
 import { globalcontext } from "../../routes/controler";
 import { updateprofiledata } from "../global component/data_fetching_components/me_endpoint";
 import { useFormik } from "formik";
-// import validationSchema from "./index";
 export default function Profile() {
   const [value, setValue] = useState("1");
   const [loading, setloading] = useState(false);
@@ -47,50 +45,60 @@ export default function Profile() {
   const tabhandleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const handleFocus = () => {
+    setservererror(false);
+  };
   // formik here is
-  // console.log(userinfo.firstName, userinfo.lastName, "in last nae amd ");
-
   const initialValues = {
-    // firstname: userinfo.firstName, // Set default value to empty string if userinfo.firstName is undefined
+    // Set default value to empty string if userinfo.firstName is undefined
     firstname: "",
     lastname: "",
     email: "",
   };
-  const { values, handleBlur, handleChange, handleSubmit, setValues } =
-    useFormik({
-      initialValues: initialValues,
-      // validationSchema,
-      onSubmit: async (values) => {
-        setloading(true);
-        setismodify(!ismodify);
-        try {
-          console.log("in the update lvoe saveasdf");
-          let updateddata = await updateprofiledata(
-            values.firstname,
-            values.lastname,
-            values.email
-          );
-          console.log(updateddata.userinfo, "this si sis sisis sisisi");
-          if (updateddata.status === 1) {
-            setloading(loading);
-            setismodify(!ismodify);
-            setuserinfo(updateddata.userinfo);
-            setsuccessmessage("User data has been updated successfully");
-            setservererror(false);
-          } else if (updateddata.servererror) {
-            seterrormessage(updateddata.servererror);
-          } else {
-            setservererror(updateddata.error);
-            console.log(error, "this is lerror");
-            // alert(error);
-          }
-
-          console.log(values, "called data update");
-        } catch (error) {
-          console.log(error);
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    setValues,
+  } = useFormik({
+    initialValues: initialValues,
+    validationSchema,
+    onSubmit: async (values) => {
+      setloading(true);
+      setismodify(!ismodify);
+      try {
+        console.log("in the update lvoe saveasdf");
+        let updateddata = await updateprofiledata(
+          values.firstname,
+          values.lastname,
+          values.email
+        );
+        console.log(updateddata.userinfo, "this si sis sisis sisisi");
+        if (updateddata.status === 1) {
+          setloading(loading);
+          console.log(updateddata.status, "this si sis sis");
+          setismodify(!ismodify);
+          setuserinfo(updateddata.userinfo);
+          setsuccessmessage("User data has been updated successfully");
+          setservererror(false);
+        } else if (updateddata.servererror) {
+          seterrormessage(updateddata.servererror);
+        } else {
+          setservererror(updateddata.error);
+          setloading(false);
+          console.log(error, "this is lerror");
+          // alert(error);
         }
-      },
-    });
+
+        console.log(values, "called data update");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
 
   useEffect(() => {
     // it sets the input value after fetchform the api
@@ -111,13 +119,11 @@ export default function Profile() {
       <Box
         display="flex"
         width="95%"
-        // style={{ border: `1px solid ${primarycolor}` }}
         backgroundColor="white"
         marginBottom="2rem"
         marginTop="2rem"
         boxShadow={shadow}
         borderRadius={radius}
-        // border={`1px solid ${primarycolor}`}
         borderTop={borderTop}
         justifyContent="space-between"
         paddingTop="1rem"
@@ -129,11 +135,7 @@ export default function Profile() {
           padding="1rem"
           paddingLeft="2rem"
         >
-          <Avatar
-            alt="Remy Sharp"
-            // src="/static/images/avatar/1.jpg"
-            sx={{ width: 100, height: 100 }}
-          />
+          <Avatar alt="Remy Sharp" sx={{ width: 100, height: 100 }} />
           <form // method="POST"
             className="form d-flex flex-column text-start "
             onSubmit={handleSubmit}
@@ -147,6 +149,11 @@ export default function Profile() {
               paddingLeft="2rem"
             >
               <Box>
+                {/* if server gives error then show */}
+                {!!servererror ? (
+                  <h6 className="text-danger">{servererror}</h6>
+                ) : null}
+                {/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */}
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={6} xl={4}>
                     <TextField
@@ -161,6 +168,9 @@ export default function Profile() {
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      error={(touched.firstname && errors.firstname) || null}
+                      helperText={errors.firstname}
+                      onFocus={handleFocus}
                       required
                       style={{ width: "100%", marginBottom: "1rem" }}
                     />
@@ -174,10 +184,13 @@ export default function Profile() {
                       value={values.lastname}
                       onChange={handleChange}
                       disabled={!ismodify}
+                      error={(touched.lastname && errors.lastname) || null}
+                      helperText={errors.lastname}
                       onBlur={handleBlur}
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      onFocus={handleFocus}
                       required
                       style={{ width: "100%", marginBottom: "1rem" }}
                     />
@@ -192,10 +205,11 @@ export default function Profile() {
                       variant="outlined"
                       disabled={!ismodify}
                       value={values.email}
-                      error={!!servererror}
-                      helperText={servererror}
+                      error={(touched.email && errors.email) || null}
+                      helperText={errors.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      onFocus={handleFocus}
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -226,7 +240,6 @@ export default function Profile() {
                     variant="contained"
                     type="submit"
                     disabled={!ismodify}
-                    // onClick={() => setismodify(!ismodify)}
                     style={{
                       margin: "1rem",
                       padding: "0.5rem",
@@ -255,27 +268,14 @@ export default function Profile() {
             </Stack>
           </form>
         </Stack>
-
-        {/* switch for allowing modifying */}
-        {/* <Box margin="2rem">
-          <h5>Modify</h5>
-          <Switch
-            color="secondary"
-            onChange={() => setismodify(!ismodify)}
-          ></Switch>
-        </Box> */}
       </Box>
       {/* ) : null} */}
       <Box
         width="95%"
         backgroundColor="white"
-        // margin="1rem"
-        // marginRight="2rem"
         borderRadius={radius}
-        // border={`1px solid ${primarycolor}`}
         borderTop={borderTop}
         boxShadow={shadow}
-        // borderRadius="1rem"
         height="100%"
       >
         {" "}
