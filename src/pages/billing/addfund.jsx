@@ -203,9 +203,8 @@ function AddFunds() {
                     shrink: true,
                   }}
                   onFocus={() => {
-                    if (values.amount == 0) {
+                    if (values.amount <= 0) {
                       setservererror("");
-                      // inputElement.current.focus();
                     }
                   }}
                 />
@@ -324,7 +323,7 @@ function AddFunds() {
                   type="submit"
                   onClick={() => {
                     {
-                      values.amount == 0
+                      values.amount <= 0
                         ? setshowpaymentbtn(false)
                         : setshowpaymentbtn(true);
                     }

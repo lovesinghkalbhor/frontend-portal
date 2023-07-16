@@ -148,7 +148,7 @@ function Login() {
                     </IconButton>
                   </InputAdornment>
                 }
-                label="Password"
+                // label="Password"
               />
             </FormControl>
             <Link className="mt-1 text-end fs-6 link ">Forgot password</Link>

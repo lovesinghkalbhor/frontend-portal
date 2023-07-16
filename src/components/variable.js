@@ -1,3 +1,5 @@
+// export const url = process.env.BASE_URL;
+
 // gray color zero border
 
 // export const primarycolor = "#27374D";
@@ -97,4 +99,5 @@ export const sidemenucolor = "white";
 // export const url = "https://portal-api-connect.onrender.com";
 
 export const url = "https://aditya1.staging.cloudmate.in";
+
 // export const url = "http://localhost:5000";

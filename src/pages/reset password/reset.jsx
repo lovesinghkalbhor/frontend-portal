@@ -13,14 +13,17 @@ import {
 } from "@mui/material";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { useNavigate } from "react-router-dom";
-
+import validationSchema from "../global component/schema for validation";
 import { shadow, radius, borderTop } from "../../components/variable";
 import { Reset_password } from "../global component/data_fetching_components/auth";
 import { primarycolor } from "../../components/variable";
 import { Send_reset_email } from "../global component/data_fetching_components/auth";
 import { globalcontext } from "../../routes/controler";
 import { useFormik } from "formik";
+import Spinner from "react-bootstrap/Spinner";
+
 export default function ChangePassword() {
+  let vcodeParam, vcode2Param, emailParam;
   const navigate = useNavigate();
   const [message, setmessage] = useState(false);
   const [parmsdata, setparamsdata] = useState({
@@ -28,7 +31,8 @@ export default function ChangePassword() {
     vcode2: false,
     email: false,
   });
-  let vcodeParam, vcode2Param, emailParam;
+  const [ismodify, setismodify] = useState(true);
+  const [loading, setloading] = useState(false);
 
   const [error, seterror] = useState(false);
   // context for media query
@@ -48,28 +52,31 @@ export default function ChangePassword() {
     password: "",
     email: "",
   };
-  const { values, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: initialValues,
-    // validationSchema,
-    onSubmit: async (values) => {
-      if (parmsdata.vcode) {
-        setpassword(
-          parmsdata.vcode,
-          parmsdata.vcode2,
-          parmsdata.email,
-          values.password
-        );
-        console.log(
-          parmsdata.vcode,
-          parmsdata.vcode2,
-          parmsdata.email,
-          values.password
-        );
-      } else {
-        isemailcorrect(values);
-      }
-    },
-  });
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: initialValues,
+      validationSchema,
+      onSubmit: async (values) => {
+        setloading(true);
+        setismodify(!ismodify);
+        if (parmsdata.vcode) {
+          setpassword(
+            parmsdata.vcode,
+            parmsdata.vcode2,
+            parmsdata.email,
+            values.password
+          );
+          console.log(
+            parmsdata.vcode,
+            parmsdata.vcode2,
+            parmsdata.email,
+            values.password
+          );
+        } else {
+          isemailcorrect(values);
+        }
+      },
+    });
 
   async function isemailcorrect(values) {
     try {
@@ -78,9 +85,11 @@ export default function ChangePassword() {
       console.log(updateddata.userinfo, "this si sis sisis sisisi");
       if (updateddata.status === 1) {
         setservererror(false);
+        setloading(false);
         setmessage(updateddata.message);
         setsuccessmessage(updateddata.message);
       } else {
+        setloading(false);
         setservererror(updateddata.error);
         setmessage(false);
         console.log(error, "this is lerror");
@@ -100,6 +109,7 @@ export default function ChangePassword() {
       if (updateddata.status === 1) {
         setservererror(false);
         setmessage(updateddata.message);
+        console.log(updateddata, "this is reset message");
         setsuccessmessage(updateddata.message);
         setTimeout(() => {
           // navigate("/login");
@@ -114,6 +124,7 @@ export default function ChangePassword() {
 
       console.log(values, "called data update");
     } catch (error) {
+      setservererror(error);
       console.log(error);
     }
   }
@@ -251,8 +262,8 @@ export default function ChangePassword() {
                     placeholder="Enter your email"
                     variant="outlined"
                     value={values.email}
-                    error={!!servererror}
-                    helperText={servererror}
+                    error={(touched.email && errors.email) || null}
+                    helperText={errors.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     InputLabelProps={{
@@ -264,7 +275,7 @@ export default function ChangePassword() {
               </Grid>
             </Grid>
 
-            <Button
+            {/* <Button
               variant="contained"
               type="submit"
               style={{
@@ -281,6 +292,35 @@ export default function ChangePassword() {
               }}
             >
               Save
+            </Button> */}
+
+            <Button
+              variant="contained"
+              type="submit"
+              disabled={!ismodify}
+              on
+              style={{
+                // margin: "1rem",
+                padding: "0.5rem",
+                paddingLeft: "1rem",
+                paddingRight: "1rem",
+                color: "white",
+                backgroundColor: primarycolor,
+                marginBottom: "1rem",
+                borderRadius: radius,
+              }}
+            >
+              {!loading ? (
+                "Save"
+              ) : (
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              )}
             </Button>
           </Box>
         </Stack>
