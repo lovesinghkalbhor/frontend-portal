@@ -15,7 +15,6 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import Cookies from "js-cookie";
 import Spinner from "react-bootstrap/Spinner";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Logout from "@mui/icons-material/Logout";

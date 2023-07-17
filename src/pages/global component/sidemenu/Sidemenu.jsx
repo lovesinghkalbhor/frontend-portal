@@ -9,13 +9,6 @@ import {
 import "./style.css"; // Import your custom styles
 import { Box, IconButton, useMediaQuery, Tooltip, Zoom } from "@mui/material";
 import { Link } from "react-router-dom";
-import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
-import LanguageRoundedIcon from "@mui/icons-material/LanguageRounded";
-import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
-import BuildRoundedIcon from "@mui/icons-material/BuildRounded";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   primarycolor,
@@ -23,81 +16,9 @@ import {
   toprightbordersidemenu,
 } from "../../../components/variable";
 import { globalcontext } from "../../../routes/controler";
-import CorporateFareIcon from "@mui/icons-material/CorporateFare";
-
+import { menus } from "./helperFunctionorData";
 export default function Sidemenu() {
-  // const iconcolor = "#1F33F2";
-  let menus = [
-    {
-      icon: <DashboardCustomizeRoundedIcon></DashboardCustomizeRoundedIcon>,
-      name: "Dashboard",
-      path: "/dashboard",
-    },
-    {
-      icon: <CorporateFareIcon></CorporateFareIcon>,
-      name: "Organization",
-      path: "/organization",
-    },
-
-    {
-      icon: <ShoppingCartRoundedIcon></ShoppingCartRoundedIcon>,
-      name: "Place orders",
-      path: "/place_orders",
-    },
-    {
-      icon: <LanguageRoundedIcon></LanguageRoundedIcon>,
-      name: "Domain",
-      path: "/domain",
-    },
-    {
-      icon: <PersonRoundedIcon></PersonRoundedIcon>,
-      name: "Customer",
-      path: "/customer",
-    },
-    {
-      icon: <PaidRoundedIcon></PaidRoundedIcon>,
-      name: "Billing",
-      path: "/billing",
-    },
-    {
-      icon: <BuildRoundedIcon></BuildRoundedIcon>,
-      name: "Tools",
-      subitems: [
-        {
-          icon: <ArrowRightIcon></ArrowRightIcon>,
-          name: "Action history",
-          path: "/tools/action-history",
-        },
-        {
-          icon: <ArrowRightIcon></ArrowRightIcon>,
-          name: "Domain Pull Request",
-          path: "/tools/domain-pull-request",
-        },
-        {
-          icon: <ArrowRightIcon></ArrowRightIcon>,
-          name: "Domain TransferOut List",
-          path: "/tools/domain-transferout-list",
-        },
-        {
-          icon: <ArrowRightIcon></ArrowRightIcon>,
-          name: "Pending Bulk Summary",
-          path: "/tools/pending-bulk-summary",
-        },
-        {
-          icon: <ArrowRightIcon></ArrowRightIcon>,
-          name: "Reports",
-          path: "tools/reports",
-        },
-        {
-          icon: <ArrowRightIcon></ArrowRightIcon>,
-          name: "Bulk Action File Upload",
-          path: "tools/bulk-action-file",
-        },
-      ],
-    },
-  ];
   const is_screen_md = useMediaQuery("(min-width:767px)");
-
   const { is_screen_sm, is_session_valid } = useContext(globalcontext);
   const { collapseSidebar, toggleSidebar, collapsed } = useProSidebar();
   const [iscollapsed, setiscollapsed] = useState(1);

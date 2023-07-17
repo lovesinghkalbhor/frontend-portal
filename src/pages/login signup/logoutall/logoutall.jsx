@@ -51,16 +51,19 @@ function Logoutall() {
     validationSchema,
     onSubmit: async (parms) => {
       // parms.preventDefault();
+      setloading(true);
       console.log(values.email, values.password);
       let data = await Logoutallfunction(values.email, values.password);
       console.log(data, "this is s");
 
       if (data.status === 1) {
         setsuccessmessage("loged out Successfully form all the devices");
+        setloading(false);
         logout();
         // Cookies.set("session_id", "");
         // navigate("/login");
       } else if (data.status === 0) {
+        setloading(false);
         setservererror(data.error);
         //for internat errors
       } else if (data.servererror) {

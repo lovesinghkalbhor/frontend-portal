@@ -15,7 +15,6 @@ export default function UpdateUser() {
   const [ismodify, setismodify] = useState(false);
   const [loading, setloading] = useState(false);
   const {
-    orgdata,
     servererror,
     is_session_valid,
     setservererror,
@@ -216,36 +215,17 @@ export default function UpdateUser() {
                 <Box>
                   <Button
                     variant="contained"
+                    className="smallButton"
                     // type="submit"
                     onClick={() => setismodify(!ismodify)}
-                    style={{
-                      margin: "1rem",
-                      marginLeft: 0,
-                      padding: "0.5rem",
-                      paddingLeft: "1rem",
-                      paddingRight: "1rem",
-                      color: "white",
-                      backgroundColor: primarycolor,
-                      marginBottom: "1rem",
-                      borderRadius: radius,
-                    }}
                   >
                     Edit
                   </Button>
                   <Button
                     variant="contained"
+                    className="smallButton"
                     type="submit"
                     disabled={!ismodify}
-                    style={{
-                      margin: "1rem",
-                      padding: "0.5rem",
-                      paddingLeft: "1rem",
-                      paddingRight: "1rem",
-                      color: "white",
-                      backgroundColor: primarycolor,
-                      marginBottom: "1rem",
-                      borderRadius: radius,
-                    }}
                   >
                     {!loading ? (
                       "Update"

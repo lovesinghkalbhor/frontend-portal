@@ -1,0 +1,60 @@
+body .longloadingButton {
+  padding: 0.5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  color: white;
+  width: 100%;
+  background-color: #7a1de0;
+  margin-bottom: 1rem;
+  margin: 0;
+  margin-left: 0;
+  border-radius: 2rem;
+}
+body .longloadingButton:hover {
+  background-color: #7a1de0;
+}
+body .smallButton {
+  padding: 0.5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  color: white;
+  width: 0;
+  background-color: #7a1de0;
+  margin-bottom: 1rem;
+  margin: 0.7rem;
+  margin-left: 0rem;
+  border-radius: 2rem;
+}
+body .smallButton:hover {
+  background-color: #7a1de0;
+}
+body .controler .alert {
+  position: fixed;
+  z-index: 1000;
+  width: 95%;
+  margin-left: 3%;
+  margin-top: 2%;
+  border: 1px solid gray;
+  border-radius: 2rem;
+  box-shadow: 0px 3px 10px rgba(6, 4, 4, 0.1);
+}
+body .controler .page-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+body .controler .page-wrapper .headerAndMain {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+body .addFunds .card-container {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #ffffff;
+  box-shadow: 0px 3px 10px rgba(6, 4, 4, 0.1); /* If shadow is a CSS variable */
+  cursor: pointer;
+  border-top: 2px solid #7a1de0; /* If borderTop is a CSS variable */
+}
+/*# sourceMappingURL=controler.css.map */

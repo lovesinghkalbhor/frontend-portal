@@ -29,6 +29,7 @@ export default function Billing() {
   return (
     <>
       <Box
+        className="billingMainPage"
         width={is_screen_sm ? "98%" : "100%"}
         padding={is_screen_sm ? "1rem" : "0.2rem"}
         margin={is_screen_sm ? "0.5rem" : "0rem"}

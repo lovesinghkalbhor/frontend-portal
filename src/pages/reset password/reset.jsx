@@ -11,6 +11,8 @@ import {
   ListItem,
   ListItemIcon,
 } from "@mui/material";
+import "../global component/css/controler.css";
+
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { useNavigate } from "react-router-dom";
 import validationSchema from "../global component/schema for validation";
@@ -295,20 +297,11 @@ export default function ChangePassword() {
             </Button> */}
 
             <Button
+              className="smallButton"
               variant="contained"
               type="submit"
               disabled={!ismodify}
               on
-              style={{
-                // margin: "1rem",
-                padding: "0.5rem",
-                paddingLeft: "1rem",
-                paddingRight: "1rem",
-                color: "white",
-                backgroundColor: primarycolor,
-                marginBottom: "1rem",
-                borderRadius: radius,
-              }}
             >
               {!loading ? (
                 "Save"

@@ -22,7 +22,7 @@ import { globalcontext } from "../../routes/controler";
 import { AddFund } from "../global component/data_fetching_components/billing_endpoints";
 import { useFormik } from "formik";
 import { calculat_percentage, totalAmount } from "./helperfunction";
-
+import "../global component/css/controler.css";
 /**  this page adds the payment*/
 function AddFunds() {
   // this destructure the variable and funtion form the globalcontext
@@ -79,6 +79,7 @@ function AddFunds() {
   return (
     <>
       <Box
+        className="addFunds"
         width={is_screen_sm ? "99%" : "100%"}
         padding={is_screen_sm ? "2rem" : "1rem"}
         margin={is_screen_sm ? "1rem" : "0rem"}
@@ -91,14 +92,7 @@ function AddFunds() {
         <Grid container spacing={4}>
           <Grid item md={6} lg={4}>
             <Card
-              style={{
-                width: "100%",
-                padding: "0.5rem",
-                backgroundColor: "#FFFFFF",
-                boxShadow: shadow,
-                cursor: "pointer",
-                borderTop: borderTop,
-              }}
+              className="card-container"
               onClick={() => {
                 setplatformfee(transfertype.credit_card);
                 window.scrollTo(0, document.body.scrollHeight);
@@ -119,14 +113,7 @@ function AddFunds() {
           </Grid>
           <Grid item md={6} lg={4}>
             <Card
-              style={{
-                width: "100%",
-                padding: "0.5rem",
-                backgroundColor: "#FFFFFF",
-                boxShadow: shadow,
-                cursor: "pointer",
-                borderTop: borderTop,
-              }}
+              className="card-container"
               onClick={() => {
                 setplatformfee(transfertype.net_banking);
                 window.scrollTo(0, document.body.scrollHeight);
@@ -147,14 +134,7 @@ function AddFunds() {
           </Grid>
           <Grid item md={6} lg={4}>
             <Card
-              style={{
-                width: "100%",
-                padding: "0.5rem",
-                backgroundColor: "#FFFFFF",
-                boxShadow: shadow,
-                cursor: "pointer",
-                borderTop: borderTop,
-              }}
+              className="card-container"
               onClick={() => {
                 setplatformfee(transfertype.debit_card);
                 window.scrollTo(0, document.body.scrollHeight);
@@ -288,22 +268,13 @@ function AddFunds() {
 
               {showpaymentbtn ? (
                 <LoadingButton
+                  className="longloadingButton"
                   type="submit"
                   variant="contained"
                   onClick={() => {
                     if (addfunddata.payment_link) {
                       window.open(addfunddata.payment_link, "_blank");
                     }
-                  }}
-                  style={{
-                    padding: "0.5rem",
-                    paddingLeft: "1rem",
-                    paddingRight: "1rem",
-                    color: "white",
-                    width: "100%",
-                    backgroundColor: primarycolor,
-                    marginBottom: "1rem",
-                    borderRadius: radius,
                   }}
                 >
                   {addfunddata.order_number ? (
@@ -320,6 +291,7 @@ function AddFunds() {
                 </LoadingButton>
               ) : (
                 <LoadingButton
+                  className="longloadingButton"
                   type="submit"
                   onClick={() => {
                     {
@@ -327,23 +299,12 @@ function AddFunds() {
                         ? setshowpaymentbtn(false)
                         : setshowpaymentbtn(true);
                     }
-
                     setisclicked(true);
-
                     setTimeout(() => {
                       window.scrollTo(0, document.body.scrollHeight);
                     }, 500);
                   }}
                   variant="contained"
-                  style={{
-                    padding: "0.5rem",
-                    paddingLeft: "1rem",
-                    paddingRight: "1rem",
-                    color: "white",
-                    backgroundColor: primarycolor,
-                    marginBottom: "1rem",
-                    borderRadius: radius,
-                  }}
                 >
                   Proceed
                 </LoadingButton>

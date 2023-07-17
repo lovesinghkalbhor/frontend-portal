@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { primarycolor, radius } from "../../components/variable";
 import Spinner from "react-bootstrap/Spinner";
+import "../global component/css/controler.css";
 
 import {
   OrgUserData,
@@ -147,6 +148,7 @@ function Row(props) {
                   </Grid>
                   <Grid item xs={12} sm={3} lg={2}>
                     <Button
+                      className="smallButton"
                       id="suspend"
                       type="submit"
                       variant="contained"
@@ -158,21 +160,13 @@ function Row(props) {
                           revoke: false,
                         });
                       }}
-                      style={{
-                        paddingLeft: "1rem",
-                        paddingRight: "1rem",
-                        color: "white",
-                        backgroundColor: primarycolor,
-                        marginTop: "1rem",
-                        borderRadius: radius,
-                        marginBottom: "1rem",
-                      }}
                     >
                       Suspend
                     </Button>{" "}
                   </Grid>
                   <Grid item xs={12} sm={3} lg={2}>
                     <Button
+                      className="smallButton"
                       type="submit"
                       id="revoke"
                       variant="contained"
@@ -183,15 +177,6 @@ function Row(props) {
                           revoke: true,
                           suspend: false,
                         });
-                      }}
-                      style={{
-                        paddingLeft: "1rem",
-                        paddingRight: "1rem",
-                        color: "white",
-                        backgroundColor: primarycolor,
-                        marginTop: "1rem",
-                        borderRadius: radius,
-                        marginBottom: "1rem",
                       }}
                     >
                       Revoke

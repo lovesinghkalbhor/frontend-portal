@@ -1,0 +1,64 @@
+$shadow: 0px 3px 10px rgba(6, 4, 4, 0.1);
+$primarycolor: #7a1de0;
+$radius: 2rem;
+$borderTop: 2px solid $primarycolor;
+@mixin button($width, $margin: 0, $marginLeft: 0) {
+  padding: 0.5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  color: white;
+  width: $width;
+  background-color: $primarycolor;
+  margin-bottom: 1rem;
+  margin: $margin;
+  margin-left: $marginLeft;
+  border-radius: $radius;
+  &:hover {
+    background-color: $primarycolor;
+  }
+}
+body {
+  .longloadingButton {
+    @include button(100%);
+  }
+  .smallButton {
+    @include button(0, 0.7rem, 0rem);
+  }
+
+  .controler {
+    .alert {
+      position: fixed;
+      z-index: 1000;
+      width: 95%;
+      margin-left: 3%;
+      margin-top: 2%;
+      border: 1px solid gray;
+      border-radius: 2rem;
+      box-shadow: $shadow;
+    }
+
+    .page-wrapper {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+
+      .headerAndMain {
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+      }
+    }
+  }
+
+  .addFunds {
+    .card-container {
+      width: 100%;
+      padding: 0.5rem;
+      background-color: #ffffff;
+      box-shadow: $shadow; /* If shadow is a CSS variable */
+      cursor: pointer;
+      border-top: $borderTop; /* If borderTop is a CSS variable */
+    }
+  }
+}

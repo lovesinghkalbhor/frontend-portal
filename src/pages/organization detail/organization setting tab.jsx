@@ -277,39 +277,20 @@ export default function OrganizationSetting() {
 
         <Box>
           <Button
+            className="smallButton"
             variant="contained"
             onClick={() => {
               setismodify(!ismodify);
               OnclickEdit();
-            }}
-            style={{
-              margin: "1rem",
-              marginLeft: 0,
-              padding: "0.5rem",
-              paddingLeft: "1rem",
-              paddingRight: "1rem",
-              color: "white",
-              backgroundColor: primarycolor,
-              marginBottom: "1rem",
-              borderRadius: radius,
             }}
           >
             Edit
           </Button>
           <Button
             variant="contained"
+            className="smallButton"
             type="submit"
             disabled={!ismodify}
-            style={{
-              margin: "1rem",
-              padding: "0.5rem",
-              paddingLeft: "1rem",
-              paddingRight: "1rem",
-              color: "white",
-              backgroundColor: primarycolor,
-              marginBottom: "1rem",
-              borderRadius: radius,
-            }}
           >
             {!loading ? (
               "Update"

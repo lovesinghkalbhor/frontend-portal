@@ -10,7 +10,7 @@ import { calculat_percentage, totalAmount } from "./helperfunction";
 import { viewInvoice } from "../global component/data_fetching_components/billing_endpoints";
 import { globalcontext } from "../../routes/controler";
 import { OrgEndpoint } from "../global component/data_fetching_components/org";
-
+import "../global component/css/controler.css";
 export default function ViewInvoice() {
   const [transactiondata, settransactiondata] = useState({});
   const [transactiondataItem, settransactiondataItem] = useState({
@@ -240,17 +240,9 @@ export default function ViewInvoice() {
         <Button
           id="printButton"
           variant="contained"
+          className="smallButton"
           onClick={() => {
             window.open(transactiondata.url);
-          }}
-          style={{
-            padding: "0.5rem",
-            paddingLeft: "1rem",
-            paddingRight: "1rem",
-            color: "white",
-            backgroundColor: primarycolor,
-            margin: "1rem",
-            borderRadius: "0.5rem",
           }}
         >
           Print

@@ -9,6 +9,8 @@ import { useFormik } from "formik";
 import { AddUser } from "../global component/data_fetching_components/org";
 import { globalcontext } from "../../routes/controler";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import "../global component/css/controler.css";
+
 import FormControl from "@mui/material/FormControl";
 export default function AddUserTab() {
   const [ismodify, setismodify] = useState(false);
@@ -189,40 +191,20 @@ export default function AddUserTab() {
         </Grid>
         <Box>
           <Button
+            className="smallButton"
             variant="contained"
             onClick={() => {
               setismodify(!ismodify);
               OnclickEdit();
             }}
-            style={{
-              margin: "1rem",
-              marginLeft: 0,
-              padding: "0.5rem",
-              paddingLeft: "1rem",
-              paddingRight: "1rem",
-              color: "white",
-              backgroundColor: primarycolor,
-              marginBottom: "1rem",
-              borderRadius: radius,
-            }}
           >
             Edit
           </Button>
           <Button
+            className="smallButton"
             variant="contained"
             type="submit"
             disabled={!ismodify}
-            on
-            style={{
-              margin: "1rem",
-              padding: "0.5rem",
-              paddingLeft: "1rem",
-              paddingRight: "1rem",
-              color: "white",
-              backgroundColor: primarycolor,
-              marginBottom: "1rem",
-              borderRadius: radius,
-            }}
           >
             {!loading ? (
               "Update"
