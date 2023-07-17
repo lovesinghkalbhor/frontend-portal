@@ -1,6 +1,8 @@
-import "./login.css";
+// import "./login.css";
+import "../../global component/css/controler.css";
+
 import React, { useState, useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import {
   FormHelperText,

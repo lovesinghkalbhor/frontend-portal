@@ -1,4 +1,5 @@
-import "./login.css";
+// import "./login.css";
+import "../../global component/css/controler.css";
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -79,7 +80,7 @@ function Login() {
 
   return (
     <Box
-      className="full-screen"
+      className="full_screen_login_page"
       style={{
         overflow: "hidden",
       }}

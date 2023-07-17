@@ -17,14 +17,14 @@ body {
   background: #f6f0fd;
   filter: blur(0.4);
 }
-body .full-screen {
+body .full_screen_login_page {
   min-width: 100vw;
   background: #ffffff;
   background-image: url("./Rectangle_voilet.svg");
   background-repeat: no-repeat;
 }
 @media only screen and (max-width: 767px) {
-  body .full-screen {
+  body .full_screen_login_page {
     background-image: url("");
     background-color: #7a1de0;
   }
