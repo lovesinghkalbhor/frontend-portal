@@ -8,7 +8,7 @@ const OrgEndpoint = async () => {
   const session_id = Cookies.get("session_id");
   try {
     const userdata = await axios.post(
-      `${url}/org/view`,
+      `/org/view`,
       {
         session_id,
       },
@@ -55,7 +55,7 @@ const OrgUserData = async (org_id) => {
   console.log(session_id);
   console.log(org_id, "orgdataag");
   try {
-    const userdata = await axios.post(`${url}/org/getUsers`, {
+    const userdata = await axios.post(`/org/getUsers`, {
       session_id,
       org_id,
     });
@@ -75,7 +75,7 @@ const SuspendUser = async (org_id, user_id) => {
   console.log(session_id);
   console.log(org_id, "orgdataag");
   try {
-    const userdata = await axios.post(`${url}/org/suspendUsers`, {
+    const userdata = await axios.post(`/org/suspendUsers`, {
       session_id,
       org_id,
       user_id,
@@ -95,7 +95,7 @@ const RevokeUser = async (org_id, user_id) => {
   console.log(session_id);
   console.log(org_id, "orgdataag");
   try {
-    const userdata = await axios.post(`${url}/org/revokeUsers`, {
+    const userdata = await axios.post(`/org/revokeUsers`, {
       session_id,
       org_id,
       user_id,
@@ -116,7 +116,7 @@ const SearchUser = async (org_id, search_array) => {
   console.log(session_id);
   console.log(org_id, "orgdataag");
   try {
-    const userdata = await axios.post(`${url}/org/searchUsers`, {
+    const userdata = await axios.post(`/org/searchUsers`, {
       session_id,
       org_id,
       search_array,
@@ -137,7 +137,7 @@ const EditUser = async (org_id, edit_data, user_id) => {
   console.log(session_id);
   console.log(org_id, "orgdataag");
   try {
-    const userdata = await axios.post(`${url}/org/editUsers`, {
+    const userdata = await axios.post(`/org/editUsers`, {
       session_id,
       org_id,
       user_id,
@@ -158,7 +158,7 @@ const AddUser = async (dataobj) => {
   console.log(dataobj, "50000000000000000000sdffffffffffffff");
   const obj = { session_id, ...dataobj };
   try {
-    const userdata = await axios.post(`${url}/org/addUser`, obj, {
+    const userdata = await axios.post(`/org/addUser`, obj, {
       headers: {
         "Content-Type": "application/json",
       },

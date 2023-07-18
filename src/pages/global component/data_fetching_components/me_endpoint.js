@@ -9,7 +9,7 @@ const Me_Endpoint = async () => {
 
   try {
     const userdata = await axios.post(
-      `${url}/me/view`,
+      `/me/view`,
       {
         session_id,
       },
@@ -40,7 +40,7 @@ const updateprofiledata = async (
   let data = {};
   try {
     const userdata = await axios.post(
-      `${url}/me/update`,
+      `/me/update`,
       {
         session_id,
         first_name,

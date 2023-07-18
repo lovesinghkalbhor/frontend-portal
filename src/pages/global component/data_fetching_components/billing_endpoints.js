@@ -5,12 +5,13 @@ import { url } from "../../../components/variable";
 /**This function gives the data of available fund*/
 const billing_view_Data = async () => {
   let data = {};
+  // const apiUrl = `${url}/billing/viewFunds`;
   const session_id = Cookies.get("session_id");
   console.log(session_id);
 
   try {
     const userdata = await axios.post(
-      `${url}/billing/viewFunds`,
+      `/billing/viewFunds`,
       {
         session_id,
       },
@@ -38,7 +39,7 @@ const listTransactions = async () => {
 
   try {
     const userdata = await axios.post(
-      `${url}/billing/listTransactions`,
+      `/billing/listTransactions`,
       {
         session_id,
       },
@@ -69,15 +70,11 @@ const viewTransaction = async (reference_number) => {
   };
 
   try {
-    const userdata = await axios.post(
-      `${url}/billing/viewTransaction`,
-      requestBody,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const userdata = await axios.post(`/billing/viewTransaction`, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     data = userdata.data;
     console.log(data, "this is billing end point andh what about you tell me ");
@@ -99,15 +96,11 @@ const viewInvoice = async (invoice_number) => {
   };
 
   try {
-    const userdata = await axios.post(
-      `${url}/billing/viewInvoice`,
-      requestBody,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const userdata = await axios.post(`/billing/viewInvoice`, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     data = userdata.data;
     console.log(data, "this is billing end point andh what about you tell me ");
@@ -128,7 +121,7 @@ const AddFund = async (amount) => {
   };
 
   try {
-    const userdata = await axios.post(`${url}/billing/addFunds`, requestBody, {
+    const userdata = await axios.post(`/billing/addFunds`, requestBody, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -156,15 +149,11 @@ const invoiceList = async () => {
   };
 
   try {
-    const userdata = await axios.post(
-      `${url}/billing/listInvoices`,
-      requestBody,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const userdata = await axios.post(`/billing/listInvoices`, requestBody, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     data = userdata.data;
     console.log(

@@ -4,7 +4,8 @@ import { url } from "../../../components/variable";
 
 /** function for calling the login api, require email and password */
 const Logindata = async (email, password) => {
-  const apiUrl = `${url}/auth/login`;
+  const apiUrl = `/auth/login`;
+  // const apiUrl = `${url}/auth/login`;
   console.log("in login");
   const requestBody = {
     email: email,
@@ -26,7 +27,8 @@ const Logindata = async (email, password) => {
 };
 // 2fa authentication api
 const TwoFactorAuth = async (passcode) => {
-  const apiUrl = `${url}/auth/twofa`;
+  const apiUrl = `/auth/twofa`;
+  // const apiUrl = `${url}/auth/twofa`;
   const session_id = Cookies.get("session_id");
 
   console.log("in login");
@@ -51,7 +53,8 @@ const TwoFactorAuth = async (passcode) => {
 
 /** This function send the reset link to your email */
 const Send_reset_email = async (email) => {
-  const apiUrl = `${url}/auth/reset`;
+  const apiUrl = `/auth/reset`;
+  // const apiUrl = `${url}/auth/reset`;
   console.log("in login");
   const requestBody = {
     email: email,
@@ -74,7 +77,8 @@ const Send_reset_email = async (email) => {
 
 /** This function actualy reset your password */
 const Reset_password = async (vcode, vcode2, hashedEmail, password) => {
-  const apiUrl = `${url}/auth/reset2`;
+  const apiUrl = `/auth/reset2`;
+  // const apiUrl = `${url}/auth/reset2`;
   const requestBody = {
     vcode: vcode,
     vcode2: vcode2,
@@ -100,7 +104,8 @@ const Reset_password = async (vcode, vcode2, hashedEmail, password) => {
 /** This function checks if the session is valid or not*/
 const is_user_session_valid = async () => {
   const session_id = Cookies.get("session_id");
-  const apiUrl = `${url}/auth/status`;
+  const apiUrl = `/auth/status`;
+  // const apiUrl = `${url}/auth/status`;
   console.log("in login");
   let data = {};
   try {
@@ -126,7 +131,8 @@ const is_user_session_valid = async () => {
 /** This function logout the user */
 const Logoutfunction = async () => {
   const session_id = Cookies.get("session_id");
-  const apiUrl = `${url}/auth/logout`;
+  const apiUrl = `/auth/logout`;
+  // const apiUrl = `${url}/auth/logout`;
   let data = {};
   try {
     const userdata = await axios.post(
@@ -151,7 +157,8 @@ const Logoutfunction = async () => {
 
 /** This function logout the user form all the devices */
 const Logoutallfunction = async (email, password) => {
-  const apiUrl = `${url}/auth/logoutall`;
+  const apiUrl = `/auth/logoutall`;
+  // const apiUrl = `${url}/auth/logoutall`;
   console.log("in login");
   let data = {};
   const requestBody = {
